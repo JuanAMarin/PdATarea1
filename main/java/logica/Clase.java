@@ -1,11 +1,13 @@
 package logica;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Clase {
 	private String nombre, url;
 	private Date fecha, fechaReg, horaInicio;
-	private Registro registro;
+	private Map<Socio,Registro> registros;
 	
 	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Registro registro) {
 		super();
@@ -14,7 +16,7 @@ public class Clase {
 		this.fecha = fecha;
 		this.fechaReg = fechaReg;
 		this.horaInicio = horaInicio;
-		this.registro = registro;
+		this.registros = new HashMap<Socio,Registro>();
 	}
 	
 	public String getNombre() {
@@ -32,11 +34,11 @@ public class Clase {
 	public Date getHoraInicio() {
 		return horaInicio;
 	}
-	public Registro getRegistro() {
-		return registro;
+	public Map<Socio, Registro> getRegistros() {
+		return registros;
 	}
-	public void setRegistro(Registro registro) {
-		this.registro = registro;
+	public void setRegistros(Map<Socio, Registro> registros) {
+		this.registros = registros;
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;

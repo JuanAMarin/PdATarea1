@@ -1,21 +1,23 @@
 package logica;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Socio extends Usuario{
-	private Registro registro;
+	private Map<Socio,Registro> registros;
 	
 	public Socio(String nickname, String nombre, String apellido, String email, Date fechaNac, Registro registro) {
 		super(nickname, nombre, apellido, email, fechaNac);
-		this.registro=registro;
+		this.registros = new HashMap<Socio,Registro>();
 	}
 
-	public Registro getRegistro() {
-		return registro;
+	public Map<Socio, Registro> getRegistros() {
+		return registros;
 	}
 
-	public void setRegistro(Registro registro) {
-		this.registro = registro;
+	public void setRegistros(Map<Socio, Registro> registros) {
+		this.registros = registros;
 	}
 	
 	

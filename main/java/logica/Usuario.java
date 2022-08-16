@@ -3,8 +3,8 @@ package logica;
 import java.util.Date;
 
 public class Usuario {
-	private String nickname, nombre, apellido, email;
-	private Date fechaNac;
+	protected String nickname, nombre, apellido, email;
+	protected Date fechaNac;
 	
 	public Usuario(String nickname, String nombre, String apellido, String email, Date fechaNac) {
 		super();
@@ -54,6 +54,11 @@ public class Usuario {
 	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
 	}
+	
+//-----------------------------------------------------------------------------------
+// Funciones ...
+	
+	
 	
 	
 }
