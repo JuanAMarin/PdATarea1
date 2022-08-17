@@ -8,6 +8,7 @@ public class Socio extends Usuario{
 	private Map<Socio,Registro> registros;
 	
 	public Socio(String nickname, String nombre, String apellido, String email, Date fechaNac, Registro registro) {
+	public Socio(String nickname, String nombre, String apellido, String email, Date fechaNac) {
 		super(nickname, nombre, apellido, email, fechaNac);
 		this.registros = new HashMap<Socio,Registro>();
 	}
