@@ -15,9 +15,6 @@ public class ManejadorInstituciones {
     }
 	
 	public InstitucionDep buscarInstitucion(String nombre) {
-		InstitucionDep insti;
-		insti=instituciones.get(nombre);
-		return insti;
 		return instituciones.get(nombre);
 	}
 }
