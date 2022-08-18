@@ -13,10 +13,6 @@ public class ManejadorUsuarios {
         return instancia;
     }
 	
-	public Usuario buscarInstitucion(String nombre) {
-		return usuarios.get(nombre);
-	}
-	
 	public void agregarUsuario(Usuario usu) {
 		usuarios.putIfAbsent(usu.nickname, usu);
 	}
