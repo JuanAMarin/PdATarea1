@@ -1,24 +1,21 @@
 package logica;
-
-import java.util.Date;
-
+import java.time.LocalDate;
 import interfaces.ICaltausuario;
 
 public class Caltausuario implements ICaltausuario{
 
 	protected String nickname, nombre, apellido, email;
-	protected Date fechaNac;
+	protected LocalDate fechaNac;
 	private String descripcion, biografia, sitioweb;
 	private InstitucionDep institucion;
 	private boolean profe;
 	
-	public void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac, boolean profe) {
+	public void datosUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac) {
 		this.nickname = nickname;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.fechaNac = fechaNac;
-		this.profe = profe;
 	}
 	
 	public void datosProfesor(String descripcion, String biografia, String sitioweb, InstitucionDep institucion, boolean profe) {

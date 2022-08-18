@@ -1,12 +1,11 @@
 package logica;
-
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Usuario {
 	protected String nickname, nombre, apellido, email;
-	protected Date fechaNac;
+	protected LocalDate fechaNac;
 	
-	public Usuario(String nickname, String nombre, String apellido, String email, Date fechaNac) {
+	public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
@@ -31,7 +30,7 @@ public class Usuario {
 		return email;
 	}
 
-	public Date getFechaNac() {
+	public LocalDate getFechaNac() {
 		return fechaNac;
 	}
 
@@ -51,7 +50,7 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public void setFechaNac(Date fechaNac) {
+	public void setFechaNac(LocalDate fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 	

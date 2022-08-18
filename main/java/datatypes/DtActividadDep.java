@@ -1,7 +1,5 @@
 package datatypes;
-
 import java.util.Map;
-
 import logica.Clase;
 
 public class DtActividadDep {

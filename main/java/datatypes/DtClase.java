@@ -1,8 +1,6 @@
 package datatypes;
-
 import java.util.Date;
 import java.util.Map;
-
 import logica.Registro;
 import logica.Socio;
 

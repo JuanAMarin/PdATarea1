@@ -1,13 +1,9 @@
 package presentacion;
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import interfaces.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -15,7 +11,7 @@ import java.awt.event.ActionEvent;
 
 public class Principal {
 
-	private JFrame frame;
+	private JFrame frmServidorCentral;
 	private ICaltausuario ICau;
 	private altausuario AltaUsuario;
 
@@ -27,7 +23,7 @@ public class Principal {
 			public void run() {
 				try {
 					Principal window = new Principal();
-					window.frame.setVisible(true);
+					window.frmServidorCentral.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,9 +39,15 @@ public class Principal {
 		
 		Fabrica fabrica = Fabrica.getInstancia();
 		ICau=fabrica.getICaltausuario();
-
+		
+		frmServidorCentral.setResizable(false);
+		
 		AltaUsuario=new altausuario(ICau);
+		
+		AltaUsuario.setLocation(0,20);
+		
 		AltaUsuario.setVisible(false);
+		frmServidorCentral.getContentPane().add(AltaUsuario);
 
 	}
 
@@ -53,72 +55,75 @@ public class Principal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmServidorCentral = new JFrame();
+		frmServidorCentral.setTitle("Servidor Central");
+		frmServidorCentral.setBounds(100, 100, 538, 496);
+		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmServidorCentral.getContentPane().setLayout(null);
 		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 434, 22);
-		frame.getContentPane().add(menuBar);
+		JMenuBar menuPrincipal = new JMenuBar();
+		menuPrincipal.setBounds(0, 0, 524, 22);
+		frmServidorCentral.getContentPane().add(menuPrincipal);
 		
-		JMenu mnNewMenu = new JMenu("Alta");
-		menuBar.add(mnNewMenu);
+		JMenu menuAlta = new JMenu("Alta");
+		menuPrincipal.add(menuAlta);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Usuario");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		JMenuItem menuUsuarioA = new JMenuItem("Usuario");
+		menuUsuarioA.setSelected(true);
+		menuUsuarioA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AltaUsuario.setVisible(true);
 			}
 		});
-		mnNewMenu.add(mntmNewMenuItem);
+		menuAlta.add(menuUsuarioA);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Actividad");
-		mnNewMenu.add(mntmNewMenuItem_1);
+		JMenuItem menuActividadA = new JMenuItem("Actividad");
+		menuAlta.add(menuActividadA);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Clase");
-		mnNewMenu.add(mntmNewMenuItem_2);
+		JMenuItem menuClaseA = new JMenuItem("Clase");
+		menuAlta.add(menuClaseA);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Institucion");
-		mnNewMenu.add(mntmNewMenuItem_3);
+		JMenuItem menuInstitucionA = new JMenuItem("Institucion");
+		menuAlta.add(menuInstitucionA);
 		
-		JMenu mnNewMenu_4 = new JMenu("Registrar");
-		menuBar.add(mnNewMenu_4);
+		JMenu menuRegistrar = new JMenu("Registrar");
+		menuPrincipal.add(menuRegistrar);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Inscripcion a clase");
-		mnNewMenu_4.add(mntmNewMenuItem_4);
+		JMenuItem menuInscripcion = new JMenuItem("Inscripcion a clase");
+		menuRegistrar.add(menuInscripcion);
 		
-		JMenu mnNewMenu_2 = new JMenu("Modificar");
-		menuBar.add(mnNewMenu_2);
+		JMenu menuModificar = new JMenu("Modificar");
+		menuPrincipal.add(menuModificar);
 		
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Usuario");
-		mnNewMenu_2.add(mntmNewMenuItem_6);
+		JMenuItem menuUsuarioM = new JMenuItem("Usuario");
+		menuModificar.add(menuUsuarioM);
 		
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Actividad");
-		mnNewMenu_2.add(mntmNewMenuItem_5);
+		JMenuItem menuActividadM = new JMenuItem("Actividad");
+		menuModificar.add(menuActividadM);
 		
-		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Institucion");
-		mnNewMenu_2.add(mntmNewMenuItem_7);
+		JMenuItem menuInstitucionM = new JMenuItem("Institucion");
+		menuModificar.add(menuInstitucionM);
 		
-		JMenu mnNewMenu_3 = new JMenu("Ranking");
-		menuBar.add(mnNewMenu_3);
+		JMenu menuRanking = new JMenu("Ranking");
+		menuPrincipal.add(menuRanking);
 		
-		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Clases");
-		mnNewMenu_3.add(mntmNewMenuItem_8);
+		JMenuItem menuClasesR = new JMenuItem("Clases");
+		menuRanking.add(menuClasesR);
 		
-		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Actividades");
-		mnNewMenu_3.add(mntmNewMenuItem_9);
+		JMenuItem menuActividadesR = new JMenuItem("Actividades");
+		menuRanking.add(menuActividadesR);
 		
-		JMenu mnNewMenu_1 = new JMenu("Consultar");
-		menuBar.add(mnNewMenu_1);
+		JMenu menuConsultar = new JMenu("Consultar");
+		menuPrincipal.add(menuConsultar);
 		
-		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Usuario");
-		mnNewMenu_1.add(mntmNewMenuItem_10);
+		JMenuItem menuUsuarioC = new JMenuItem("Usuario");
+		menuConsultar.add(menuUsuarioC);
 		
-		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Actividad");
-		mnNewMenu_1.add(mntmNewMenuItem_11);
+		JMenuItem menuActividadC = new JMenuItem("Actividad");
+		menuConsultar.add(menuActividadC);
 		
-		JMenuItem mntmNewMenuItem_12 = new JMenuItem("Clase");
-		mnNewMenu_1.add(mntmNewMenuItem_12);
+		JMenuItem menuClaseC = new JMenuItem("Clase");
+		menuConsultar.add(menuClaseC);
+		
 	}
 }

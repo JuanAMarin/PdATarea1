@@ -1,5 +1,4 @@
 package interfaces;
-
 import logica.Caltausuario;
 
 public class Fabrica {
