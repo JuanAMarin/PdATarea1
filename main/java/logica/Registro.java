@@ -38,3 +38,15 @@ public class Registro {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+

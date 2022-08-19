@@ -14,6 +14,6 @@ public class ManejadorUsuarios {
     }
 	
 	public void agregarUsuario(Usuario usu) {
-		usuarios.putIfAbsent(usu.nickname, usu);
+		usuarios.putIfAbsent(usu.nickname + usu.email, usu);
 	}
 }

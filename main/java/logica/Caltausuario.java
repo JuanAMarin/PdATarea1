@@ -2,6 +2,7 @@ package logica;
 import exceptions.UsuarioRepetidoException;
 import exceptions.EmailRepetidoException;
 import exceptions.ErrorFechaException;
+import exceptions.NicknameRepetidoException;
 import interfaces.ICaltausuario;
 
 import java.util.Date;
@@ -17,17 +18,18 @@ public class Caltausuario implements ICaltausuario{
 	private boolean profe;
 	
 	@SuppressWarnings("deprecation")
-	public void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac) throws UsuarioRepetidoException, EmailRepetidoException, ErrorFechaException{
+	public void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac) throws UsuarioRepetidoException, NicknameRepetidoException, EmailRepetidoException, ErrorFechaException{
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		if(musus.usuarios.containsKey(nickname))
-			throw new UsuarioRepetidoException("El nickname " + nickname + " ya ha sido ingresado");
+		if(musus.usuarios.containsKey(nickname + email))
+			throw new UsuarioRepetidoException("El nickname " + nickname + " y el email " + email + " ya ha sido ingresado");
 		Iterator<Map.Entry<String, Usuario>> itr = musus.usuarios.entrySet().iterator();
         while(itr.hasNext()) {
         	Map.Entry<String, Usuario> entry = itr.next();
-        	if(email == entry.getValue().email)
+        	if(nickname == entry.getValue().nickname)
+        		throw new NicknameRepetidoException("El nickname " + nickname + " ya ha sido ingresado");
+        	else if(email == entry.getValue().email)
         		throw new EmailRepetidoException("El email " + email + " ya ha sido ingresado");
-        }	
-        
+        }
         Date century = new Date();
         century.setYear(century.getYear()-100); //Se puede cambiar valor de resta para limite de edad
         
