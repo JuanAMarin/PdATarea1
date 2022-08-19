@@ -1,23 +1,23 @@
 package logica;
-import java.time.LocalDate;
 import exceptions.UsuarioRepetidoException;
 import exceptions.EmailRepetidoException;
 import exceptions.ErrorFechaException;
 import interfaces.ICaltausuario;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
 public class Caltausuario implements ICaltausuario{
 
 	protected String nickname, nombre, apellido, email;
-	protected LocalDate fechaNac;
+	protected Date fechaNac;
 	private String descripcion, biografia, sitioweb;
 	private InstitucionDep institucion;
 	private boolean profe;
 	
-	public void datosUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNac) throws UsuarioRepetidoException, EmailRepetidoException, ErrorFechaException{
+	@SuppressWarnings("deprecation")
+	public void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac) throws UsuarioRepetidoException, EmailRepetidoException, ErrorFechaException{
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
 		if(musus.usuarios.containsKey(nickname))
 			throw new UsuarioRepetidoException("El nickname " + nickname + " ya ha sido ingresado");
@@ -26,36 +26,19 @@ public class Caltausuario implements ICaltausuario{
         	Map.Entry<String, Usuario> entry = itr.next();
         	if(email == entry.getValue().email)
         		throw new EmailRepetidoException("El email " + email + " ya ha sido ingresado");
-    		int dia = (int)fechaNac.getDayOfMonth();
-    		int mes = (int)fechaNac.getMonthValue();
-    		int anio = (int)fechaNac.getYear();
-    		Calendar cal= Calendar.getInstance();
-    		int year= cal.get(Calendar.YEAR);
-    		if(anio>year || anio<year-100)
-    			throw new ErrorFechaException("*Fecha inadecuada");
-			if(mes==1 || mes==3 || mes==5 || mes==7 || mes==8 || mes==10 || mes==12)
-				if(dia>31 ||dia<1)
-					throw new ErrorFechaException("*Fecha inadecuada");
-			else if(mes==4 || mes==6 || mes==9 || mes==11) {
-				if(anio%400==0 || (anio%4==0 && anio%100!=0))
-					if(mes == 2)
-						if(dia>29 ||dia<1)
-							throw new ErrorFechaException("*Fecha inadecuada");
-				else {
-					if(mes == 2)
-						if(dia>28 ||dia<1)
-							throw new ErrorFechaException("*Fecha inadecuada");
-					else
-						if(dia>30 ||dia<1)
-							throw new ErrorFechaException("*Fecha inadecuada");
-				}
-			}
-    		this.nickname = nickname;
-    		this.nombre = nombre;
-    		this.apellido = apellido;
-    		this.email = email;
-    		this.fechaNac = fechaNac;
-        }
+        }	
+        
+        Date century = new Date();
+        century.setYear(century.getYear()-100); //Se puede cambiar valor de resta para limite de edad
+        
+        if(fechaNac.after(new Date()) || fechaNac.before(century))
+    		throw new ErrorFechaException("La fecha es incorrecta");
+        
+		this.nickname = nickname;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.fechaNac = fechaNac;
 	}
 	
 	

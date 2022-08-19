@@ -2,6 +2,8 @@ package presentacion;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Label;
+
 import javax.swing.JTextField;
 
 import exceptions.EmailRepetidoException;
@@ -16,13 +18,28 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.*;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class altausuario extends JInternalFrame {
 	
@@ -42,11 +59,40 @@ public class altausuario extends JInternalFrame {
 	private JRadioButton rdbtnSocio;
 	private JButton btnCancelar;
 	private JButton btnAceptar;
+	private JDateChooser dateFechaNac;
 
 	/**
 	 * Create the frame.
 	 */
+	private void formClose(){
+		textNickname.setText("");
+		textNombre.setText("");
+		textApellido.setText("");
+		textEmail.setText("");
+		textDescripcion.setText("");
+		textBiografia.setText("");
+		textSitioWeb.setText("");
+		rdbtnProfesor.setSelected(false);
+		rdbtnSocio.setSelected(false);
+		dateFechaNac.setCalendar(null);
+	}
+	
+	private void changeTextFormat(JLabel l, Color c){
+		/*
+		 l - Label a cambiar el color
+		 c - Color de fuente
+		*/
+		
+		l.setForeground(c);
+	}
+	
 	public altausuario(ICaltausuario ICaltau) {
+		addInternalFrameListener(new InternalFrameAdapter() {
+			@Override
+			public void internalFrameClosing(InternalFrameEvent e) {
+				formClose();
+			}
+		});
 		setClosable(true);
 		
 		setTitle("Alta de Usuario");
@@ -55,6 +101,21 @@ public class altausuario extends JInternalFrame {
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
 		
+		JLabel lblErrorFecha = new JLabel("*Fecha Incorrecta");
+		lblErrorFecha.setForeground(Color.RED);
+		lblErrorFecha.setBounds(236, 167, 170, 13);
+		getContentPane().add(lblErrorFecha);
+		
+		dateFechaNac = new JDateChooser();
+		dateFechaNac.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				lblErrorFecha.setVisible(false);
+			}
+		});
+		dateFechaNac.setBounds(236, 145, 170, 19);
+		getContentPane().add(dateFechaNac);
+		lblErrorFecha.setVisible(false);
+				
 		JLabel lblMensaje = new JLabel("Complete los campos a continuación:");
 		lblMensaje.setToolTipText("");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -82,6 +143,12 @@ public class altausuario extends JInternalFrame {
 		getContentPane().add(lblFechaNaci);
 		
 		textNickname = new JTextField();
+		textNickname.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				changeTextFormat(lblNickname, Color.BLACK);
+			}
+		});
 		textNickname.setBounds(236, 47, 170, 20);
 		getContentPane().add(textNickname);
 		textNickname.setColumns(10);
@@ -97,21 +164,15 @@ public class altausuario extends JInternalFrame {
 		textApellido.setColumns(10);
 		
 		textEmail = new JTextField();
+		textEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				changeTextFormat(lblEmail, Color.BLACK);
+			}
+		});
 		textEmail.setBounds(236, 119, 170, 20);
 		getContentPane().add(textEmail);
 		textEmail.setColumns(10);
-		
-		JSpinner spinnerMes = new JSpinner();
-		spinnerMes.setBounds(297, 143, 46, 20);
-		getContentPane().add(spinnerMes);
-		
-		JSpinner spinnerAño = new JSpinner();
-		spinnerAño.setBounds(360, 143, 46, 20);
-		getContentPane().add(spinnerAño);
-		
-		JSpinner spinnerDia = new JSpinner();
-		spinnerDia.setBounds(236, 143, 46, 20);
-		getContentPane().add(spinnerDia);
 		
 		rdbtnProfesor = new JRadioButton("Profesor");
 		rdbtnProfesor.addActionListener(new ActionListener() {
@@ -182,18 +243,11 @@ public class altausuario extends JInternalFrame {
 		comboBoxInsti.setEnabled(false);
 		textDescripcion.setEnabled(false);
 		textBiografia.setEnabled(false);
-		textSitioWeb.setEnabled(false);
-		
+		textSitioWeb.setEnabled(false);		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				textNickname.setText("");
-				textNombre.setText("");
-				textApellido.setText("");
-				textEmail.setText("");
-				textDescripcion.setText("");
-				textBiografia.setText("");
-				textSitioWeb.setText("");
+				formClose();
 				setVisible(false);
 			}
 		});
@@ -212,7 +266,7 @@ public class altausuario extends JInternalFrame {
 				String nombre=textNombre.getText();
 				String apellido=textApellido.getText();
 				String email=textEmail.getText();
-				LocalDate fecha = LocalDate.of((int)spinnerDia.getValue(),(int)spinnerMes.getValue(),(int)spinnerAño.getValue());
+				Date fecha = dateFechaNac.getDate();
 				try {
 					ICau.datosUsuario(nickname, nombre, apellido, email, fecha);
 					if(rdbtnProfesor.isSelected()){
@@ -225,19 +279,20 @@ public class altausuario extends JInternalFrame {
 						ICau.datosProfesor(descripcion, biografia, sitioweb, institucion, profe);
 					}
 					ICau.altausuario();
-				} catch (UsuarioRepetidoException | EmailRepetidoException | ErrorFechaException e1) {
-					e1.printStackTrace();
+					formClose();
+				} catch (UsuarioRepetidoException e1) {
+					changeTextFormat(lblNickname, Color.RED);
+				} catch (ErrorFechaException e2) {
+					lblErrorFecha.setVisible(true);
+				} catch (EmailRepetidoException e3) {
+					changeTextFormat(lblEmail, Color.RED);
 				}
 			}
+			
 		});
 		btnAceptar.setBounds(297, 376, 98, 23);
 		getContentPane().add(btnAceptar);
 		
-		JLabel lblErrorFecha = new JLabel("*Fecha Incorrecta");
-		lblErrorFecha.setForeground(Color.RED);
-		lblErrorFecha.setBounds(236, 167, 170, 13);
-		getContentPane().add(lblErrorFecha);
-		lblErrorFecha.setVisible(false);
 		
 	}
 }

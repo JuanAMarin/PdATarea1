@@ -1,11 +1,12 @@
 package logica;
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public class Profesor extends Usuario{
 	private String descripcion, biografia, sitioweb;
 	private InstitucionDep institucion;
 
-	public Profesor(String nickname, String nombre, String apellido, String email, LocalDate fechaNac, String descripcion, String biografia, String sitioweb, InstitucionDep institucion) {
+	public Profesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, InstitucionDep institucion) {
 		super(nickname, nombre, apellido, email, fechaNac);
 		this.descripcion = descripcion;
 		this.biografia = biografia;
