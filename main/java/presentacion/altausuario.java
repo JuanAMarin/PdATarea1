@@ -1,47 +1,35 @@
 package presentacion;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Label;
-
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+
+import com.toedter.calendar.JDateChooser;
 
 import exceptions.EmailRepetidoException;
 import exceptions.ErrorFechaException;
 import exceptions.NicknameRepetidoException;
 import exceptions.UsuarioRepetidoException;
-import interfaces.*;
+import interfaces.ICaltausuario;
 import logica.InstitucionDep;
 import logica.ManejadorInstituciones;
-import javax.swing.JSpinner;
-import javax.swing.JRadioButton;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.time.*;
-import java.util.Date;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import javax.swing.JTextPane;
-import javax.swing.border.LineBorder;
-
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JCheckBox;
 
 public class altausuario extends JInternalFrame {
 	
@@ -62,6 +50,9 @@ public class altausuario extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnAceptar;
 	private JDateChooser dateFechaNac;
+	private JLabel lblErrorFecha;
+	private JLabel lblErrorEmail;
+	private JLabel lblErrorNickname;
 
 	/**
 	 * Create the frame.
@@ -96,6 +87,12 @@ public class altausuario extends JInternalFrame {
 		}
 	}
 	
+	public boolean verificarEmail(String email) {
+		Pattern patron = Pattern.compile("^[A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-])*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+		Matcher mat = patron.matcher(email);
+		return mat.find();
+	}
+	
 	public void habilitarAceptar() {
 		if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
 			&& !textEmail.getText().isEmpty() && dateFechaNac.getDate()!=null && !textDescripcion.getText().isEmpty() 
@@ -120,18 +117,31 @@ public class altausuario extends JInternalFrame {
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
 		
-		JLabel lblErrorFecha = new JLabel("*Fecha Incorrecta");
+		lblErrorFecha = new JLabel("*Fecha Incorrecta");
 		lblErrorFecha.setForeground(Color.RED);
-		lblErrorFecha.setBounds(412, 121, 170, 13);
+		lblErrorFecha.setBounds(405, 121, 170, 13);
 		getContentPane().add(lblErrorFecha);
+		
+		lblErrorNickname = new JLabel("*Nickname en uso");
+		lblErrorNickname.setHorizontalAlignment(SwingConstants.LEFT);
+		lblErrorNickname.setForeground(Color.RED);
+		lblErrorNickname.setBounds(405, 50, 170, 13);
+		getContentPane().add(lblErrorNickname);
+		
+		lblErrorEmail = new JLabel("*Email incorrecto");
+		lblErrorEmail.setForeground(Color.RED);
+		lblErrorEmail.setBounds(405, 146, 170, 13);
+		getContentPane().add(lblErrorEmail);
 		
 		dateFechaNac = new JDateChooser();
 		dateFechaNac.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				lblErrorFecha.setVisible(false);
+				habilitarAceptar();
+				habilitarPofSoc();
 			}
 		});
-		dateFechaNac.setBounds(236, 121, 170, 19);
+		dateFechaNac.setBounds(225, 121, 170, 19);
 		getContentPane().add(dateFechaNac);
 		lblErrorFecha.setVisible(false);
 				
@@ -144,6 +154,7 @@ public class altausuario extends JInternalFrame {
 		JLabel lblNickname = new JLabel("NICKNAME");
 		lblNickname.setBounds(43, 49, 139, 14);
 		getContentPane().add(lblNickname);
+		lblErrorNickname.setVisible(false);
 		
 		JLabel lblNombre = new JLabel("NOMBRE");
 		lblNombre.setBounds(43, 73, 139, 14);
@@ -156,12 +167,19 @@ public class altausuario extends JInternalFrame {
 		JLabel lblEmail = new JLabel("EMAIL");
 		lblEmail.setBounds(43, 145, 99, 14);
 		getContentPane().add(lblEmail);
+		lblErrorEmail.setVisible(false);
 		
 		JLabel lblFechaNaci = new JLabel("FECHA DE NACIMIENTO");
 		lblFechaNaci.setBounds(43, 121, 183, 14);
 		getContentPane().add(lblFechaNaci);
 		
 		textNickname = new JTextField();
+		textNickname.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				lblErrorNickname.setVisible(false);
+			}
+		});
+		
 		textNickname.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -170,7 +188,7 @@ public class altausuario extends JInternalFrame {
 				habilitarPofSoc();
 			}
 		});
-		textNickname.setBounds(236, 47, 170, 20);
+		textNickname.setBounds(225, 47, 170, 20);
 		getContentPane().add(textNickname);
 		textNickname.setColumns(10);
 		
@@ -182,7 +200,7 @@ public class altausuario extends JInternalFrame {
 				habilitarPofSoc();
 			}
 		});
-		textNombre.setBounds(236, 71, 170, 20);
+		textNombre.setBounds(225, 71, 170, 20);
 		getContentPane().add(textNombre);
 		textNombre.setColumns(10);
 		
@@ -194,20 +212,38 @@ public class altausuario extends JInternalFrame {
 				habilitarPofSoc();
 			}
 		});
-		textApellido.setBounds(236, 95, 170, 20);
+		textApellido.setBounds(225, 95, 170, 20);
 		getContentPane().add(textApellido);
 		textApellido.setColumns(10);
 		
 		textEmail = new JTextField();
+		textEmail.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				lblErrorEmail.setVisible(false);
+			}
+		});
 		textEmail.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				changeTextFormat(lblEmail, Color.BLACK);
-				habilitarAceptar();
-				habilitarPofSoc();
+				if(verificarEmail(textEmail.getText())) {
+					changeTextFormat(lblEmail, Color.BLACK);
+					habilitarAceptar();
+					habilitarPofSoc();
+					lblErrorEmail.setVisible(false);
+					changeTextFormat(lblEmail, Color.BLACK);
+				}else {
+					changeTextFormat(lblEmail, Color.RED);
+					lblErrorEmail.setVisible(true);
+				}
+				if(textEmail.getText().isEmpty()) {
+					lblErrorEmail.setVisible(false);
+					changeTextFormat(lblEmail, Color.BLACK);
+					habilitarAceptar();
+					habilitarPofSoc();
+				}
 			}
 		});
-		textEmail.setBounds(236, 146, 170, 20);
+		textEmail.setBounds(225, 143, 170, 20);
 		getContentPane().add(textEmail);
 		textEmail.setColumns(10);
 		
@@ -274,7 +310,7 @@ public class altausuario extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textDescripcion.setBounds(236, 220, 170, 20);
+		textDescripcion.setBounds(225, 220, 170, 20);
 		getContentPane().add(textDescripcion);
 		textDescripcion.setColumns(10);
 		
@@ -285,7 +321,7 @@ public class altausuario extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textBiografia.setBounds(236, 245, 170, 20);
+		textBiografia.setBounds(225, 245, 170, 20);
 		getContentPane().add(textBiografia);
 		textBiografia.setColumns(10);
 		
@@ -296,7 +332,7 @@ public class altausuario extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textSitioWeb.setBounds(236, 269, 170, 20);
+		textSitioWeb.setBounds(225, 269, 170, 20);
 		getContentPane().add(textSitioWeb);
 		textSitioWeb.setColumns(10);
 		
@@ -307,7 +343,7 @@ public class altausuario extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		cboInsti.setBounds(236, 291, 170, 22);
+		cboInsti.setBounds(225, 291, 170, 22);
 		getContentPane().add(cboInsti);
 		
 		JLabel lblInstitucion = new JLabel("INSTITUCIÓN");
@@ -343,15 +379,15 @@ public class altausuario extends JInternalFrame {
 				String email=textEmail.getText();
 				Date fecha = dateFechaNac.getDate();
 				try {
-					ICau.datosUsuario(nickname, nombre, apellido, email, fecha);
+					ICau.datosUsuario(nickname.toLowerCase(), nombre.toLowerCase(), apellido.toLowerCase(), email.toLowerCase(), fecha);
 					if(rdbtnProfesor.isSelected()){
 						String descripcion=textDescripcion.getText();
 						String biografia=textBiografia.getText();
 						String sitioweb=textSitioWeb.getText();
 						insti=(String)cboInsti.getSelectedItem();
-						institucion=mInst.buscarInstitucion(insti);
+						institucion=mInst.buscarInstitucion(insti.toLowerCase());
 						profe=true;
-						ICau.datosProfesor(descripcion, biografia, sitioweb, institucion, profe);
+						ICau.datosProfesor(descripcion.toLowerCase(), biografia.toLowerCase(), sitioweb.toLowerCase(), institucion, profe);
 					}
 					ICau.altausuario();
 					formClose();
@@ -359,17 +395,20 @@ public class altausuario extends JInternalFrame {
 					changeTextFormat(lblNickname, Color.RED);
 					changeTextFormat(lblEmail, Color.RED);
 				} catch (ErrorFechaException e2) {
+					changeTextFormat(lblFechaNaci, Color.RED);
 					lblErrorFecha.setVisible(true);
 				} catch (EmailRepetidoException e3) {
 					changeTextFormat(lblEmail, Color.RED);
 				}catch (NicknameRepetidoException e4) {
 					changeTextFormat(lblNickname, Color.RED);
+					lblErrorNickname.setVisible(true);
 				}
 			}
 			
 		});
 		btnAceptar.setBounds(297, 376, 98, 23);
 		getContentPane().add(btnAceptar);
+		
 		
 		
 	}
