@@ -1,4 +1,5 @@
 package logica;
+
 import java.util.*;
 
 public class ManejadorUsuarios {
@@ -13,12 +14,11 @@ public class ManejadorUsuarios {
         return instancia;
     }
 	
-	public void agregarUsuario(Usuario usu) {
-		usuarios.putIfAbsent(usu.nickname + usu.email, usu);
+	public Usuario buscarInstitucion(String nombre) {
+		return usuarios.get(nombre);
 	}
 	
-	public Usuario buscarUsuario(String key) {
-		Usuario usu = usuarios.get(key);
-		return usu;
+	public void agregarUsuario(Usuario usu) {
+		usuarios.putIfAbsent(usu.nickname, usu);
 	}
 }

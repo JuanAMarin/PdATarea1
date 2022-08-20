@@ -13,7 +13,9 @@ public class Principal {
 
 	private JFrame frmServidorCentral;
 	private ICaltausuario ICau;
+	private ICconsultaUsuario ICcu;
 	private altausuario AltaUsuario;
+	private ConsultaUsuario consultaUsuario;
 
 	/**
 	 * Launch the application.
@@ -39,6 +41,7 @@ public class Principal {
 		
 		Fabrica fabrica = Fabrica.getInstancia();
 		ICau=fabrica.getICaltausuario();
+		ICcu=fabrica.getICconsultaUsuario();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -60,6 +63,12 @@ public class Principal {
 		frmServidorCentral.setBounds(100, 100, 538, 496);
 		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmServidorCentral.getContentPane().setLayout(null);
+		consultaUsuario=new ConsultaUsuario(ICcu);
+		consultaUsuario.setSize(524, 440);
+		consultaUsuario.setLocation(0, 20);
+		
+		consultaUsuario.setVisible(false);
+		frmServidorCentral.getContentPane().add(consultaUsuario);
 		
 		JMenuBar menuPrincipal = new JMenuBar();
 		menuPrincipal.setBounds(0, 0, 524, 22);
@@ -117,6 +126,11 @@ public class Principal {
 		menuPrincipal.add(menuConsultar);
 		
 		JMenuItem menuUsuarioC = new JMenuItem("Usuario");
+		menuUsuarioC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultaUsuario.setVisible(true);
+			}
+		});
 		menuConsultar.add(menuUsuarioC);
 		
 		JMenuItem menuActividadC = new JMenuItem("Actividad");

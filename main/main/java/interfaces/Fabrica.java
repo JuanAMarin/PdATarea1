@@ -1,6 +1,6 @@
 package interfaces;
+
 import logica.Caltausuario;
-import logica.CconsultaUsuario;
 
 public class Fabrica {
 	
@@ -15,9 +15,5 @@ public class Fabrica {
 	
 	public ICaltausuario getICaltausuario() {
         return new Caltausuario();
-    }
-	
-	public ICconsultaUsuario getICconsultaUsuario() {
-        return new CconsultaUsuario();
     }
 }
