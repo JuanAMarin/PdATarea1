@@ -25,9 +25,9 @@ public class Caltausuario implements ICaltausuario{
 		Iterator<Map.Entry<String, Usuario>> itr = musus.usuarios.entrySet().iterator();
         while(itr.hasNext()) {
         	Map.Entry<String, Usuario> entry = itr.next();
-        	if(nickname == entry.getValue().nickname)
+        	if(nickname.equalsIgnoreCase(entry.getValue().getNickname()))
         		throw new NicknameRepetidoException("El nickname " + nickname + " ya ha sido ingresado");
-        	else if(email == entry.getValue().email)
+        	else if(email.equalsIgnoreCase(entry.getValue().getEmail()))
         		throw new EmailRepetidoException("El email " + email + " ya ha sido ingresado");
         }
         Date century = new Date();
