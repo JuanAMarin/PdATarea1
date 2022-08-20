@@ -50,6 +50,7 @@ public class altausuario extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnAceptar;
 	private JDateChooser dateFechaNac;
+	private JLabel lblUsuarioAñadido;
 	private JLabel lblErrorFecha;
 	private JLabel lblErrorEmail;
 	private JLabel lblErrorNickname;
@@ -68,6 +69,7 @@ public class altausuario extends JInternalFrame {
 		rdbtnProfesor.setSelected(false);
 		rdbtnSocio.setSelected(false);
 		dateFechaNac.setCalendar(null);
+		lblUsuarioAñadido.setVisible(true);
 	}
 	
 	private void changeTextFormat(JLabel l, Color c){
@@ -78,12 +80,14 @@ public class altausuario extends JInternalFrame {
 	
 	public void habilitarPofSoc() {
 		if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
-			&& !textEmail.getText().isEmpty() && dateFechaNac.getDate()!=null) {
+			&& !textEmail.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty()) {
 			rdbtnProfesor.setEnabled(true);
 			rdbtnSocio.setEnabled(true);
 		}else {
 			rdbtnProfesor.setEnabled(false);
 			rdbtnSocio.setEnabled(false);
+			rdbtnProfesor.setSelected(false);
+			rdbtnSocio.setSelected(false);
 		}
 	}
 	
@@ -95,11 +99,12 @@ public class altausuario extends JInternalFrame {
 	
 	public void habilitarAceptar() {
 		if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
-			&& !textEmail.getText().isEmpty() && dateFechaNac.getDate()!=null && !textDescripcion.getText().isEmpty() 
-			&& !textBiografia.getText().isEmpty() && !textSitioWeb.getText().isEmpty() && cboInsti.getSelectedItem()!=null)
-					btnAceptar.setEnabled(true);
+			&& !textEmail.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty() 
+			&& (rdbtnSocio.isSelected() || (rdbtnProfesor.isSelected() && !textDescripcion.getText().isEmpty() 
+			&& !textBiografia.getText().isEmpty() && !textSitioWeb.getText().isEmpty() && cboInsti.getSelectedItem()!=null)))
+				btnAceptar.setEnabled(true);
 		else
-			btnAceptar.setEnabled(false);
+				btnAceptar.setEnabled(false);
 	}
 	
 	public altausuario(ICaltausuario ICaltau) {
@@ -134,11 +139,18 @@ public class altausuario extends JInternalFrame {
 		getContentPane().add(lblErrorEmail);
 		
 		dateFechaNac = new JDateChooser();
+		
+		dateFechaNac.getDateEditor().addPropertyChangeListener(
+			    new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			        	habilitarAceptar();
+						habilitarPofSoc();
+			        }
+			    });
 		dateFechaNac.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				lblErrorFecha.setVisible(false);
-				habilitarAceptar();
-				habilitarPofSoc();
 			}
 		});
 		dateFechaNac.setBounds(225, 121, 170, 19);
@@ -174,16 +186,11 @@ public class altausuario extends JInternalFrame {
 		getContentPane().add(lblFechaNaci);
 		
 		textNickname = new JTextField();
-		textNickname.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				lblErrorNickname.setVisible(false);
-			}
-		});
-		
 		textNickname.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				changeTextFormat(lblNickname, Color.BLACK);
+				lblErrorNickname.setVisible(false);
 				habilitarAceptar();
 				habilitarPofSoc();
 			}
@@ -284,7 +291,7 @@ public class altausuario extends JInternalFrame {
 				textSitioWeb.setText("");
 				textSitioWeb.setEnabled(false);
 				if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
-						&& !textEmail.getText().isEmpty() && dateFechaNac.getDate()!=null)
+						&& !textEmail.getText().isEmpty() && !dateFechaNac.getDateFormatString().isEmpty())
 					btnAceptar.setEnabled(true);
 			}
 		});
@@ -361,8 +368,15 @@ public class altausuario extends JInternalFrame {
 				setVisible(false);
 			}
 		});
+		
 		btnCancelar.setBounds(405, 376, 98, 23);
 		getContentPane().add(btnCancelar);
+		
+		lblUsuarioAñadido = new JLabel("Usuario añadido exitosamente!!!");
+		lblUsuarioAñadido.setForeground(new Color(50, 205, 50));
+		lblUsuarioAñadido.setBounds(95, 381, 215, 13);
+		getContentPane().add(lblUsuarioAñadido);
+		lblUsuarioAñadido.setVisible(false);
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setEnabled(false);
@@ -390,15 +404,26 @@ public class altausuario extends JInternalFrame {
 						ICau.datosProfesor(descripcion.toLowerCase(), biografia.toLowerCase(), sitioweb.toLowerCase(), institucion, profe);
 					}
 					ICau.altausuario();
+					lblUsuarioAñadido.setVisible(true);
+					int delay = 3000; //milliseconds
+					ActionListener taskPerformer = new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+					    	lblUsuarioAñadido.setVisible(false);
+					    }
+					};
+					new javax.swing.Timer(delay, taskPerformer).start();
 					formClose();
 				} catch (UsuarioRepetidoException e1) {
 					changeTextFormat(lblNickname, Color.RED);
 					changeTextFormat(lblEmail, Color.RED);
+					lblErrorEmail.setVisible(true);
+					lblErrorNickname.setVisible(true);
 				} catch (ErrorFechaException e2) {
 					changeTextFormat(lblFechaNaci, Color.RED);
 					lblErrorFecha.setVisible(true);
 				} catch (EmailRepetidoException e3) {
 					changeTextFormat(lblEmail, Color.RED);
+					lblErrorEmail.setVisible(true);
 				}catch (NicknameRepetidoException e4) {
 					changeTextFormat(lblNickname, Color.RED);
 					lblErrorNickname.setVisible(true);
@@ -408,8 +433,5 @@ public class altausuario extends JInternalFrame {
 		});
 		btnAceptar.setBounds(297, 376, 98, 23);
 		getContentPane().add(btnAceptar);
-		
-		
-		
 	}
 }
