@@ -54,6 +54,7 @@ public class altausuario extends JInternalFrame {
 	private JLabel lblErrorFecha;
 	private JLabel lblErrorEmail;
 	private JLabel lblErrorNickname;
+	private JLabel lblEmailEnUso;
 
 	/**
 	 * Create the frame.
@@ -226,7 +227,7 @@ public class altausuario extends JInternalFrame {
 		textEmail = new JTextField();
 		textEmail.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				lblErrorEmail.setVisible(false);
+				lblEmailEnUso.setVisible(false);
 			}
 		});
 		textEmail.addKeyListener(new KeyAdapter() {
@@ -237,13 +238,16 @@ public class altausuario extends JInternalFrame {
 					habilitarAceptar();
 					habilitarPofSoc();
 					lblErrorEmail.setVisible(false);
+					lblEmailEnUso.setVisible(false);
 					changeTextFormat(lblEmail, Color.BLACK);
 				}else {
 					changeTextFormat(lblEmail, Color.RED);
 					lblErrorEmail.setVisible(true);
+					lblEmailEnUso.setVisible(false);
 				}
 				if(textEmail.getText().isEmpty()) {
 					lblErrorEmail.setVisible(false);
+					lblEmailEnUso.setVisible(false);
 					changeTextFormat(lblEmail, Color.BLACK);
 					habilitarAceptar();
 					habilitarPofSoc();
@@ -372,6 +376,12 @@ public class altausuario extends JInternalFrame {
 		btnCancelar.setBounds(405, 376, 98, 23);
 		getContentPane().add(btnCancelar);
 		
+		lblEmailEnUso = new JLabel("*Email en uso");
+		lblEmailEnUso.setForeground(Color.RED);
+		lblEmailEnUso.setBounds(405, 146, 170, 13);
+		getContentPane().add(lblEmailEnUso);
+		lblEmailEnUso.setVisible(false);
+		
 		lblUsuarioAñadido = new JLabel("Usuario añadido exitosamente!!!");
 		lblUsuarioAñadido.setForeground(new Color(50, 205, 50));
 		lblUsuarioAñadido.setBounds(95, 381, 215, 13);
@@ -405,7 +415,7 @@ public class altausuario extends JInternalFrame {
 					}
 					ICau.altausuario();
 					lblUsuarioAñadido.setVisible(true);
-					int delay = 3000; //milliseconds
+					int delay = 2000; //milliseconds
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 					    	lblUsuarioAñadido.setVisible(false);
@@ -416,14 +426,14 @@ public class altausuario extends JInternalFrame {
 				} catch (UsuarioRepetidoException e1) {
 					changeTextFormat(lblNickname, Color.RED);
 					changeTextFormat(lblEmail, Color.RED);
-					lblErrorEmail.setVisible(true);
+					lblEmailEnUso.setVisible(true);
 					lblErrorNickname.setVisible(true);
 				} catch (ErrorFechaException e2) {
 					changeTextFormat(lblFechaNaci, Color.RED);
 					lblErrorFecha.setVisible(true);
 				} catch (EmailRepetidoException e3) {
 					changeTextFormat(lblEmail, Color.RED);
-					lblErrorEmail.setVisible(true);
+					lblEmailEnUso.setVisible(true);
 				}catch (NicknameRepetidoException e4) {
 					changeTextFormat(lblNickname, Color.RED);
 					lblErrorNickname.setVisible(true);
