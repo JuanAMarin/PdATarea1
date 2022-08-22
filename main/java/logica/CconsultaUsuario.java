@@ -4,13 +4,13 @@ import java.util.Date;
 
 import interfaces.ICconsultaUsuario;
 
-public class CconsultaUsuario implements ICconsultaUsuario{
+public class Cconsultausuario implements ICconsultaUsuario{
 	
 	private String nickname, email, nombre, apellido, descripcion, biografia, sitioweb, institucion;
 	private Date fechaNac;
 	private boolean profe;
 	
-	public CconsultaUsuario() {
+	public Cconsultausuario() {
 		super();
 	}
 	

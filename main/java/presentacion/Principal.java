@@ -12,14 +12,20 @@ import java.awt.event.ActionEvent;
 public class Principal {
 
 	private JFrame frmServidorCentral;
+	
 	private ICaltausuario ICau;
+	private Altausuario AltaUsuario;
 	private ICconsultaUsuario ICcu;
-	private altausuario AltaUsuario;
-	private ConsultaUsuario consultaUsuario;
+	private Consultausuario consultaUsuario;
 	private ICaltainstitucion ICai;
-	private altainstitucion AltaInstitucion;
+	private Altainstitucion AltaInstitucion;
 	private ICmodinstitucion ICmi;
-	private modinstitucion ModInstitucion;
+	private Modinstitucion ModInstitucion;
+	private ICrankingdeclases ICrc;
+	private Rankingdeclases RankingClases;
+	private ICmodusuario ICmu;
+	private Modusuario ModUsuario;
+
 
 	/**
 	 * Launch the application.
@@ -40,6 +46,15 @@ public class Principal {
 	/**
 	 * Create the application.
 	 */
+	
+	public void limpiarVentanas() {
+		AltaUsuario.setVisible(false);
+		consultaUsuario.setVisible(false);
+		AltaInstitucion.setVisible(false);
+		ModInstitucion.setVisible(false);
+		RankingClases.setVisible(false);
+		ModUsuario.setVisible(false);
+	}
 	public Principal() {
 		initialize();
 		
@@ -48,29 +63,35 @@ public class Principal {
 		ICcu=fabrica.getICconsultaUsuario();
 		ICai=fabrica.getICaltainstitucion();
 		ICmi=fabrica.getICmodinstitucion();
+		ICrc=fabrica.getICrankingdeclases();
+		ICmu=fabrica.getICmodusuario();
 		
 		frmServidorCentral.setResizable(false);
 		
-		AltaUsuario=new altausuario(ICau);
-		
+		AltaUsuario=new Altausuario(ICau);
 		AltaUsuario.setLocation(0,20);
-		
 		AltaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaUsuario);
 		
-		AltaInstitucion=new altainstitucion(ICai);
-		
+		AltaInstitucion=new Altainstitucion(ICai);
 		AltaInstitucion.setLocation(0,20);
-		
 		AltaInstitucion.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaInstitucion);
 		
-		ModInstitucion=new modinstitucion(ICmi);
-		
+		ModInstitucion=new Modinstitucion(ICmi);
 		ModInstitucion.setLocation(0,20);
-		
 		ModInstitucion.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModInstitucion);
+		
+		RankingClases=new Rankingdeclases(ICrc);
+		RankingClases.setLocation(0,20);
+		RankingClases.setVisible(false);
+		frmServidorCentral.getContentPane().add(RankingClases);
+		
+		ModUsuario=new Modusuario(ICmu);
+		ModUsuario.setLocation(0,20);
+		ModUsuario.setVisible(false);
+		frmServidorCentral.getContentPane().add(ModUsuario);
 
 	}
 
@@ -83,7 +104,7 @@ public class Principal {
 		frmServidorCentral.setBounds(100, 100, 538, 496);
 		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmServidorCentral.getContentPane().setLayout(null);
-		consultaUsuario=new ConsultaUsuario(ICcu);
+		consultaUsuario=new Consultausuario(ICcu);
 		consultaUsuario.setSize(524, 440);
 		consultaUsuario.setLocation(0, 20);
 		
@@ -101,6 +122,7 @@ public class Principal {
 		menuUsuarioA.setSelected(true);
 		menuUsuarioA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
 				AltaUsuario.setVisible(true);
 			}
 		});
@@ -116,6 +138,7 @@ public class Principal {
 		menuInstitucionA.setSelected(true);
 		menuInstitucionA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
 				AltaInstitucion.setVisible(true);
 			}
 		});
@@ -131,6 +154,12 @@ public class Principal {
 		menuPrincipal.add(menuModificar);
 		
 		JMenuItem menuUsuarioM = new JMenuItem("Usuario");
+		menuUsuarioM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
+				ModUsuario.setVisible(true);
+			}
+		});
 		menuModificar.add(menuUsuarioM);
 		
 		JMenuItem menuActividadM = new JMenuItem("Actividad");
@@ -141,6 +170,7 @@ public class Principal {
 		menuInstitucionM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ModInstitucion.inicializarComboBox();
+				limpiarVentanas();
 				ModInstitucion.setVisible(true);
 			}
 		});
@@ -150,6 +180,12 @@ public class Principal {
 		menuPrincipal.add(menuRanking);
 		
 		JMenuItem menuClasesR = new JMenuItem("Clases");
+		menuClasesR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
+				RankingClases.setVisible(true);
+			}
+		});
 		menuRanking.add(menuClasesR);
 		
 		JMenuItem menuActividadesR = new JMenuItem("Actividades");
@@ -161,6 +197,7 @@ public class Principal {
 		JMenuItem menuUsuarioC = new JMenuItem("Usuario");
 		menuUsuarioC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
 				consultaUsuario.setVisible(true);
 			}
 		});

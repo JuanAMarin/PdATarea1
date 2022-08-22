@@ -1,8 +1,10 @@
 package interfaces;
 import logica.Caltainstitucion;
 import logica.Caltausuario;
-import logica.CconsultaUsuario;
+import logica.Cconsultausuario;
 import logica.Cmodinstitucion;
+import logica.Cmodusuario;
+import logica.Crankingdeclases;
 
 public class Fabrica {
 	
@@ -20,7 +22,7 @@ public class Fabrica {
     }
 	
 	public ICconsultaUsuario getICconsultaUsuario() {
-        return new CconsultaUsuario();
+        return new Cconsultausuario();
     }
 	
 	public ICaltainstitucion getICaltainstitucion() {
@@ -30,5 +32,13 @@ public class Fabrica {
 	public ICmodinstitucion getICmodinstitucion() {
 		return new Cmodinstitucion();
 	}
+	
+	public ICrankingdeclases getICrankingdeclases() {
+		return new Crankingdeclases();
+	}
+	public ICmodusuario getICmodusuario() {
+		return new Cmodusuario();
+	}
+
 }
 

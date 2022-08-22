@@ -21,4 +21,27 @@ public class ManejadorUsuarios {
 		Usuario usu = usuarios.get(key);
 		return usu;
 	}
+	
+	public Usuario buscarxNick(String nick) {
+		Iterator<Map.Entry<String, Usuario>> itr = usuarios.entrySet().iterator();
+		boolean salir = false;
+		Usuario usu = null;
+        while(itr.hasNext() && salir == false) {
+        	Map.Entry<String, Usuario> entry = itr.next();
+        	if(nick.equals(entry.getValue().getNickname())) {
+        		salir = true;
+        		usu = entry.getValue();
+        	}
+        }
+        return usu;
+	}
+	
+	public ArrayList<String> obtenerUsuarios(){
+		ArrayList<String> retorno = new ArrayList<>();
+		for(Usuario aux: usuarios.values()) {
+			retorno.add(aux.getNombre());
+		}
+		return retorno;
+	}
+
 }

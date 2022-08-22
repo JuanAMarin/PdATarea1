@@ -16,22 +16,18 @@ import logica.InstitucionDep;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-public class modinstitucion extends JInternalFrame {
+public class Modinstitucion extends JInternalFrame {
 	private ICmodinstitucion ICmi;
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldDescripcion;
 	private JTextField textFieldUrl;
 	private JComboBox<String> comboBoxIns;
-	/**
-	 * Launch the application.
-	 */
-
 
 	/**
 	 * Create the frame.
 	 */
 	
-	public modinstitucion(ICmodinstitucion ICmodi) {
+	public Modinstitucion(ICmodinstitucion ICmodi) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
@@ -49,7 +45,7 @@ public class modinstitucion extends JInternalFrame {
 		
 		ICmi = ICmodi;
 		JLabel lblInstitucion = new JLabel("INSTITUCION");
-		lblInstitucion.setBounds(10, 39, 99, 14);
+		lblInstitucion.setBounds(10, 39, 141, 14);
 		getContentPane().add(lblInstitucion);
 		
 		JButton btnAceptar = new JButton("Aceptar");
@@ -66,21 +62,21 @@ public class modinstitucion extends JInternalFrame {
 				modInstitucionVerInfoActionPerformed(e);
 			}
 		});
-		btnVerInfo.setBounds(307, 34, 117, 25);
+		btnVerInfo.setBounds(329, 34, 117, 25);
 		getContentPane().add(btnVerInfo);
 		
 		
 		comboBoxIns = new JComboBox<String>();
-		comboBoxIns.setBounds(99, 35, 190, 22);
+		comboBoxIns.setBounds(129, 35, 190, 22);
 		getContentPane().add(comboBoxIns);
 		
 		textFieldDescripcion = new JTextField();
-		textFieldDescripcion.setBounds(99, 89, 190, 20);
+		textFieldDescripcion.setBounds(129, 90, 190, 20);
 		getContentPane().add(textFieldDescripcion);
 		textFieldDescripcion.setColumns(10);
 		
 		JLabel lblDescripcion = new JLabel("DESCRIPCION");
-		lblDescripcion.setBounds(10, 92, 79, 14);
+		lblDescripcion.setBounds(10, 92, 141, 14);
 		getContentPane().add(lblDescripcion);
 		
 		JLabel lblUrl = new JLabel("URL");
@@ -88,7 +84,7 @@ public class modinstitucion extends JInternalFrame {
 		getContentPane().add(lblUrl);
 		
 		textFieldUrl = new JTextField();
-		textFieldUrl.setBounds(99, 134, 190, 20);
+		textFieldUrl.setBounds(129, 135, 190, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 		

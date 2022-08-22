@@ -20,7 +20,7 @@ import interfaces.ICaltainstitucion;
 
 
 
-public class altainstitucion extends JInternalFrame {
+public class Altainstitucion extends JInternalFrame {
 	private ICaltainstitucion ICai;
 	/**
 	 * 
@@ -45,7 +45,7 @@ public class altainstitucion extends JInternalFrame {
 				btnAceptar.setEnabled(false);
 	}
 	
-	public altainstitucion(ICaltainstitucion ICaltai) {
+	public Altainstitucion(ICaltainstitucion ICaltai) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
@@ -91,7 +91,7 @@ public class altainstitucion extends JInternalFrame {
 		getContentPane().add(lblMensaje);
 		
 		JLabel lblIns = new JLabel("NOMBRE INSTITUCION");
-		lblIns.setBounds(19, 142, 126, 14);
+		lblIns.setBounds(19, 142, 236, 14);
 		getContentPane().add(lblIns);
 		
 		JLabel lblDesc = new JLabel("DESCRIPCION");
@@ -109,7 +109,7 @@ public class altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldNombre.setBounds(175, 139, 170, 20);
+		textFieldNombre.setBounds(196, 140, 170, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
@@ -120,7 +120,7 @@ public class altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldDesc.setBounds(175, 174, 170, 20);
+		textFieldDesc.setBounds(196, 175, 170, 20);
 		getContentPane().add(textFieldDesc);
 		textFieldDesc.setColumns(10);
 		
@@ -131,7 +131,7 @@ public class altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldUrl.setBounds(175, 210, 170, 20);
+		textFieldUrl.setBounds(196, 211, 170, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 	}

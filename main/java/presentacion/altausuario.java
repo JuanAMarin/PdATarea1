@@ -31,7 +31,7 @@ import interfaces.ICaltausuario;
 import logica.InstitucionDep;
 import logica.ManejadorInstituciones;
 
-public class altausuario extends JInternalFrame {
+public class Altausuario extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -70,7 +70,6 @@ public class altausuario extends JInternalFrame {
 		rdbtnProfesor.setSelected(false);
 		rdbtnSocio.setSelected(false);
 		dateFechaNac.setCalendar(null);
-		lblUsuarioAñadido.setVisible(true);
 	}
 	
 	private void changeTextFormat(JLabel l, Color c){
@@ -108,7 +107,7 @@ public class altausuario extends JInternalFrame {
 				btnAceptar.setEnabled(false);
 	}
 	
-	public altausuario(ICaltausuario ICaltau) {
+	public Altausuario(ICaltausuario ICaltau) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {

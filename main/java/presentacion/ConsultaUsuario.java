@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("unused")
-public class ConsultaUsuario extends JInternalFrame {
+public class Consultausuario extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private ICconsultaUsuario ICcu;
@@ -22,7 +22,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaUsuario(ICconsultaUsuario ICcu) {	
+	public Consultausuario(ICconsultaUsuario ICcu) {	
 		setClosable(true);
 		
 		setTitle("Consulta de usuario");
