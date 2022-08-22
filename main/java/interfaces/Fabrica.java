@@ -1,6 +1,8 @@
 package interfaces;
+import logica.Caltainstitucion;
 import logica.Caltausuario;
 import logica.CconsultaUsuario;
+import logica.Cmodinstitucion;
 
 public class Fabrica {
 	
@@ -20,4 +22,13 @@ public class Fabrica {
 	public ICconsultaUsuario getICconsultaUsuario() {
         return new CconsultaUsuario();
     }
+	
+	public ICaltainstitucion getICaltainstitucion() {
+		return new Caltainstitucion();
+	}
+	
+	public ICmodinstitucion getICmodinstitucion() {
+		return new Cmodinstitucion();
+	}
 }
+

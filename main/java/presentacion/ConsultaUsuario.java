@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -19,7 +22,9 @@ public class ConsultaUsuario extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaUsuario(ICconsultaUsuario ICcu) {
+	public ConsultaUsuario(ICconsultaUsuario ICcu) {	
+		setClosable(true);
+		
 		setTitle("Consulta de usuario");
 		this.ICcu = ICcu;
 		

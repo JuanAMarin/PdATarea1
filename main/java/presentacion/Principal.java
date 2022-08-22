@@ -16,6 +16,10 @@ public class Principal {
 	private ICconsultaUsuario ICcu;
 	private altausuario AltaUsuario;
 	private ConsultaUsuario consultaUsuario;
+	private ICaltainstitucion ICai;
+	private altainstitucion AltaInstitucion;
+	private ICmodinstitucion ICmi;
+	private modinstitucion ModInstitucion;
 
 	/**
 	 * Launch the application.
@@ -42,6 +46,8 @@ public class Principal {
 		Fabrica fabrica = Fabrica.getInstancia();
 		ICau=fabrica.getICaltausuario();
 		ICcu=fabrica.getICconsultaUsuario();
+		ICai=fabrica.getICaltainstitucion();
+		ICmi=fabrica.getICmodinstitucion();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -51,6 +57,20 @@ public class Principal {
 		
 		AltaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaUsuario);
+		
+		AltaInstitucion=new altainstitucion(ICai);
+		
+		AltaInstitucion.setLocation(0,20);
+		
+		AltaInstitucion.setVisible(false);
+		frmServidorCentral.getContentPane().add(AltaInstitucion);
+		
+		ModInstitucion=new modinstitucion(ICmi);
+		
+		ModInstitucion.setLocation(0,20);
+		
+		ModInstitucion.setVisible(false);
+		frmServidorCentral.getContentPane().add(ModInstitucion);
 
 	}
 
@@ -93,6 +113,12 @@ public class Principal {
 		menuAlta.add(menuClaseA);
 		
 		JMenuItem menuInstitucionA = new JMenuItem("Institucion");
+		menuInstitucionA.setSelected(true);
+		menuInstitucionA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AltaInstitucion.setVisible(true);
+			}
+		});
 		menuAlta.add(menuInstitucionA);
 		
 		JMenu menuRegistrar = new JMenu("Registrar");
@@ -111,6 +137,13 @@ public class Principal {
 		menuModificar.add(menuActividadM);
 		
 		JMenuItem menuInstitucionM = new JMenuItem("Institucion");
+		menuInstitucionM.setSelected(true);
+		menuInstitucionM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ModInstitucion.inicializarComboBox();
+				ModInstitucion.setVisible(true);
+			}
+		});
 		menuModificar.add(menuInstitucionM);
 		
 		JMenu menuRanking = new JMenu("Ranking");
