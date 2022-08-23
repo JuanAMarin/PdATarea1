@@ -73,8 +73,6 @@ public class Altausuario extends JInternalFrame {
 	}
 	
 	private void changeTextFormat(JLabel l, Color c){
-		//l - Label a cambiar el color
-		//c - Color de fuente
 		l.setForeground(c);
 	}
 	

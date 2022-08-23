@@ -62,8 +62,7 @@ public class Cmodusuario implements ICmodusuario {
 
 	public Usuario obtenerInfo(String nombre) {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		Usuario aux=musus.buscarxNick(nombre);
-		return aux;
+		return musus.buscarxNick(nombre);
 	}
 	
 	public String[] listarInstituciones() {

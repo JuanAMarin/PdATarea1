@@ -2,7 +2,7 @@ package interfaces;
 
 import java.util.Date;
 
-public interface ICconsultaUsuario {
+public interface ICconsultausuario {
 	public abstract void consultaUsuario(String key);
 	public abstract String getNickname(); 
 	public abstract String getEmail(); 

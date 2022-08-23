@@ -1,5 +1,6 @@
 package interfaces;
 import logica.Caltaactividaddeportiva;
+import logica.Caltadictadoclase;
 import logica.Caltainstitucion;
 import logica.Caltausuario;
 import logica.Cconsultausuario;
@@ -22,7 +23,7 @@ public class Fabrica {
         return new Caltausuario();
     }
 	
-	public ICconsultaUsuario getICconsultaUsuario() {
+	public ICconsultausuario getICconsultaUsuario() {
         return new Cconsultausuario();
     }
 	
@@ -44,6 +45,10 @@ public class Fabrica {
 	public ICaltaactividaddeportiva getICaltaactividaddeportiva() {
 		return new Caltaactividaddeportiva();
 	}
-
+	
+	public ICaltadictadoclase getICaltadictadoclase() {
+		return new Caltadictadoclase();
+	}
+	
 }
 

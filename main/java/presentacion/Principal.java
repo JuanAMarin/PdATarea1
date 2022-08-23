@@ -7,6 +7,8 @@ import javax.swing.JMenuItem;
 import interfaces.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.UIManager;
 
 
 public class Principal {
@@ -15,7 +17,7 @@ public class Principal {
 	
 	private ICaltausuario ICau;
 	private Altausuario AltaUsuario;
-	private ICconsultaUsuario ICcu;
+	private ICconsultausuario ICcu;
 	private Consultausuario consultaUsuario;
 	private ICaltainstitucion ICai;
 	private Altainstitucion AltaInstitucion;
@@ -27,6 +29,9 @@ public class Principal {
 	private Modusuario ModUsuario;
 	private ICaltaactividaddeportiva ICaad;
 	private Altaactividaddeportiva AltaActividadDeportiva;
+	private Altadictadoclase AltaDictadoClaseInternalFrame;
+	private ICaltadictadoclase ICac;
+
 
 
 	/**
@@ -69,6 +74,7 @@ public class Principal {
 		ICrc=fabrica.getICrankingdeclases();
 		ICmu=fabrica.getICmodusuario();
 		ICaad=fabrica.getICaltaactividaddeportiva();
+		ICac=fabrica.getICaltadictadoclase();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -101,7 +107,11 @@ public class Principal {
 		AltaActividadDeportiva.setLocation(0,20);
 		AltaActividadDeportiva.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaActividadDeportiva);
-
+		
+		AltaDictadoClaseInternalFrame=new Altadictadoclase(ICac);
+		AltaDictadoClaseInternalFrame.setLocation(0,20);
+		AltaDictadoClaseInternalFrame.setVisible(false);
+		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
 	}
 
 	/**
@@ -114,6 +124,8 @@ public class Principal {
 		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmServidorCentral.getContentPane().setLayout(null);
 		consultaUsuario=new Consultausuario(ICcu);
+		consultaUsuario.setBorder(UIManager.getBorder("OptionPane.border"));
+		consultaUsuario.setBackground(Color.GRAY);
 		consultaUsuario.setSize(524, 440);
 		consultaUsuario.setLocation(0, 20);
 		
@@ -121,6 +133,7 @@ public class Principal {
 		frmServidorCentral.getContentPane().add(consultaUsuario);
 		
 		JMenuBar menuPrincipal = new JMenuBar();
+		menuPrincipal.setForeground(Color.BLACK);
 		menuPrincipal.setBounds(0, 0, 524, 22);
 		frmServidorCentral.getContentPane().add(menuPrincipal);
 		
@@ -148,6 +161,12 @@ public class Principal {
 		menuAlta.add(menuActividadA);
 		
 		JMenuItem menuClaseA = new JMenuItem("Clase");
+		menuClaseA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AltaDictadoClaseInternalFrame.inicializarComboBoxes();
+				AltaDictadoClaseInternalFrame.setVisible(true);
+			}
+		});
 		menuAlta.add(menuClaseA);
 		
 		JMenuItem menuInstitucionA = new JMenuItem("Institucion");

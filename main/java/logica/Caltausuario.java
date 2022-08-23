@@ -17,6 +17,7 @@ public class Caltausuario implements ICaltausuario{
 	private InstitucionDep institucion;
 	private boolean profe;
 	
+	
 	@SuppressWarnings("deprecation")
 	public void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac) throws UsuarioRepetidoException, NicknameRepetidoException, EmailRepetidoException, ErrorFechaException{
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();

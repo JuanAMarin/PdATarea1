@@ -6,15 +6,17 @@ import java.util.Map;
 public class Clase {
 	private String nombre, url;
 	private Date fecha, fechaReg, horaInicio;
+	private Usuario profesor;
 	private Map<Socio,Registro> registros;
 	
-	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Registro registro) {
+	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Usuario profesor) {
 		super();
 		this.nombre = nombre;
 		this.url = url;
 		this.fecha = fecha;
 		this.fechaReg = fechaReg;
 		this.horaInicio = horaInicio;
+		this.profesor = profesor;
 		this.registros = new HashMap<Socio,Registro>();
 	}
 	
@@ -32,6 +34,9 @@ public class Clase {
 	}
 	public Date getHoraInicio() {
 		return horaInicio;
+	}
+	public Usuario getProfesor() {
+		return profesor;
 	}
 	public Map<Socio, Registro> getRegistros() {
 		return registros;
@@ -54,9 +59,7 @@ public class Clase {
 	public void setHoraInicio(Date horaInicio) {
 		this.horaInicio = horaInicio;
 	}
-	
-	
-	
-	
-	
+	private void setProfesor(Usuario profesor) {
+		this.profesor=profesor;
+	}
 }

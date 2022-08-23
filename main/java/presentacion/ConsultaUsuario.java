@@ -2,7 +2,7 @@ package presentacion;
 
 import javax.swing.JInternalFrame;
 
-import interfaces.ICconsultaUsuario;
+import interfaces.ICconsultausuario;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JComboBox;
@@ -17,12 +17,12 @@ import java.awt.event.ActionEvent;
 public class Consultausuario extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
-	private ICconsultaUsuario ICcu;
+	private ICconsultausuario ICcu;
 
 	/**
 	 * Create the frame.
 	 */
-	public Consultausuario(ICconsultaUsuario ICcu) {	
+	public Consultausuario(ICconsultausuario ICcu) {	
 		setClosable(true);
 		
 		setTitle("Consulta de usuario");

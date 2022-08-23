@@ -8,8 +8,8 @@ import logica.Usuario;
 public interface ICmodusuario {
 	public abstract void modProfesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, InstitucionDep institucion);
 	public abstract void modSocio(String nickname, String nombre, String apellido, String email, Date fechaNac);
-	public String[] listarUsuarios();
-	public String[] listarInstituciones();
-	public Usuario obtenerInfo(String nombre);
+	public abstract String[] listarUsuarios();
+	public abstract String[] listarInstituciones();
+	public abstract Usuario obtenerInfo(String nombre);
 }
 

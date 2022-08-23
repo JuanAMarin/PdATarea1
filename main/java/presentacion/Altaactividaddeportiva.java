@@ -103,11 +103,11 @@ public class Altaactividaddeportiva extends JInternalFrame {
 			}
 		});
 		btnAceptar.setEnabled(false);
-		btnAceptar.setBounds(292, 376, 98, 23);
+		btnAceptar.setBounds(298, 376, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(400, 376, 98, 23);
+		btnCancelar.setBounds(404, 376, 98, 23);
 		getContentPane().add(btnCancelar);
 		
 		

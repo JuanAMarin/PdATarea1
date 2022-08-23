@@ -2,9 +2,9 @@ package logica;
 
 import java.util.Date;
 
-import interfaces.ICconsultaUsuario;
+import interfaces.ICconsultausuario;
 
-public class Cconsultausuario implements ICconsultaUsuario{
+public class Cconsultausuario implements ICconsultausuario{
 	
 	private String nickname, email, nombre, apellido, descripcion, biografia, sitioweb, institucion;
 	private Date fechaNac;
