@@ -1,4 +1,5 @@
 package interfaces;
+import logica.Caltaactividaddeportiva;
 import logica.Caltainstitucion;
 import logica.Caltausuario;
 import logica.Cconsultausuario;
@@ -38,6 +39,10 @@ public class Fabrica {
 	}
 	public ICmodusuario getICmodusuario() {
 		return new Cmodusuario();
+	}
+
+	public ICaltaactividaddeportiva getICaltaactividaddeportiva() {
+		return new Caltaactividaddeportiva();
 	}
 
 }

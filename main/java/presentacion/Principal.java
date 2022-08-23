@@ -25,6 +25,8 @@ public class Principal {
 	private Rankingdeclases RankingClases;
 	private ICmodusuario ICmu;
 	private Modusuario ModUsuario;
+	private ICaltaactividaddeportiva ICaad;
+	private Altaactividaddeportiva AltaActividadDeportiva;
 
 
 	/**
@@ -54,6 +56,7 @@ public class Principal {
 		ModInstitucion.setVisible(false);
 		RankingClases.setVisible(false);
 		ModUsuario.setVisible(false);
+		AltaActividadDeportiva.setVisible(false);
 	}
 	public Principal() {
 		initialize();
@@ -65,6 +68,7 @@ public class Principal {
 		ICmi=fabrica.getICmodinstitucion();
 		ICrc=fabrica.getICrankingdeclases();
 		ICmu=fabrica.getICmodusuario();
+		ICaad=fabrica.getICaltaactividaddeportiva();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -92,6 +96,11 @@ public class Principal {
 		ModUsuario.setLocation(0,20);
 		ModUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModUsuario);
+		
+		AltaActividadDeportiva=new Altaactividaddeportiva(ICaad);
+		AltaActividadDeportiva.setLocation(0,20);
+		AltaActividadDeportiva.setVisible(false);
+		frmServidorCentral.getContentPane().add(AltaActividadDeportiva);
 
 	}
 
@@ -129,6 +138,13 @@ public class Principal {
 		menuAlta.add(menuUsuarioA);
 		
 		JMenuItem menuActividadA = new JMenuItem("Actividad");
+		menuActividadA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
+				AltaActividadDeportiva.inicializarComboBox();
+				AltaActividadDeportiva.setVisible(true);
+			}
+		});
 		menuAlta.add(menuActividadA);
 		
 		JMenuItem menuClaseA = new JMenuItem("Clase");
