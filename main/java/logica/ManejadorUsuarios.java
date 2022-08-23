@@ -1,10 +1,16 @@
 package logica;
 import java.util.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import persistencia.Conexion;
+
 public class ManejadorUsuarios {
 	
-	private static ManejadorUsuarios instancia;
-	Map<String,Usuario> usuarios = new HashMap<String,Usuario>();
+	private static ManejadorUsuarios instancia = null;
+	
+	private ManejadorUsuarios(){}
 	
     public static ManejadorUsuarios getInstancia() {
         if (instancia == null) {
@@ -14,34 +20,56 @@ public class ManejadorUsuarios {
     }
 	
 	public void agregarUsuario(Usuario usu) {
-		usuarios.putIfAbsent(usu.nickname + usu.email, usu);
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		
+		em.persist(usu);
+		
+		em.getTransaction().commit();
 	}
 	
-	public Usuario buscarUsuario(String key) {
-		Usuario usu = usuarios.get(key);
-		return usu;
+	public Profesor buscarProfesor(String key) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+			Profesor prof = em.find(Profesor.class, key);
+		return prof;
 	}
 	
-	public Usuario buscarxNick(String nick) {
-		Iterator<Map.Entry<String, Usuario>> itr = usuarios.entrySet().iterator();
-		boolean salir = false;
-		Usuario usu = null;
-        while(itr.hasNext() && salir == false) {
-        	Map.Entry<String, Usuario> entry = itr.next();
-        	if(nick.equals(entry.getValue().getNickname())) {
-        		salir = true;
-        		usu = entry.getValue();
-        	}
-        }
-        return usu;
+	public Socio buscarSocio(String key) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+			Socio socio = em.find(Socio.class, key);
+		return socio;
 	}
 	
-	public ArrayList<String> obtenerUsuarios(){
-		ArrayList<String> retorno = new ArrayList<>();
-		for(Usuario aux: usuarios.values()) {
-			retorno.add(aux.getNombre());
+	
+	public ArrayList<String> obtenerSocios(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Query query = em.createQuery("select s from Socio s");
+		List<Socio> listSocio = (List<Socio>) query.getResultList();
+		
+		ArrayList<String> aRetornar = new ArrayList<>();
+		for(Socio s: listSocio) {
+			aRetornar.add(s.getNickname());
 		}
-		return retorno;
+		return aRetornar;
+	}
+	
+	public ArrayList<String> obtenerProfesores(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Query query = em.createQuery("select p from Profesor p");
+		List<Profesor> listProfesor = (List<Profesor>) query.getResultList();
+		
+		ArrayList<String> aRetornar = new ArrayList<>();
+		for(Profesor p: listProfesor) {
+			aRetornar.add(p.getNickname());
+		}
+		return aRetornar;
 	}
 
 }

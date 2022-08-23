@@ -1,11 +1,14 @@
 package logica;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import persistencia.Conexion;
+
 public class ManejadorClases {
+	
 	private static ManejadorClases instancia = null;
-	private List<Clase> clases = new ArrayList<>();
 	
 	private ManejadorClases(){}
 	
@@ -16,15 +19,19 @@ public class ManejadorClases {
 	}
 	
 	public void agregarClase(Clase clase) {
-		clases.add(clase);
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		
+		em.persist(clase);
+		
+		em.getTransaction().commit();
 	}
 	
 	public Clase buscarClase(String nombre) {
-		Clase aretornar=null;
-		for(Clase c: clases) {
-			if (c.getNombre() == nombre)
-				aretornar=c;
-		}
-		return aretornar;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+			Clase clase = em.find(Clase.class, nombre);
+		return clase;
 	}
 }

@@ -2,8 +2,14 @@ package logica;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class InstitucionDep {
-	private String nombre, descripcion, url;
+	@Id
+	private String nombre;
+	private String descripcion, url;
 	private Map<String,ActividadDep> actividades;
 	
 	public InstitucionDep(String nombre, String descripcion, String url) {

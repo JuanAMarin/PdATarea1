@@ -2,6 +2,9 @@ package logica;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Profesor extends Usuario{
 	private String descripcion, biografia, sitioweb;
 	private InstitucionDep institucion;

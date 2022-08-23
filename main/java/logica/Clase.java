@@ -1,13 +1,30 @@
 package logica;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Clase {
-	private String nombre, url;
+	@Id
+	private String nombre;
+	private String url;
 	private Date fecha, fechaReg, horaInicio;
 	private Usuario profesor;
-	private Map<Socio,Registro> registros;
+
+
+	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Registro> registros;
+	
+	public Clase() {
+		super();	
+	}
 	
 	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Usuario profesor) {
 		super();
@@ -17,7 +34,7 @@ public class Clase {
 		this.fechaReg = fechaReg;
 		this.horaInicio = horaInicio;
 		this.profesor = profesor;
-		this.registros = new HashMap<Socio,Registro>();
+		this.registros = new ArrayList<>();
 	}
 	
 	public String getNombre() {
