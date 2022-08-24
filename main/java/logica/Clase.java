@@ -1,9 +1,7 @@
 package logica;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -55,10 +53,10 @@ public class Clase {
 	public Usuario getProfesor() {
 		return profesor;
 	}
-	public Map<Socio, Registro> getRegistros() {
+	public List<Registro> getRegistros() {
 		return registros;
 	}
-	public void setRegistros(Map<Socio, Registro> registros) {
+	public void setRegistros(List<Registro> registros) {
 		this.registros = registros;
 	}
 	public void setNombre(String nombre) {
@@ -75,8 +73,5 @@ public class Clase {
 	}
 	public void setHoraInicio(Date horaInicio) {
 		this.horaInicio = horaInicio;
-	}
-	private void setProfesor(Usuario profesor) {
-		this.profesor=profesor;
 	}
 }

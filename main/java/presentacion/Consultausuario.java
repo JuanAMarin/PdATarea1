@@ -62,8 +62,7 @@ public class Consultausuario extends JInternalFrame {
 						p.getDescripcion() +
 						p.getBiografia() +
 						p.getSitioweb() +
-						p.getInstitucion().getNombre()
-						);
+						p.getInstitucion());
 				textAreaUsu.setBounds(226, 26, 340, 411);
 				getContentPane().add(textAreaUsu);
 				}else {

@@ -20,13 +20,19 @@ public class ManejadorUsuarios {
         return instancia;
     }
 	
-	public void agregarUsuario(Usuario usu) {
+	public void agregarProfesor(Profesor usu) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
-		
 		em.persist(usu);
-		
+		em.getTransaction().commit();
+	}
+	
+	public void agregarSocio(Socio usu) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(usu);
 		em.getTransaction().commit();
 	}
 	
@@ -58,6 +64,19 @@ public class ManejadorUsuarios {
 		Query query = em.createQuery("select nickname from Profesor union select nickname from Socio");
 		List<String> listNick = (List<String>) query.getResultList(); 
 		return listNick.equals(nick);
+	}
+	public Socio buscarSocioN(String nickname) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select * from Socio where nickname='"+nickname+"'");
+		return (Socio) query.getResultList();
+	}
+	
+	public Profesor buscarProfesorN(String nickname) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select * from Profesor where nickname='"+nickname+"'");
+		return (Profesor) query.getResultList();
 	}
 	
 	public ArrayList<String> obtenerSocios(){

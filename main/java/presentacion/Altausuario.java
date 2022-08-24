@@ -28,8 +28,6 @@ import exceptions.ErrorFechaException;
 import exceptions.NicknameRepetidoException;
 import exceptions.UsuarioRepetidoException;
 import interfaces.ICaltausuario;
-import logica.InstitucionDep;
-import logica.ManejadorInstituciones;
 
 public class Altausuario extends JInternalFrame {
 	
@@ -344,7 +342,7 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(textSitioWeb);
 		textSitioWeb.setColumns(10);
 		
-		cboInsti = new <String>JComboBox();
+		cboInsti = new JComboBox<String>();
 		cboInsti.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {

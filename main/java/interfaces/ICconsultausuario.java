@@ -5,9 +5,10 @@ import java.util.Date;
 
 import logica.Profesor;
 import logica.Socio;
+import persistencia.UsuarioID;
 
 public interface ICconsultausuario {
-	public abstract void consultaUsuario(String key, boolean profe);
+	public abstract void consultaUsuario(UsuarioID key, boolean profe);
 	public abstract ArrayList<String> listarUsuarios();
 	public abstract String getNickname(); 
 	public abstract String getEmail(); 
@@ -19,6 +20,6 @@ public interface ICconsultausuario {
 	public abstract String getInstitucion(); 
 	public abstract Date getFechaNac(); 
 	public abstract boolean isProfe();
-	boolean esProfe(Socio s, Profesor p, String key); 
+	boolean esProfe(Socio s, Profesor p, String nickname); 
 	
 }

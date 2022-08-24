@@ -54,11 +54,12 @@ public class Caltausuario implements ICaltausuario{
 	
 	public void altausuario() {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		Usuario usu;
-		if(profe)
-			usu = new Profesor(nickname, nombre, apellido, email, fechaNac, descripcion, biografia, sitioweb, institucion);
-		else
-			usu = new Socio(nickname, nombre, apellido, email, fechaNac);
-		musus.agregarUsuario(usu);
+		if(profe) {
+			Profesor profesor = new Profesor(nickname, nombre, apellido, email, fechaNac, descripcion, biografia, sitioweb, institucion);
+			musus.agregarProfesor(profesor);
+		}else {
+			Socio socio = new Socio(nickname, nombre, apellido, email, fechaNac);
+			musus.agregarSocio(socio);
+		}
 	}
 }

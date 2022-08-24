@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import interfaces.ICconsultausuario;
+import persistencia.UsuarioID;
 
 public class Cconsultausuario implements ICconsultausuario{
 	
@@ -16,11 +17,10 @@ public class Cconsultausuario implements ICconsultausuario{
 	}
 	
 	@Override
-	public void consultaUsuario(String key, boolean profe) {
+	public void consultaUsuario(UsuarioID key, boolean profe) {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
 		if(profe) {
 			Profesor prof = musus.buscarProfesor(key);
-			InstitucionDep insti;
 			this.profe=true;
 			this.nickname=prof.getNickname();
 			this.email=prof.getEmail();
@@ -30,8 +30,7 @@ public class Cconsultausuario implements ICconsultausuario{
 			this.descripcion=prof.getDescripcion();
 			this.biografia=prof.getBiografia();
 			this.sitioweb=prof.getSitioweb();
-			insti=prof.getInstitucion();
-			this.institucion=insti.getNombre();
+			this.institucion=prof.getInstitucion();
 		}else {
 			Socio socio = musus.buscarSocio(key);
 			this.nickname=socio.getNickname();
@@ -44,11 +43,11 @@ public class Cconsultausuario implements ICconsultausuario{
 	
 	
 	@Override
-	public boolean esProfe(Socio s, Profesor p, String key) {
+	public boolean esProfe(Socio s, Profesor p, String nickname) {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		s=musus.buscarSocio(key);
+		s=musus.buscarSocioN(nickname);
 		if(s==null) {
-			p=musus.buscarProfesor(key);
+			p=musus.buscarProfesorN(nickname);
 			return true;
 		}
 		return false;

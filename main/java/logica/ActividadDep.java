@@ -1,8 +1,6 @@
 package logica;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,6 +13,10 @@ public class ActividadDep {
 	private Integer duracion;
 	private float costo;
 	private List<Clase> clases;
+	
+	public ActividadDep() {
+		super();
+	}
 	
 	public ActividadDep(String nombre, String descripcion, Integer duracion, float costo, Clase clase) {
 		super();
@@ -41,11 +43,11 @@ public class ActividadDep {
 		return costo;
 	}
 
-	public Map<String, Clase> getClases() {
+	public List<Clase> getClases() {
 		return clases;
 	}
 
-	public void setClases(Map<String, Clase> clases) {
+	public void setClases(List<Clase> clases) {
 		this.clases = clases;
 	}
 

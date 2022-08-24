@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 public class Profesor extends Usuario{
 	private String descripcion, biografia, sitioweb;
 	private String insti;
+	
+	public Profesor() {
+		super();
+	}
 
 	public Profesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, String institucion) {
 		super(nickname, nombre, apellido, email, fechaNac);

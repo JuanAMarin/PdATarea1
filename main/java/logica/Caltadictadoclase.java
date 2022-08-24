@@ -53,8 +53,8 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 	
 	public void datosClase(String nombre, String url, String profesor) {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		Usuario usu=musus.buscarxNick(nombre);
-		this.profesor=(Profesor) usu;
+		//Usuario usu=musus.buscarxNick(nombre);
+		//this.profesor=(Profesor) usu;
 		this.nombre=nombre;
 		this.url=url;
 	}
