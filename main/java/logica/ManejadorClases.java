@@ -1,8 +1,10 @@
 package logica;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import persistencia.Conexion;
 
@@ -33,5 +35,15 @@ public class ManejadorClases {
 		EntityManager em = conexion.getEntityManager();
 			Clase clase = em.find(Clase.class, nombre);
 		return clase;
+	}
+	
+	public List<Clase> obtenerClases(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Query query = em.createQuery("select * from Clase");
+		List<Clase> listClases = (List<Clase>) query.getResultList();
+		
+		return listClases;
 	}
 }

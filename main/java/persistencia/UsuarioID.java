@@ -13,6 +13,16 @@ public class UsuarioID implements Serializable{
 	public UsuarioID() {
 		super();
 	}
+	
+	
+
+	public UsuarioID(String nickname, String email) {
+		super();
+		this.nickname = nickname;
+		this.email = email;
+	}
+
+
 
 	public String getNickname() {
 		return nickname;

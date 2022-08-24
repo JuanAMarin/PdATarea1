@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import persistencia.Conexion;
+import persistencia.UsuarioID;
 
 public class ManejadorUsuarios {
 	
@@ -29,20 +30,35 @@ public class ManejadorUsuarios {
 		em.getTransaction().commit();
 	}
 	
-	public Profesor buscarProfesor(String key) {
+	public Profesor buscarProfesor(UsuarioID key) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 			Profesor prof = em.find(Profesor.class, key);
 		return prof;
 	}
 	
-	public Socio buscarSocio(String key) {
+	public Socio buscarSocio(UsuarioID key) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 			Socio socio = em.find(Socio.class, key);
 		return socio;
 	}
 	
+	public boolean emailRepetido(String email) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select email from Profesor union select email from Socio");
+		List<String> listEmail = (List<String>) query.getResultList(); 
+		return listEmail.equals(email);
+	}
+	
+	public boolean nicknameRepetido(String nick) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select nickname from Profesor union select nickname from Socio");
+		List<String> listNick = (List<String>) query.getResultList(); 
+		return listNick.equals(nick);
+	}
 	
 	public ArrayList<String> obtenerSocios(){
 		Conexion conexion = Conexion.getInstancia();

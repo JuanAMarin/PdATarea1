@@ -1,5 +1,7 @@
 package logica;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -12,7 +14,7 @@ public class ActividadDep {
 	private String descripcion;
 	private Integer duracion;
 	private float costo;
-	private Map<String,Clase> clases;
+	private List<Clase> clases;
 	
 	public ActividadDep(String nombre, String descripcion, Integer duracion, float costo, Clase clase) {
 		super();
@@ -20,7 +22,7 @@ public class ActividadDep {
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.costo = costo;
-		this.clases=new HashMap<String,Clase>();
+		this.clases=new ArrayList<>();
 	}
 
 	public String getNombre() {

@@ -233,6 +233,7 @@ public class Principal {
 		menuUsuarioC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarVentanas();
+				consultaUsuario.cargarCombo();
 				consultaUsuario.setVisible(true);
 			}
 		});

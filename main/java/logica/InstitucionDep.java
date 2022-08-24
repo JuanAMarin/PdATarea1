@@ -1,23 +1,28 @@
 package logica;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class InstitucionDep {
+	@OneToMany(mappedBy="insti",cascade=CascadeType.ALL)
 	@Id
 	private String nombre;
 	private String descripcion, url;
-	private Map<String,ActividadDep> actividades;
+	private List<ActividadDep> actividades;
 	
 	public InstitucionDep(String nombre, String descripcion, String url) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.url = url;
-		this.actividades = new HashMap<String,ActividadDep>();
+		this.actividades=new ArrayList<>();
 	}
 	
 	public String getNombre() {
