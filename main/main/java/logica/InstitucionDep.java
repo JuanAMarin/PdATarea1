@@ -1,30 +1,18 @@
 package logica;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import java.util.HashMap;
+import java.util.Map;
 
-@Entity
 public class InstitucionDep {
-	@OneToMany(mappedBy="insti",cascade=CascadeType.ALL)
-	@Id
-	private String nombre;
-	private String descripcion, url;
-	private List<ActividadDep> actividades;
-	
-	public InstitucionDep() {
-		super();
-	}
+	private String nombre, descripcion, url;
+	private Map<String,ActividadDep> actividades;
 	
 	public InstitucionDep(String nombre, String descripcion, String url) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.url = url;
-		this.actividades=new ArrayList<>();
+		this.actividades = new HashMap<String,ActividadDep>();
 	}
 	
 	public String getNombre() {
@@ -36,6 +24,9 @@ public class InstitucionDep {
 	public String getUrl() {
 		return url;
 	}
+	public Map<String, ActividadDep> getActividades() {
+		return actividades;
+	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -45,11 +36,10 @@ public class InstitucionDep {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public List<ActividadDep> getActividades() {
-		return actividades;
-	}
-	public void setActividades(List<ActividadDep> actividades) {
+	public void setActividades(Map<String, ActividadDep> actividades) {
 		this.actividades = actividades;
 	}
-	
+	public ActividadDep buscarActividad(String nombre) {
+		return actividades.get(nombre);
+	}
 }

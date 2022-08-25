@@ -2,11 +2,28 @@ package logica;
 
 import java.util.Date;
 
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.MappedSuperclass;
+
+import persistencia.UsuarioID;
+
+@MappedSuperclass
+@IdClass(UsuarioID.class)
 public class Usuario {
-	protected String nickname, nombre, apellido, email;
+	
+	@Id
+	protected String nickname;
+	
+	@Id
+	protected String email;
+	
+	protected String nombre, apellido;
 	protected Date fechaNac;
 	
-	public Usuario(){}
+	public Usuario(){
+		super();
+	}
 	
 	public Usuario(String nickname, String nombre, String apellido, String email, Date fechaNac) {
 		super();

@@ -1,38 +1,23 @@
 package presentacion;
+
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import interfaces.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
-import javax.swing.UIManager;
 
 
 public class Principal {
 
-	private JFrame frmServidorCentral;
-	
+	private JFrame frame;
 	private ICaltausuario ICau;
-	private Altausuario AltaUsuario;
-	private ICconsultausuario ICcu;
-	private Consultausuario consultaUsuario;
-	private ICaltainstitucion ICai;
-	private Altainstitucion AltaInstitucion;
-	private ICmodinstitucion ICmi;
-	private Modinstitucion ModInstitucion;
-	private ICrankingdeclases ICrc;
-	private Rankingdeclases RankingClases;
-	private ICmodusuario ICmu;
-	private Modusuario ModUsuario;
-	private ICaltaactividaddeportiva ICaad;
-	private Altaactividaddeportiva AltaActividadDeportiva;
-	private Altadictadoclase AltaDictadoClaseInternalFrame;
-	private ICaltadictadoclase ICac;
-
-
+	private altausuario AltaUsuario;
 
 	/**
 	 * Launch the application.
@@ -42,7 +27,7 @@ public class Principal {
 			public void run() {
 				try {
 					Principal window = new Principal();
-					window.frmServidorCentral.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -53,197 +38,87 @@ public class Principal {
 	/**
 	 * Create the application.
 	 */
-	
-	public void limpiarVentanas() {
-		AltaUsuario.setVisible(false);
-		consultaUsuario.setVisible(false);
-		AltaInstitucion.setVisible(false);
-		ModInstitucion.setVisible(false);
-		RankingClases.setVisible(false);
-		ModUsuario.setVisible(false);
-		AltaActividadDeportiva.setVisible(false);
-	}
 	public Principal() {
 		initialize();
 		
 		Fabrica fabrica = Fabrica.getInstancia();
 		ICau=fabrica.getICaltausuario();
-		ICcu=fabrica.getICconsultaUsuario();
-		ICai=fabrica.getICaltainstitucion();
-		ICmi=fabrica.getICmodinstitucion();
-		ICrc=fabrica.getICrankingdeclases();
-		ICmu=fabrica.getICmodusuario();
-		ICaad=fabrica.getICaltaactividaddeportiva();
-		ICac=fabrica.getICaltadictadoclase();
-		
-		frmServidorCentral.setResizable(false);
-		
-		AltaUsuario=new Altausuario(ICau);
-		AltaUsuario.setLocation(0,20);
+
+		AltaUsuario=new altausuario(ICau);
 		AltaUsuario.setVisible(false);
-		frmServidorCentral.getContentPane().add(AltaUsuario);
-		
-		AltaInstitucion=new Altainstitucion(ICai);
-		AltaInstitucion.setLocation(0,20);
-		AltaInstitucion.setVisible(false);
-		frmServidorCentral.getContentPane().add(AltaInstitucion);
-		
-		ModInstitucion=new Modinstitucion(ICmi);
-		ModInstitucion.setLocation(0,20);
-		ModInstitucion.setVisible(false);
-		frmServidorCentral.getContentPane().add(ModInstitucion);
-		
-		RankingClases=new Rankingdeclases(ICrc);
-		RankingClases.setLocation(0,20);
-		RankingClases.setVisible(false);
-		frmServidorCentral.getContentPane().add(RankingClases);
-		
-		ModUsuario=new Modusuario(ICmu);
-		ModUsuario.setLocation(0,20);
-		ModUsuario.setVisible(false);
-		frmServidorCentral.getContentPane().add(ModUsuario);
-		
-		AltaActividadDeportiva=new Altaactividaddeportiva(ICaad);
-		AltaActividadDeportiva.setLocation(0,20);
-		AltaActividadDeportiva.setVisible(false);
-		frmServidorCentral.getContentPane().add(AltaActividadDeportiva);
-		
-		AltaDictadoClaseInternalFrame=new Altadictadoclase(ICac);
-		AltaDictadoClaseInternalFrame.setLocation(0,20);
-		AltaDictadoClaseInternalFrame.setVisible(false);
-		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
+
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmServidorCentral = new JFrame();
-		frmServidorCentral.setTitle("Servidor Central");
-		frmServidorCentral.setBounds(100, 100, 538, 496);
-		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmServidorCentral.getContentPane().setLayout(null);
-		consultaUsuario=new Consultausuario(ICcu);
-		consultaUsuario.setBorder(UIManager.getBorder("OptionPane.border"));
-		consultaUsuario.setBackground(Color.GRAY);
-		consultaUsuario.setSize(524, 440);
-		consultaUsuario.setLocation(0, 20);
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
-		consultaUsuario.setVisible(false);
-		frmServidorCentral.getContentPane().add(consultaUsuario);
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 434, 22);
+		frame.getContentPane().add(menuBar);
 		
-		JMenuBar menuPrincipal = new JMenuBar();
-		menuPrincipal.setForeground(Color.BLACK);
-		menuPrincipal.setBounds(0, 0, 524, 22);
-		frmServidorCentral.getContentPane().add(menuPrincipal);
+		JMenu mnNewMenu = new JMenu("Alta");
+		menuBar.add(mnNewMenu);
 		
-		JMenu menuAlta = new JMenu("Alta");
-		menuPrincipal.add(menuAlta);
-		
-		JMenuItem menuUsuarioA = new JMenuItem("Usuario");
-		menuUsuarioA.setSelected(true);
-		menuUsuarioA.addActionListener(new ActionListener() {
+		JMenuItem mntmNewMenuItem = new JMenuItem("Usuario");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limpiarVentanas();
 				AltaUsuario.setVisible(true);
 			}
 		});
-		menuAlta.add(menuUsuarioA);
+		mnNewMenu.add(mntmNewMenuItem);
 		
-		JMenuItem menuActividadA = new JMenuItem("Actividad");
-		menuActividadA.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarVentanas();
-				AltaActividadDeportiva.inicializarComboBox();
-				AltaActividadDeportiva.setVisible(true);
-			}
-		});
-		menuAlta.add(menuActividadA);
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Actividad");
+		mnNewMenu.add(mntmNewMenuItem_1);
 		
-		JMenuItem menuClaseA = new JMenuItem("Clase");
-		menuClaseA.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AltaDictadoClaseInternalFrame.inicializarComboBoxes();
-				AltaDictadoClaseInternalFrame.setVisible(true);
-			}
-		});
-		menuAlta.add(menuClaseA);
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Clase");
+		mnNewMenu.add(mntmNewMenuItem_2);
 		
-		JMenuItem menuInstitucionA = new JMenuItem("Institucion");
-		menuInstitucionA.setSelected(true);
-		menuInstitucionA.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarVentanas();
-				AltaInstitucion.setVisible(true);
-			}
-		});
-		menuAlta.add(menuInstitucionA);
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Institucion");
+		mnNewMenu.add(mntmNewMenuItem_3);
 		
-		JMenu menuRegistrar = new JMenu("Registrar");
-		menuPrincipal.add(menuRegistrar);
+		JMenu mnNewMenu_4 = new JMenu("Registrar");
+		menuBar.add(mnNewMenu_4);
 		
-		JMenuItem menuInscripcion = new JMenuItem("Inscripcion a clase");
-		menuRegistrar.add(menuInscripcion);
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Inscripcion a clase");
+		mnNewMenu_4.add(mntmNewMenuItem_4);
 		
-		JMenu menuModificar = new JMenu("Modificar");
-		menuPrincipal.add(menuModificar);
+		JMenu mnNewMenu_2 = new JMenu("Modificar");
+		menuBar.add(mnNewMenu_2);
 		
-		JMenuItem menuUsuarioM = new JMenuItem("Usuario");
-		menuUsuarioM.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarVentanas();
-				ModUsuario.setVisible(true);
-			}
-		});
-		menuModificar.add(menuUsuarioM);
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Usuario");
+		mnNewMenu_2.add(mntmNewMenuItem_6);
 		
-		JMenuItem menuActividadM = new JMenuItem("Actividad");
-		menuModificar.add(menuActividadM);
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Actividad");
+		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
-		JMenuItem menuInstitucionM = new JMenuItem("Institucion");
-		menuInstitucionM.setSelected(true);
-		menuInstitucionM.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ModInstitucion.inicializarComboBox();
-				limpiarVentanas();
-				ModInstitucion.setVisible(true);
-			}
-		});
-		menuModificar.add(menuInstitucionM);
+		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Institucion");
+		mnNewMenu_2.add(mntmNewMenuItem_7);
 		
-		JMenu menuRanking = new JMenu("Ranking");
-		menuPrincipal.add(menuRanking);
+		JMenu mnNewMenu_3 = new JMenu("Ranking");
+		menuBar.add(mnNewMenu_3);
 		
-		JMenuItem menuClasesR = new JMenuItem("Clases");
-		menuClasesR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarVentanas();
-				RankingClases.setVisible(true);
-			}
-		});
-		menuRanking.add(menuClasesR);
+		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Clases");
+		mnNewMenu_3.add(mntmNewMenuItem_8);
 		
-		JMenuItem menuActividadesR = new JMenuItem("Actividades");
-		menuRanking.add(menuActividadesR);
+		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Actividades");
+		mnNewMenu_3.add(mntmNewMenuItem_9);
 		
-		JMenu menuConsultar = new JMenu("Consultar");
-		menuPrincipal.add(menuConsultar);
+		JMenu mnNewMenu_1 = new JMenu("Consultar");
+		menuBar.add(mnNewMenu_1);
 		
-		JMenuItem menuUsuarioC = new JMenuItem("Usuario");
-		menuUsuarioC.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarVentanas();
-				consultaUsuario.cargarCombo();
-				consultaUsuario.setVisible(true);
-			}
-		});
-		menuConsultar.add(menuUsuarioC);
+		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Usuario");
+		mnNewMenu_1.add(mntmNewMenuItem_10);
 		
-		JMenuItem menuActividadC = new JMenuItem("Actividad");
-		menuConsultar.add(menuActividadC);
+		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Actividad");
+		mnNewMenu_1.add(mntmNewMenuItem_11);
 		
-		JMenuItem menuClaseC = new JMenuItem("Clase");
-		menuConsultar.add(menuClaseC);
-		
+		JMenuItem mntmNewMenuItem_12 = new JMenuItem("Clase");
+		mnNewMenu_1.add(mntmNewMenuItem_12);
 	}
 }

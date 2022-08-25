@@ -2,18 +2,23 @@ package logica;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Profesor extends Usuario{
 	private String descripcion, biografia, sitioweb;
-	private InstitucionDep institucion;
-
-	public Profesor(){}
+	private String insti;
 	
-	public Profesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, InstitucionDep institucion) {
+	public Profesor() {
+		super();
+	}
+
+	public Profesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, String institucion) {
 		super(nickname, nombre, apellido, email, fechaNac);
 		this.descripcion = descripcion;
 		this.biografia = biografia;
 		this.sitioweb = sitioweb;
-		this.institucion=institucion;
+		this.insti=institucion;
 	}
 
 	public String getDescripcion() {
@@ -28,12 +33,12 @@ public class Profesor extends Usuario{
 		return sitioweb;
 	}
 	
-	public InstitucionDep getInstitucion() {
-		return institucion;
+	public String getInstitucion() {
+		return insti;
 	}
 
-	public void setInstitucion(InstitucionDep institucion) {
-		this.institucion = institucion;
+	public void setInstitucion(String institucion) {
+		this.insti = institucion;
 	}
 
 	public void setDescripcion(String descripcion) {

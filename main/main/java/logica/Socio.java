@@ -1,22 +1,24 @@
 package logica;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import java.util.HashMap;
+import java.util.Map;
 
-@Entity
 public class Socio extends Usuario{
-	@OneToMany(mappedBy="socio",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Registro> registros;
-
-	public Socio() {
-		super();
-	}
-
+	private Map<Socio,Registro> registros;
+	
 	public Socio(String nickname, String nombre, String apellido, String email, Date fechaNac) {
 		super(nickname, nombre, apellido, email, fechaNac);
-		this.registros = new ArrayList<>();
-	}	
+		this.registros = new HashMap<Socio,Registro>();
+	}
+
+	public Map<Socio, Registro> getRegistros() {
+		return registros;
+	}
+
+	public void setRegistros(Map<Socio, Registro> registros) {
+		this.registros = registros;
+	}
+	
+	
 }

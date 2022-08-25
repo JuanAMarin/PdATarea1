@@ -1,5 +1,7 @@
 package datatypes;
+
 import java.util.Map;
+
 import logica.ActividadDep;
 
 public class DtInstitucionDep {

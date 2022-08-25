@@ -3,22 +3,25 @@ package persistencia;
 import java.io.Serializable;
 import java.util.Objects;
 
+import logica.Clase;
+import logica.Socio;
+
 public class RegistroID implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String socio;
+	private UsuarioID socio;
 	private String clase;
 	
 	public RegistroID() {
 		super();
 	}
 
-	public String getSocio() {
+	public UsuarioID getSocio() {
 		return socio;
 	}
 
-	public void setSocio(String socio) {
+	public void setSocio(UsuarioID socio) {
 		this.socio = socio;
 	}
 

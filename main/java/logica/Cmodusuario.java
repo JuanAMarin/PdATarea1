@@ -10,7 +10,7 @@ import interfaces.ICmodusuario;
 public class Cmodusuario implements ICmodusuario {
 
 	public void modProfesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, InstitucionDep institucion) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		/*ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
 		Usuario aux=musus.buscarUsuario(nickname);
 		Class<? extends Usuario> clase = aux.getClass();
 		String name = clase.getName();
@@ -26,11 +26,11 @@ public class Cmodusuario implements ICmodusuario {
 				prof.setBiografia(biografia);
 				prof.setSitioweb(sitioweb);
 			}
-		}
+		}*/
 	}
 	
 	public void modSocio(String nickname, String nombre, String apellido, String email, Date fechaNac) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		/*ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
 		Usuario aux=musus.buscarUsuario(nickname);
 		Class<? extends Usuario> clase = aux.getClass();
 		String name = clase.getName();
@@ -43,12 +43,12 @@ public class Cmodusuario implements ICmodusuario {
 				socio.setFechaNac(fechaNac);
 				socio.setNombre(nombre);
 			}
-		}
+		}*/
 	}
 	
 
 	public String[] listarUsuarios() {
-		ArrayList<String> usuarios;
+		/*ArrayList<String> usuarios;
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
 		usuarios = musus.obtenerUsuarios();
 		String[] inst = new String[usuarios.size()];
@@ -57,12 +57,16 @@ public class Cmodusuario implements ICmodusuario {
 			inst[i]=ins;
 			i++;
 		}
-		return inst;
+		return inst;*/
+		
+		return null;
 	}
 
 	public Usuario obtenerInfo(String nombre) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		return musus.buscarxNick(nombre);
+		/*ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		return musus.buscarxNick(nombre);*/
+		
+		return null;
 	}
 	
 	public String[] listarInstituciones() {
