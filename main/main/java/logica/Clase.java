@@ -1,22 +1,38 @@
 package logica;
-
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Clase {
-	private String nombre, url;
+	@Id
+	private String nombre;
+	private String url;
 	private Date fecha, fechaReg, horaInicio;
-	private Map<Socio,Registro> registros;
+	private Usuario profesor;
+
+
+	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Registro> registros;
 	
-	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Registro registro) {
+	public Clase() {
+		super();	
+	}
+	
+	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Usuario profesor) {
 		super();
 		this.nombre = nombre;
 		this.url = url;
 		this.fecha = fecha;
 		this.fechaReg = fechaReg;
 		this.horaInicio = horaInicio;
-		this.registros = new HashMap<Socio,Registro>();
+		this.profesor = profesor;
+		this.registros = new ArrayList<>();
 	}
 	
 	public String getNombre() {
@@ -34,10 +50,13 @@ public class Clase {
 	public Date getHoraInicio() {
 		return horaInicio;
 	}
-	public Map<Socio, Registro> getRegistros() {
+	public Usuario getProfesor() {
+		return profesor;
+	}
+	public List<Registro> getRegistros() {
 		return registros;
 	}
-	public void setRegistros(Map<Socio, Registro> registros) {
+	public void setRegistros(List<Registro> registros) {
 		this.registros = registros;
 	}
 	public void setNombre(String nombre) {
@@ -55,9 +74,4 @@ public class Clase {
 	public void setHoraInicio(Date horaInicio) {
 		this.horaInicio = horaInicio;
 	}
-	
-	
-	
-	
-	
 }

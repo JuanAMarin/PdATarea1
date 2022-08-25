@@ -1,28 +1,15 @@
 package logica;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-@Entity
 public class Clase {
-	@Id
-	private String nombre;
-	private String url;
+	private String nombre, url;
 	private Date fecha, fechaReg, horaInicio;
 	private Usuario profesor;
-
-
-	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Registro> registros;
+	private Map<Socio,Registro> registros;
 	
-	public Clase() {
-		super();	
-	}
+	public Clase(){}
 	
 	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Usuario profesor) {
 		super();
@@ -32,7 +19,7 @@ public class Clase {
 		this.fechaReg = fechaReg;
 		this.horaInicio = horaInicio;
 		this.profesor = profesor;
-		this.registros = new ArrayList<>();
+		this.registros = new HashMap<Socio,Registro>();
 	}
 	
 	public String getNombre() {
@@ -53,10 +40,10 @@ public class Clase {
 	public Usuario getProfesor() {
 		return profesor;
 	}
-	public List<Registro> getRegistros() {
+	public Map<Socio, Registro> getRegistros() {
 		return registros;
 	}
-	public void setRegistros(List<Registro> registros) {
+	public void setRegistros(Map<Socio, Registro> registros) {
 		this.registros = registros;
 	}
 	public void setNombre(String nombre) {
@@ -73,5 +60,8 @@ public class Clase {
 	}
 	public void setHoraInicio(Date horaInicio) {
 		this.horaInicio = horaInicio;
+	}
+	private void setProfesor(Usuario profesor) {
+		this.profesor=profesor;
 	}
 }

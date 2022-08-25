@@ -1,6 +1,12 @@
 package interfaces;
-
+import logica.Caltaactividaddeportiva;
+import logica.Caltadictadoclase;
+import logica.Caltainstitucion;
 import logica.Caltausuario;
+import logica.Cconsultausuario;
+import logica.Cmodinstitucion;
+import logica.Cmodusuario;
+import logica.Crankingdeclases;
 
 public class Fabrica {
 	
@@ -16,4 +22,33 @@ public class Fabrica {
 	public ICaltausuario getICaltausuario() {
         return new Caltausuario();
     }
+	
+	public ICconsultausuario getICconsultaUsuario() {
+        return new Cconsultausuario();
+    }
+	
+	public ICaltainstitucion getICaltainstitucion() {
+		return new Caltainstitucion();
+	}
+	
+	public ICmodinstitucion getICmodinstitucion() {
+		return new Cmodinstitucion();
+	}
+	
+	public ICrankingdeclases getICrankingdeclases() {
+		return new Crankingdeclases();
+	}
+	public ICmodusuario getICmodusuario() {
+		return new Cmodusuario();
+	}
+
+	public ICaltaactividaddeportiva getICaltaactividaddeportiva() {
+		return new Caltaactividaddeportiva();
+	}
+	
+	public ICaltadictadoclase getICaltadictadoclase() {
+		return new Caltadictadoclase();
+	}
+	
 }
+

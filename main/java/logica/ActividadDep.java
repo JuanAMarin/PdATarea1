@@ -1,30 +1,25 @@
 package logica;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
 public class ActividadDep {
-	@Id
-	private String nombre;
-	private String descripcion;
+	private String nombre, descripcion;
 	private Integer duracion;
 	private float costo;
-	private List<Clase> clases;
+	private Date fechaAlta;
+	private Map<String,Clase> clases;
 	
-	public ActividadDep() {
-		super();
-	}
+	public ActividadDep(){}
 	
-	public ActividadDep(String nombre, String descripcion, Integer duracion, float costo, Clase clase) {
+	public ActividadDep(String nombre, String descripcion, Integer duracion, float costo, Date fechaAlta) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.costo = costo;
-		this.clases=new ArrayList<>();
+		this.fechaAlta = fechaAlta;
+		this.clases=new HashMap<String,Clase>();
 	}
 
 	public String getNombre() {
@@ -43,11 +38,11 @@ public class ActividadDep {
 		return costo;
 	}
 
-	public List<Clase> getClases() {
+	public Map<String, Clase> getClases() {
 		return clases;
 	}
 
-	public void setClases(List<Clase> clases) {
+	public void setClases(Map<String, Clase> clases) {
 		this.clases = clases;
 	}
 
@@ -65,6 +60,14 @@ public class ActividadDep {
 
 	public void setCosto(float costo) {
 		this.costo = costo;
+	}
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 	
 	//-----------------------------------------------------------------------------------

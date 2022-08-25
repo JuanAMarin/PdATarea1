@@ -34,6 +34,10 @@ public class Registro {
 	)
 	String clase;
 	
+	public Registro() {
+		super();
+	}
+	
 	public Registro(Date fechaReg, String socio, String clase) {
 		super();
 		this.fechaReg = fechaReg;

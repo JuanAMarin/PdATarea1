@@ -1,44 +1,14 @@
 package logica;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import persistencia.RegistroID;
-
-@Entity
-@IdClass(RegistroID.class)
 public class Registro {
-	
-	@Temporal(TemporalType.DATE)
 	private Date fechaReg;
+	Socio socio;
+	Clase clase;
 	
-	@Id 
-	@ManyToOne
-	@JoinColumn(
-			insertable=false,
-			updatable=false
-	)
-	String socio;
+	public Registro(){}
 	
-	@Id 
-	@ManyToOne
-	@JoinColumn(
-			insertable=false,
-			updatable=false
-	)
-	String clase;
-	
-	public Registro() {
-		super();
-	}
-	
-	public Registro(Date fechaReg, String socio, String clase) {
+	public Registro(Date fechaReg, Socio socio, Clase clase) {
 		super();
 		this.fechaReg = fechaReg;
 		this.socio = socio;
@@ -49,11 +19,11 @@ public class Registro {
 		return fechaReg;
 	}
 
-	public String getSocio() {
+	public Socio getSocio() {
 		return socio;
 	}
 
-	public String getClase() {
+	public Clase getClase() {
 		return clase;
 	}
 
@@ -61,11 +31,11 @@ public class Registro {
 		this.fechaReg = fechaReg;
 	}
 
-	public void setSocio(String socio) {
+	public void setSocio(Socio socio) {
 		this.socio = socio;
 	}
 
-	public void setClase(String clase) {
+	public void setClase(Clase clase) {
 		this.clase = clase;
 	}
 	

@@ -1,168 +1,439 @@
 package presentacion;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import java.awt.EventQueue;
-
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-
-import interfaces.*;
-import logica.InstitucionDep;
-
-import javax.swing.JFormattedTextField;
-import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
-import javax.swing.JScrollBar;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.time.*;
-import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
-public class altausuario extends JInternalFrame {
+import com.toedter.calendar.JDateChooser;
+
+import exceptions.EmailRepetidoException;
+import exceptions.ErrorFechaException;
+import exceptions.NicknameRepetidoException;
+import exceptions.UsuarioRepetidoException;
+import interfaces.ICaltausuario;
+
+public class Altausuario extends JInternalFrame {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private ICaltausuario ICau;
 	
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
+	private JTextField textNickname;
+	private JTextField textNombre;
+	private JTextField textApellido;
+	private JTextField textEmail;
+	private JTextField textDescripcion;
+	private JTextField textBiografia;
+	private JTextField textSitioWeb;
+	private JComboBox<String> cboInsti;
+	private JRadioButton rdbtnProfesor;
+	private JRadioButton rdbtnSocio;
+	private JButton btnCancelar;
+	private JButton btnAceptar;
+	private JDateChooser dateFechaNac;
+	private JLabel lblUsuarioAñadido;
+	private JLabel lblErrorFecha;
+	private JLabel lblErrorEmail;
+	private JLabel lblErrorNickname;
+	private JLabel lblEmailEnUso;
 
 	/**
 	 * Create the frame.
 	 */
-	public altausuario(ICaltausuario ICaltau) {
+	private void formClose(){
+		textNickname.setText("");
+		textNombre.setText("");
+		textApellido.setText("");
+		textEmail.setText("");
+		textDescripcion.setText("");
+		textBiografia.setText("");
+		textSitioWeb.setText("");
+		rdbtnProfesor.setSelected(false);
+		rdbtnSocio.setSelected(false);
+		dateFechaNac.setCalendar(null);
+	}
+	
+	private void changeTextFormat(JLabel l, Color c){
+		l.setForeground(c);
+	}
+	
+	public void habilitarPofSoc() {
+		if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
+			&& !textEmail.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty()) {
+			rdbtnProfesor.setEnabled(true);
+			rdbtnSocio.setEnabled(true);
+		}else {
+			rdbtnProfesor.setEnabled(false);
+			rdbtnSocio.setEnabled(false);
+			rdbtnProfesor.setSelected(false);
+			rdbtnSocio.setSelected(false);
+		}
+	}
+	
+	public boolean verificarEmail(String email) {
+		Pattern patron = Pattern.compile("^[A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-])*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+		Matcher mat = patron.matcher(email);
+		return mat.find();
+	}
+	
+	public void habilitarAceptar() {
+		if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
+			&& !textEmail.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty() 
+			&& (rdbtnSocio.isSelected() || (rdbtnProfesor.isSelected() && !textDescripcion.getText().isEmpty() 
+			&& !textBiografia.getText().isEmpty() && !textSitioWeb.getText().isEmpty() && cboInsti.getSelectedItem()!=null)))
+				btnAceptar.setEnabled(true);
+		else
+				btnAceptar.setEnabled(false);
+	}
+	
+	public Altausuario(ICaltausuario ICaltau) {
+		addInternalFrameListener(new InternalFrameAdapter() {
+			@Override
+			public void internalFrameClosing(InternalFrameEvent e) {
+				formClose();
+			}
+		});
+		setClosable(true);
+		
+		setTitle("Alta de Usuario");
 		ICau = ICaltau;
 		
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Alta de Usuario");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblNewLabel.setBounds(118, 11, 275, 83);
-		getContentPane().add(lblNewLabel);
+		lblErrorFecha = new JLabel("*Fecha Incorrecta");
+		lblErrorFecha.setForeground(Color.RED);
+		lblErrorFecha.setBounds(405, 121, 170, 13);
+		getContentPane().add(lblErrorFecha);
 		
-		JLabel lblNewLabel_1 = new JLabel("Nickname");
-		lblNewLabel_1.setBounds(48, 113, 46, 14);
-		getContentPane().add(lblNewLabel_1);
+		lblErrorNickname = new JLabel("*Nickname en uso");
+		lblErrorNickname.setHorizontalAlignment(SwingConstants.LEFT);
+		lblErrorNickname.setForeground(Color.RED);
+		lblErrorNickname.setBounds(405, 50, 170, 13);
+		getContentPane().add(lblErrorNickname);
 		
-		JLabel lblNewLabel_2 = new JLabel("Nombre");
-		lblNewLabel_2.setBounds(48, 150, 46, 14);
-		getContentPane().add(lblNewLabel_2);
+		lblErrorEmail = new JLabel("*Email incorrecto");
+		lblErrorEmail.setForeground(Color.RED);
+		lblErrorEmail.setBounds(405, 146, 170, 13);
+		getContentPane().add(lblErrorEmail);
 		
-		JLabel lblNewLabel_3 = new JLabel("Apellido");
-		lblNewLabel_3.setBounds(48, 186, 46, 14);
-		getContentPane().add(lblNewLabel_3);
+		dateFechaNac = new JDateChooser();
 		
-		JLabel lblNewLabel_4 = new JLabel("Email");
-		lblNewLabel_4.setBounds(48, 222, 46, 14);
-		getContentPane().add(lblNewLabel_4);
+		dateFechaNac.getDateEditor().addPropertyChangeListener(
+			    new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			        	habilitarAceptar();
+						habilitarPofSoc();
+			        }
+			    });
+		dateFechaNac.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				lblErrorFecha.setVisible(false);
+			}
+		});
+		dateFechaNac.setBounds(225, 121, 170, 19);
+		getContentPane().add(dateFechaNac);
+		lblErrorFecha.setVisible(false);
+				
+		JLabel lblMensaje = new JLabel("Complete los campos a continuación:");
+		lblMensaje.setToolTipText("");
+		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblMensaje.setBounds(33, 10, 170, 29);
+		getContentPane().add(lblMensaje);
 		
-		JLabel lblNewLabel_5 = new JLabel("Fecha de nacimiento");
-		lblNewLabel_5.setBounds(48, 257, 98, 14);
-		getContentPane().add(lblNewLabel_5);
+		JLabel lblNickname = new JLabel("NICKNAME");
+		lblNickname.setBounds(43, 49, 139, 14);
+		getContentPane().add(lblNickname);
+		lblErrorNickname.setVisible(false);
 		
-		textField = new JTextField();
-		textField.setBounds(173, 110, 86, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		JLabel lblNombre = new JLabel("NOMBRE");
+		lblNombre.setBounds(43, 73, 139, 14);
+		getContentPane().add(lblNombre);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(173, 147, 86, 20);
-		getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		JLabel lblApellido = new JLabel("APELLIDO");
+		lblApellido.setBounds(43, 97, 125, 14);
+		getContentPane().add(lblApellido);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(173, 183, 86, 20);
-		getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		JLabel lblEmail = new JLabel("EMAIL");
+		lblEmail.setBounds(43, 145, 99, 14);
+		getContentPane().add(lblEmail);
+		lblErrorEmail.setVisible(false);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(173, 219, 86, 20);
-		getContentPane().add(textField_3);
-		textField_3.setColumns(10);
+		JLabel lblFechaNaci = new JLabel("FECHA DE NACIMIENTO");
+		lblFechaNaci.setBounds(43, 121, 183, 14);
+		getContentPane().add(lblFechaNaci);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(173, 254, 30, 20);
-		getContentPane().add(spinner);
+		textNickname = new JTextField();
+		textNickname.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				changeTextFormat(lblNickname, Color.BLACK);
+				lblErrorNickname.setVisible(false);
+				habilitarAceptar();
+				habilitarPofSoc();
+			}
+		});
+		textNickname.setBounds(225, 47, 170, 20);
+		getContentPane().add(textNickname);
+		textNickname.setColumns(10);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(205, 254, 30, 20);
-		getContentPane().add(spinner_1);
+		textNombre = new JTextField();
+		textNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+				habilitarPofSoc();
+			}
+		});
+		textNombre.setBounds(225, 71, 170, 20);
+		getContentPane().add(textNombre);
+		textNombre.setColumns(10);
 		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setBounds(234, 254, 30, 20);
-		getContentPane().add(spinner_2);
+		textApellido = new JTextField();
+		textApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+				habilitarPofSoc();
+			}
+		});
+		textApellido.setBounds(225, 95, 170, 20);
+		getContentPane().add(textApellido);
+		textApellido.setColumns(10);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Profesor");
-		rdbtnNewRadioButton.setBounds(284, 109, 109, 23);
-		getContentPane().add(rdbtnNewRadioButton);
+		textEmail = new JTextField();
+		textEmail.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				lblEmailEnUso.setVisible(false);
+			}
+		});
+		textEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(verificarEmail(textEmail.getText())) {
+					changeTextFormat(lblEmail, Color.BLACK);
+					habilitarAceptar();
+					habilitarPofSoc();
+					lblErrorEmail.setVisible(false);
+					lblEmailEnUso.setVisible(false);
+					changeTextFormat(lblEmail, Color.BLACK);
+				}else {
+					changeTextFormat(lblEmail, Color.RED);
+					lblErrorEmail.setVisible(true);
+					lblEmailEnUso.setVisible(false);
+				}
+				if(textEmail.getText().isEmpty()) {
+					lblErrorEmail.setVisible(false);
+					lblEmailEnUso.setVisible(false);
+					changeTextFormat(lblEmail, Color.BLACK);
+					habilitarAceptar();
+					habilitarPofSoc();
+				}
+			}
+		});
+		textEmail.setBounds(225, 143, 170, 20);
+		getContentPane().add(textEmail);
+		textEmail.setColumns(10);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Socio");
-		rdbtnNewRadioButton_1.setBounds(405, 109, 109, 23);
-		getContentPane().add(rdbtnNewRadioButton_1);
+		rdbtnProfesor = new JRadioButton("Profesor");
+		rdbtnProfesor.setEnabled(false);
+		rdbtnProfesor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		rdbtnProfesor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnProfesor.setSelected(true);
+				rdbtnSocio.setSelected(false);
+				btnAceptar.setEnabled(false);
+				cboInsti.setEnabled(true);
+				textDescripcion.setEnabled(true);
+				textBiografia.setEnabled(true);
+				textSitioWeb.setEnabled(true);
+			}
+		});
+		rdbtnProfesor.setBounds(33, 186, 109, 23);
+		getContentPane().add(rdbtnProfesor);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Descripcion");
-		lblNewLabel_1_1.setBounds(284, 150, 54, 14);
-		getContentPane().add(lblNewLabel_1_1);
+		rdbtnSocio = new JRadioButton("Socio");
+		rdbtnSocio.setEnabled(false);
+		rdbtnSocio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnSocio.setSelected(true);
+				rdbtnProfesor.setSelected(false);
+				btnAceptar.setEnabled(false);
+				cboInsti.setEnabled(false);
+				textDescripcion.setText("");
+				textDescripcion.setEnabled(false);
+				textBiografia.setText("");
+				textBiografia.setEnabled(false);
+				textSitioWeb.setText("");
+				textSitioWeb.setEnabled(false);
+				if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
+						&& !textEmail.getText().isEmpty() && !dateFechaNac.getDateFormatString().isEmpty())
+					btnAceptar.setEnabled(true);
+			}
+		});
+		rdbtnSocio.setBounds(144, 186, 109, 23);
+		getContentPane().add(rdbtnSocio);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Biografia");
-		lblNewLabel_1_2.setBounds(284, 186, 46, 14);
-		getContentPane().add(lblNewLabel_1_2);
+		JLabel lblDescripcion = new JLabel("DESCRIPCIÓN");
+		lblDescripcion.setBounds(43, 222, 125, 14);
+		getContentPane().add(lblDescripcion);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("Sitio Web");
-		lblNewLabel_1_3.setBounds(284, 222, 46, 14);
-		getContentPane().add(lblNewLabel_1_3);
+		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
+		lblBiografia.setBounds(43, 247, 139, 14);
+		getContentPane().add(lblBiografia);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(354, 147, 86, 20);
-		getContentPane().add(textField_4);
-		textField_4.setColumns(10);
+		JLabel lblSitioWeb = new JLabel("SITIO WEB");
+		lblSitioWeb.setBounds(43, 271, 139, 14);
+		getContentPane().add(lblSitioWeb);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(354, 183, 86, 20);
-		getContentPane().add(textField_5);
-		textField_5.setColumns(10);
+		textDescripcion = new JTextField();
+		textDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		textDescripcion.setBounds(225, 220, 170, 20);
+		getContentPane().add(textDescripcion);
+		textDescripcion.setColumns(10);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(354, 219, 86, 20);
-		getContentPane().add(textField_6);
-		textField_6.setColumns(10);
+		textBiografia = new JTextField();
+		textBiografia.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		textBiografia.setBounds(225, 245, 170, 20);
+		getContentPane().add(textBiografia);
+		textBiografia.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(354, 253, 128, 22);
-		getContentPane().add(comboBox);
+		textSitioWeb = new JTextField();
+		textSitioWeb.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		textSitioWeb.setBounds(225, 269, 170, 20);
+		getContentPane().add(textSitioWeb);
+		textSitioWeb.setColumns(10);
 		
-		JLabel lblNewLabel_1_3_1 = new JLabel("Institucion");
-		lblNewLabel_1_3_1.setBounds(284, 257, 54, 14);
-		getContentPane().add(lblNewLabel_1_3_1);
+		cboInsti = new JComboBox<String>();
+		cboInsti.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		cboInsti.setBounds(225, 291, 170, 22);
+		getContentPane().add(cboInsti);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JLabel lblInstitucion = new JLabel("INSTITUCIÓN");
+		lblInstitucion.setBounds(43, 295, 139, 14);
+		getContentPane().add(lblInstitucion);
+		
+		cboInsti.setEnabled(false);
+		textDescripcion.setEnabled(false);
+		textBiografia.setEnabled(false);
+		textSitioWeb.setEnabled(false);		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				formClose();
+				setVisible(false);
+			}
+		});
+		
 		btnCancelar.setBounds(405, 376, 98, 23);
 		getContentPane().add(btnCancelar);
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		lblEmailEnUso = new JLabel("*Email en uso");
+		lblEmailEnUso.setForeground(Color.RED);
+		lblEmailEnUso.setBounds(405, 146, 170, 13);
+		getContentPane().add(lblEmailEnUso);
+		lblEmailEnUso.setVisible(false);
+		
+		lblUsuarioAñadido = new JLabel("Usuario añadido exitosamente!!!");
+		lblUsuarioAñadido.setForeground(new Color(50, 205, 50));
+		lblUsuarioAñadido.setBounds(95, 381, 215, 13);
+		getContentPane().add(lblUsuarioAñadido);
+		lblUsuarioAñadido.setVisible(false);
+		
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setEnabled(false);
 		btnAceptar.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-				String nickname=textField.getText();
-				String nombre=textField_1.getText();
-				String apellido=textField_2.getText();
-				String email=textField_3.getText();
-				String descripcion=textField_4.getText();
-				String biografia=textField_5.getText();
-				String sitioweb=textField_6.getText();
-				LocalDate fecha = LocalDate.of((int)spinner.getValue(),(int)spinner_1.getValue(),(int)spinner_2.getValue());
-				
-				
+				String insti;
+				boolean profe;
+				String nickname=textNickname.getText();
+				String nombre=textNombre.getText();
+				String apellido=textApellido.getText();
+				String email=textEmail.getText();
+				Date fecha = dateFechaNac.getDate();
+				try {
+					ICau.datosUsuario(nickname.toLowerCase(), nombre.toLowerCase(), apellido.toLowerCase(), email.toLowerCase(), fecha);
+					if(rdbtnProfesor.isSelected()){
+						String descripcion=textDescripcion.getText();
+						String biografia=textBiografia.getText();
+						String sitioweb=textSitioWeb.getText();
+						insti=(String)cboInsti.getSelectedItem();
+						profe=true;
+						ICau.datosProfesor(descripcion.toLowerCase(), biografia.toLowerCase(), sitioweb.toLowerCase(), insti, profe);
+					}
+					ICau.altausuario();
+					lblUsuarioAñadido.setVisible(true);
+					int delay = 2000; //milliseconds
+					ActionListener taskPerformer = new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+					    	lblUsuarioAñadido.setVisible(false);
+					    }
+					};
+					new javax.swing.Timer(delay, taskPerformer).start();
+					formClose();
+				} catch (UsuarioRepetidoException e1) {
+					changeTextFormat(lblNickname, Color.RED);
+					changeTextFormat(lblEmail, Color.RED);
+					lblEmailEnUso.setVisible(true);
+					lblErrorNickname.setVisible(true);
+				} catch (ErrorFechaException e2) {
+					changeTextFormat(lblFechaNaci, Color.RED);
+					lblErrorFecha.setVisible(true);
+				} catch (EmailRepetidoException e3) {
+					changeTextFormat(lblEmail, Color.RED);
+					lblEmailEnUso.setVisible(true);
+				}catch (NicknameRepetidoException e4) {
+					changeTextFormat(lblNickname, Color.RED);
+					lblErrorNickname.setVisible(true);
+				}
 			}
+			
 		});
 		btnAceptar.setBounds(297, 376, 98, 23);
 		getContentPane().add(btnAceptar);
-
 	}
 }

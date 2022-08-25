@@ -19,17 +19,33 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Altaactividaddeportiva extends JInternalFrame {
 	
 	private ICaltaactividaddeportiva ICaad;
-	JComboBox<String> cboInsti;
+	private JComboBox<String> cboInsti;
+	private JTextField txtNombre;
+	private JTextField txtCosto;
+	private JTextArea txtDesc;
+	private JSpinner spnDuracion;
+	
+	private void formClose(){
+		cboInsti.removeAllItems();
+		txtNombre.setText("");
+		txtDesc.setText("");
+		spnDuracion.setValue(1);
+		txtCosto.setText("");
+		inicializarComboBox();
+	}
 	
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				//formClose();
+				formClose();
 			}
 		});
 		setClosable(true);
@@ -62,6 +78,15 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		getContentPane().add(lblNombre);
 		
 		txtNombre = new JTextField();
+		txtNombre.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(ICaad.datosClaveActividad((String)cboInsti.getSelectedItem(), txtNombre.getText()))
+					System.out.print("si existe");
+				else
+					System.out.print("no existe1");
+			}
+		});
 		txtNombre.setBounds(179, 86, 170, 20);
 		getContentPane().add(txtNombre);
 		txtNombre.setColumns(10);
@@ -70,7 +95,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		lblDescripcion.setBounds(30, 117, 139, 14);
 		getContentPane().add(lblDescripcion);
 		
-		JTextArea txtDesc = new JTextArea();
+		txtDesc = new JTextArea();
 		txtDesc.setForeground(Color.BLACK);
 		txtDesc.setWrapStyleWord(true);
 		txtDesc.setLineWrap(true);
@@ -78,7 +103,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		txtDesc.setBounds(179, 116, 170, 52);
 		getContentPane().add(txtDesc);
 		
-		JSpinner spnDuracion = new JSpinner();
+		spnDuracion = new JSpinner();
 		spnDuracion.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spnDuracion.setBounds(179, 179, 170, 20);
 		getContentPane().add(spnDuracion);
@@ -99,14 +124,21 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				ICaad.datosActividad((String)cboInsti.getSelectedItem(), txtNombre.getText(), txtDesc.getText(), (Integer)spnDuracion.getValue(), Float.parseFloat(txtCosto.getText()));
+				ICaad.altaActividad();
+				formClose();
 			}
 		});
-		btnAceptar.setEnabled(false);
 		btnAceptar.setBounds(298, 376, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				formClose();
+				setVisible(false);
+			}
+		});
 		btnCancelar.setBounds(404, 376, 98, 23);
 		getContentPane().add(btnCancelar);
 		
@@ -122,6 +154,4 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField txtNombre;
-	private JTextField txtCosto;
 }
