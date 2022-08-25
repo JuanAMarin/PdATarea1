@@ -1,7 +1,6 @@
 package interfaces;
 
 import exceptions.ClaseRepetidaException;
-import datatypes.DtClase;
 
 public interface ICaltadictadoclase {
 	

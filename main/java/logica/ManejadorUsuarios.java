@@ -79,11 +79,11 @@ public class ManejadorUsuarios {
 		return (Profesor) query.getResultList();
 	}
 	
-	public ArrayList<String> obtenerSocios(){
+	public ArrayList<String> obtenerSociosN(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		
-		Query query = em.createQuery("select s from Socio s");
+		Query query = em.createQuery("select nickname from Socio");
 		List<Socio> listSocio = (List<Socio>) query.getResultList();
 		
 		ArrayList<String> aRetornar = new ArrayList<>();
@@ -93,16 +93,44 @@ public class ManejadorUsuarios {
 		return aRetornar;
 	}
 	
-	public ArrayList<String> obtenerProfesores(){
+	public ArrayList<String> obtenerProfesoresN(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		
-		Query query = em.createQuery("select p from Profesor p");
+		Query query = em.createQuery("select nickname from Profesor");
 		List<Profesor> listProfesor = (List<Profesor>) query.getResultList();
 		
 		ArrayList<String> aRetornar = new ArrayList<>();
 		for(Profesor p: listProfesor) {
 			aRetornar.add(p.getNickname());
+		}
+		return aRetornar;
+	}
+	
+	public ArrayList<String> obtenerSociosE(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Query query = em.createQuery("select email from Socio");
+		List<Socio> listSocio = (List<Socio>) query.getResultList();
+		
+		ArrayList<String> aRetornar = new ArrayList<>();
+		for(Socio s: listSocio) {
+			aRetornar.add(s.getEmail());
+		}
+		return aRetornar;
+	}
+	
+	public ArrayList<String> obtenerProfesoresE(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Query query = em.createQuery("select email from Profesor");
+		List<Profesor> listProfesor = (List<Profesor>) query.getResultList();
+		
+		ArrayList<String> aRetornar = new ArrayList<>();
+		for(Profesor p: listProfesor) {
+			aRetornar.add(p.getEmail());
 		}
 		return aRetornar;
 	}

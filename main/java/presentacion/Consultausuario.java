@@ -84,8 +84,7 @@ public class Consultausuario extends JInternalFrame {
 	}
 	
 	public void cargarCombo() {
-		ArrayList<String> usuarios = new ArrayList<String>(ICcu.listarUsuarios());
-		DefaultComboBoxModel<String> modelUsuarios = new DefaultComboBoxModel<String>((String[]) usuarios.toArray());
+		DefaultComboBoxModel<String> modelUsuarios = new DefaultComboBoxModel<String>(ICcu.listarUsuarios());
 		comboBoxNickname.setModel(modelUsuarios);
 	}
 }

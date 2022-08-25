@@ -3,13 +3,16 @@ package interfaces;
 import java.util.ArrayList;
 import java.util.Date;
 
+import logica.ManejadorUsuarios;
 import logica.Profesor;
 import logica.Socio;
 import persistencia.UsuarioID;
 
 public interface ICconsultausuario {
 	public abstract void consultaUsuario(UsuarioID key, boolean profe);
-	public abstract ArrayList<String> listarUsuarios();
+	public abstract String[] listarUsuarios();
+	public ArrayList<String> listarSocios();
+	public ArrayList<String> listarProfesores();
 	public abstract String getNickname(); 
 	public abstract String getEmail(); 
 	public abstract String getNombre(); 

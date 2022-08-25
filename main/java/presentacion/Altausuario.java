@@ -22,6 +22,7 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 import exceptions.EmailRepetidoException;
 import exceptions.ErrorFechaException;
@@ -135,7 +136,8 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(lblErrorEmail);
 		
 		dateFechaNac = new JDateChooser();
-		
+		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateFechaNac.getDateEditor();
+		editor.setEditable(false);
 		dateFechaNac.getDateEditor().addPropertyChangeListener(
 			    new PropertyChangeListener() {
 			        @Override

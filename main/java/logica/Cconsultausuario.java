@@ -53,12 +53,25 @@ public class Cconsultausuario implements ICconsultausuario{
 		return false;
 	}
 	
-	@Override
-	public ArrayList<String> listarUsuarios(){
+	public ArrayList<String> listarSocios() {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		ArrayList<String> profes = musus.obtenerProfesores();
-		profes.addAll(musus.obtenerSocios());
-		return profes;
+		ArrayList<String> usuarios = musus.obtenerSociosE();
+		return usuarios;
+	}
+	
+	public ArrayList<String> listarProfesores() {
+		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		ArrayList<String> usuarios = musus.obtenerSociosE();
+		return usuarios;
+	}
+	
+	@Override
+	public String[] listarUsuarios(){
+		ArrayList<String> profes = listarProfesores();
+		ArrayList<String> socios = listarSocios();
+		profes.addAll(socios);
+		String[] usuarios = (String[]) profes.toArray();
+		return usuarios;
 	}
 
 	public String getNickname() {

@@ -3,9 +3,6 @@ package persistencia;
 import java.io.Serializable;
 import java.util.Objects;
 
-import logica.Clase;
-import logica.Socio;
-
 public class RegistroID implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

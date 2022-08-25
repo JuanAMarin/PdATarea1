@@ -4,7 +4,6 @@ import exceptions.EmailRepetidoException;
 import exceptions.ErrorFechaException;
 import exceptions.NicknameRepetidoException;
 import exceptions.UsuarioRepetidoException;
-import logica.InstitucionDep;
 
 public interface ICaltausuario {
 	
