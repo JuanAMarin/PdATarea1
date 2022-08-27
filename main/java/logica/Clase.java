@@ -16,12 +16,11 @@ public class Clase {
 	private Date fecha, fechaReg, horaInicio;
 	private Usuario profesor;
 
-
 	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Registro> registros;
 	
 	public Clase() {
-		super();	
+		super();
 	}
 	
 	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Usuario profesor) {

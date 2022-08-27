@@ -10,10 +10,9 @@ public class Crankingdeclases implements ICrankingdeclases{
 		super();
 	}
 	
-	public List<Clase> obtenerClases(){
+	public List<String> obtenerRankingC(){
 		ManejadorClases mcla = ManejadorClases.getInstancia();
-		return mcla.obtenerClases();
+		return mcla.obtenerRanking();
 	}
-	//Crear la funcion que carge los datos de la base, y ordenar la lista, luego enviarla la presentacion
 
 }
