@@ -4,6 +4,7 @@ import logica.Caltadictadoclase;
 import logica.Caltainstitucion;
 import logica.Caltausuario;
 import logica.Cconsultausuario;
+import logica.CmodactividadDep;
 import logica.Cmodinstitucion;
 import logica.Cmodusuario;
 import logica.Crankingdeclases;
@@ -50,5 +51,9 @@ public class Fabrica {
 		return new Caltadictadoclase();
 	}
 	
+	public ICmodactividaddeportiva getICmodactividaddeportiva() {
+		return new CmodactividadDep();
+		
+	}
 }
 

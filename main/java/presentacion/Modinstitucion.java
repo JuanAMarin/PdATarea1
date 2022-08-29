@@ -22,19 +22,30 @@ public class Modinstitucion extends JInternalFrame {
 	private JTextField textFieldDescripcion;
 	private JTextField textFieldUrl;
 	private JComboBox<String> comboBoxIns;
+	private JComboBox<String> comboBoxAct;
 
 	/**
 	 * Create the frame.
 	 */
+	/*
+	public void habilitarEliminar(){
+		if (comboBoxAct.getSelectedItem()!=null)
+			btnEliminar.setEnabled(true);
+		else
+			btnEliminar.setEnabled(false);
+	}
+	*/
 	
 	public Modinstitucion(ICmodinstitucion ICmodi) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
 				limpiarFormulario();
+				comboBoxAct.setEnabled(false);
 			}
 		});
 		setClosable(true);
+		
 		
 		setTitle("Modificar Institucion");
 		setBounds(100, 100, 450, 300);
@@ -55,11 +66,17 @@ public class Modinstitucion extends JInternalFrame {
 			}
 		});
 		
+		comboBoxAct = new JComboBox<String>();
+		comboBoxAct.setEnabled(false);
+		comboBoxAct.setBounds(129, 178, 190, 22);
+		getContentPane().add(comboBoxAct);
+		
 		
 		JButton btnVerInfo = new JButton("Ver Info");
 		btnVerInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modInstitucionVerInfoActionPerformed(e);
+				comboBoxAct.setEnabled(true);
 			}
 		});
 		btnVerInfo.setBounds(329, 34, 117, 25);
@@ -96,16 +113,35 @@ public class Modinstitucion extends JInternalFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarFormulario();
+				comboBoxAct.setEnabled(false);
 				setVisible(false);
 			}
 		});
 		btnCancelar.setBounds(409, 376, 89, 23);
 		getContentPane().add(btnCancelar);
+		
+		JLabel lblActividades = new JLabel("ACTIVIDADES");
+		lblActividades.setBounds(10, 182, 141, 14);
+		getContentPane().add(lblActividades);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modInstitucionEliminarActionPerformed(e);
+			}
+		});
+		btnEliminar.setBounds(329, 178, 117, 23);
+		getContentPane().add(btnEliminar);
 	}
 	
 	public void inicializarComboBox() {
 		DefaultComboBoxModel<String> modelinstituciones = new DefaultComboBoxModel<String>(ICmi.listarInstituciones());
 		comboBoxIns.setModel(modelinstituciones);
+	}
+	
+	public void inicializarComboBoxAct() {
+		DefaultComboBoxModel<String> modelactividades = new DefaultComboBoxModel<String>(ICmi.listarActividades());
+		comboBoxAct.setModel(modelactividades);
 	}
 	
 	protected void modInstitucionVerInfoActionPerformed(ActionEvent arg0) {
@@ -116,6 +152,7 @@ public class Modinstitucion extends JInternalFrame {
 				ins = ICmi.obtenerInfo(strId);
 				textFieldDescripcion.setText(ins.getDescripcion());
 				textFieldUrl.setText(ins.getUrl());
+				inicializarComboBoxAct();
 		}
 	}
 	
@@ -148,4 +185,18 @@ public class Modinstitucion extends JInternalFrame {
         textFieldUrl.setText("");
 	 }
 	
+	protected void modInstitucionEliminarActionPerformed(ActionEvent arg0) {
+		if(this.comboBoxAct.getSelectedItem()!=null) {
+			String strId = this.comboBoxAct.getSelectedItem().toString();
+			ICmi.eliminarAct(strId);
+			JOptionPane.showMessageDialog(this, "La Activdad "+strId+" se ha eliminado con éxito", "Modificar Institucion",
+                    JOptionPane.INFORMATION_MESSAGE);
+			inicializarComboBoxAct();
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "La Institucion no tiene Actividades", "Modificar Institucion",
+                    JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }
+

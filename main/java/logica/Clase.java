@@ -1,4 +1,5 @@
 package logica;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,13 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import datatypes.DtHora;
+
 @Entity
 public class Clase {
 	@Id
 	private String nombre;
 	private String url;
-	private Date fecha, fechaReg, horaInicio;
 	private Usuario profesor;
+	LocalDateTime fechaReg;
+	private Date fecha;
+	private DtHora horaInicio;
 
 	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Registro> registros;
@@ -23,7 +28,7 @@ public class Clase {
 		super();
 	}
 	
-	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Usuario profesor) {
+	public Clase(String nombre, String url, Date fecha, LocalDateTime fechaReg, DtHora horaInicio, Usuario profesor) {
 		super();
 		this.nombre = nombre;
 		this.url = url;
@@ -43,10 +48,10 @@ public class Clase {
 	public Date getFecha() {
 		return fecha;
 	}
-	public Date getFechaReg() {
+	public LocalDateTime getFechaReg() {
 		return fechaReg;
 	}
-	public Date getHoraInicio() {
+	public DtHora getHoraInicio() {
 		return horaInicio;
 	}
 	public Usuario getProfesor() {
@@ -67,10 +72,10 @@ public class Clase {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	public void setFechaReg(Date fechaReg) {
+	public void setFechaReg(LocalDateTime fechaReg) {
 		this.fechaReg = fechaReg;
 	}
-	public void setHoraInicio(Date horaInicio) {
+	public void setHoraInicio(DtHora horaInicio) {
 		this.horaInicio = horaInicio;
 	}
 }

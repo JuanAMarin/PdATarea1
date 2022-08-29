@@ -37,4 +37,29 @@ public class Cmodinstitucion implements ICmodinstitucion {
 		return aux;
 	}
 	
+	@Override
+	public String[] listarActividades() {
+		ArrayList<String> actividades;
+		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
+		actividades = mAD.obtenerActividades();
+		String[] act = new String[actividades.size()];
+		int i = 0;
+		for (String ad:actividades) {
+			act[i]=ad;
+			i++;
+		}
+		return act;
+	}
+
+	@Override
+	public void eliminarAct(String nombreAct) {
+		ManejadorActividadDeportiva mAD= ManejadorActividadDeportiva.getInstancia();
+		ActividadDep act = mAD.buscarActividad(nombreAct);
+		mAD.eliminarActividad(act.getNombre());
+	}
+
+	
+	
+	
+	
 }

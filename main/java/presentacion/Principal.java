@@ -29,9 +29,10 @@ public class Principal {
 	private Modusuario ModUsuario;
 	private ICaltaactividaddeportiva ICaad;
 	private Altaactividaddeportiva AltaActividadDeportiva;
-	private Altadictadoclase AltaDictadoClaseInternalFrame;
+	private AltaDictadoClase AltaDictadoClaseInternalFrame;
 	private ICaltadictadoclase ICac;
-
+	private ICmodactividaddeportiva ICmad;
+	private ModActividadDeportiva ModactividadDep;
 
 
 	/**
@@ -75,6 +76,7 @@ public class Principal {
 		ICmu=fabrica.getICmodusuario();
 		ICaad=fabrica.getICaltaactividaddeportiva();
 		ICac=fabrica.getICaltadictadoclase();
+		ICmad=fabrica.getICmodactividaddeportiva();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -108,10 +110,15 @@ public class Principal {
 		AltaActividadDeportiva.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaActividadDeportiva);
 		
-		AltaDictadoClaseInternalFrame=new Altadictadoclase(ICac);
+		AltaDictadoClaseInternalFrame=new AltaDictadoClase(ICac);
 		AltaDictadoClaseInternalFrame.setLocation(0,20);
 		AltaDictadoClaseInternalFrame.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
+		
+		ModactividadDep = new ModActividadDeportiva(ICmad);
+		ModactividadDep.setLocation(0,20);
+		ModactividadDep.setVisible(false);
+		frmServidorCentral.getContentPane().add(ModactividadDep);
 	}
 
 	/**
@@ -199,6 +206,14 @@ public class Principal {
 		
 		JMenuItem menuActividadM = new JMenuItem("Actividad");
 		menuModificar.add(menuActividadM);
+		menuActividadM.setSelected(true);
+		menuActividadM.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				ModactividadDep.inicializarComboBoxes();
+				limpiarVentanas();
+				ModactividadDep.setVisible(true);
+			}
+		});
 		
 		JMenuItem menuInstitucionM = new JMenuItem("Institucion");
 		menuInstitucionM.setSelected(true);
