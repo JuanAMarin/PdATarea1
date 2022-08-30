@@ -9,22 +9,24 @@ import javax.persistence.Id;
 public class ActividadDep {
 	@Id
 	private String nombre;
+ 	
 	private String descripcion;
 	private Integer duracion;
 	private float costo;
-	private List<Clase> clases;
+	//private List<Clase> clases;
+	
 	
 	public ActividadDep() {
 		super();
 	}
-	
-	public ActividadDep(String nombre, String descripcion, Integer duracion, float costo, Clase clase) {
+
+	public ActividadDep(String nombre, String descripcion, Integer duracion, float costo) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.costo = costo;
-		this.clases=new ArrayList<>();
+		//this.clases=new ArrayList<Clase>();
 	}
 
 	public String getNombre() {
@@ -43,13 +45,13 @@ public class ActividadDep {
 		return costo;
 	}
 
-	public List<Clase> getClases() {
+	/*public List<Clase> getClases() {
 		return clases;
 	}
 
 	public void setClases(List<Clase> clases) {
 		this.clases = clases;
-	}
+	}*/
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;

@@ -9,22 +9,24 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class InstitucionDep {
-	@OneToMany(mappedBy="insti",cascade=CascadeType.ALL)
 	@Id
 	private String nombre;
+	
 	private String descripcion, url;
+	
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<ActividadDep> actividades;
 	
 	public InstitucionDep() {
 		super();
 	}
-	
+
 	public InstitucionDep(String nombre, String descripcion, String url) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.url = url;
-		this.actividades=new ArrayList<>();
+		this.actividades = new ArrayList<ActividadDep>();
 	}
 	
 	public String getNombre() {
@@ -36,6 +38,9 @@ public class InstitucionDep {
 	public String getUrl() {
 		return url;
 	}
+	public List<ActividadDep> getActividades() {
+		return actividades;
+	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -45,11 +50,11 @@ public class InstitucionDep {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public List<ActividadDep> getActividades() {
-		return actividades;
-	}
 	public void setActividades(List<ActividadDep> actividades) {
 		this.actividades = actividades;
 	}
-	
+	public ActividadDep buscarActividad(String nombre) {
+		//return actividades;
+		return null;
+	}
 }

@@ -1,10 +1,8 @@
 package logica;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import interfaces.ICconsultausuario;
-import persistencia.UsuarioID;
 
 public class Cconsultausuario implements ICconsultausuario{
 	
@@ -16,11 +14,14 @@ public class Cconsultausuario implements ICconsultausuario{
 		super();
 	}
 	
-	@Override
-	public void consultaUsuario(UsuarioID key, boolean profe) {
+	public void consultaUsuario(String key) {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		if(profe) {
-			Profesor prof = musus.buscarProfesor(key);
+		Usuario usu = musus.buscarUsuario(key);
+		Class<? extends Usuario> clase = usu.getClass();
+		String name = clase.getName();
+		if(name == "Profesor" ) {
+			Profesor prof = (Profesor) usu;
+			InstitucionDep insti;
 			this.profe=true;
 			this.nickname=prof.getNickname();
 			this.email=prof.getEmail();
@@ -30,48 +31,16 @@ public class Cconsultausuario implements ICconsultausuario{
 			this.descripcion=prof.getDescripcion();
 			this.biografia=prof.getBiografia();
 			this.sitioweb=prof.getSitioweb();
-			this.institucion=prof.getInstitucion();
+			insti=prof.getInstitucion();
+			this.institucion=insti.getNombre();
 		}else {
-			Socio socio = musus.buscarSocio(key);
+			Socio socio = (Socio) usu;
 			this.nickname=socio.getNickname();
 			this.email=socio.getEmail();
 			this.nombre=socio.getNombre();
 			this.apellido=socio.getApellido();
 			this.fechaNac=socio.getFechaNac();
 		}
-	}
-	
-	
-	@Override
-	public boolean esProfe(Socio s, Profesor p, String nickname) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		s=musus.buscarSocioN(nickname);
-		if(s==null) {
-			p=musus.buscarProfesorN(nickname);
-			return true;
-		}
-		return false;
-	}
-	
-	public ArrayList<String> listarSocios() {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		ArrayList<String> usuarios = musus.obtenerSociosE();
-		return usuarios;
-	}
-	
-	public ArrayList<String> listarProfesores() {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		ArrayList<String> usuarios = musus.obtenerSociosE();
-		return usuarios;
-	}
-	
-	@Override
-	public String[] listarUsuarios(){
-		ArrayList<String> profes = listarProfesores();
-		ArrayList<String> socios = listarSocios();
-		profes.addAll(socios);
-		String[] usuarios = (String[]) profes.toArray();
-		return usuarios;
 	}
 
 	public String getNickname() {
@@ -113,4 +82,6 @@ public class Cconsultausuario implements ICconsultausuario{
 	public boolean isProfe() {
 		return profe;
 	}
+	
+	
 }

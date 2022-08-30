@@ -12,26 +12,24 @@ import javax.persistence.OneToMany;
 public class Clase {
 	@Id
 	private String nombre;
+	
 	private String url;
 	private Date fecha, fechaReg, horaInicio;
-	private Usuario profesor;
-
-	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Registro> registros;
+	
+	//@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
+	//private List<Registro> registros = new ArrayList<Registro>();;
 	
 	public Clase() {
 		super();
 	}
-	
-	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, Usuario profesor) {
+
+	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio) {
 		super();
 		this.nombre = nombre;
 		this.url = url;
 		this.fecha = fecha;
 		this.fechaReg = fechaReg;
 		this.horaInicio = horaInicio;
-		this.profesor = profesor;
-		this.registros = new ArrayList<>();
 	}
 	
 	public String getNombre() {
@@ -49,15 +47,12 @@ public class Clase {
 	public Date getHoraInicio() {
 		return horaInicio;
 	}
-	public Usuario getProfesor() {
-		return profesor;
-	}
-	public List<Registro> getRegistros() {
+	/*public List<Registro> getRegistros() {
 		return registros;
 	}
 	public void setRegistros(List<Registro> registros) {
 		this.registros = registros;
-	}
+	}*/
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}

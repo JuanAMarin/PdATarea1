@@ -11,33 +11,32 @@ import javax.persistence.TemporalType;
 
 import persistencia.RegistroID;
 
-@Entity
-@IdClass(RegistroID.class)
+//@Entity
+//@IdClass(RegistroID.class)
 public class Registro {
-	
-	@Id 
+	/*@Id 
 	@ManyToOne
 	@JoinColumn(
 			insertable=false,
-			updatable=false,name="socio", referencedColumnName = "socio"
-	)
+			updatable=false
+	)*/
 	private Socio socio;
 	
-	@Id 
+	/*@Id 
 	@ManyToOne
 	@JoinColumn(
 			insertable=false,
-			updatable=false,name="clase", referencedColumnName = "clase"
-	)
+			updatable=false
+	)*/
 	private Clase clase;
 	
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date fechaReg;
 	
 	public Registro() {
 		super();
 	}
-	
+
 	public Registro(Date fechaReg, Socio socio, Clase clase) {
 		super();
 		this.fechaReg = fechaReg;
@@ -70,7 +69,6 @@ public class Registro {
 	}
 	
 }
-
 
 
 

@@ -4,7 +4,6 @@ import exceptions.ClaseRepetidaException;
 
 import java.util.ArrayList;
 
-import datatypes.DtClase;
 import interfaces.ICaltadictadoclase;
 
 public class Caltadictadoclase implements ICaltadictadoclase {
@@ -47,14 +46,13 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 	}
 
 	public String[] listarActividades() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	public void datosClase(String nombre, String url, String profesor) {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		//Usuario usu=musus.buscarxNick(nombre);
-		//this.profesor=(Profesor) usu;
+		Usuario usu=musus.buscarxNick(nombre);
+		this.profesor=(Profesor) usu;
 		this.nombre=nombre;
 		this.url=url;
 	}

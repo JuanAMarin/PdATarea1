@@ -1,18 +1,9 @@
 package interfaces;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import logica.ManejadorUsuarios;
-import logica.Profesor;
-import logica.Socio;
-import persistencia.UsuarioID;
-
 public interface ICconsultausuario {
-	public abstract void consultaUsuario(UsuarioID key, boolean profe);
-	public abstract String[] listarUsuarios();
-	public ArrayList<String> listarSocios();
-	public ArrayList<String> listarProfesores();
+	public abstract void consultaUsuario(String key);
 	public abstract String getNickname(); 
 	public abstract String getEmail(); 
 	public abstract String getNombre(); 
@@ -22,7 +13,6 @@ public interface ICconsultausuario {
 	public abstract String getSitioweb(); 
 	public abstract String getInstitucion(); 
 	public abstract Date getFechaNac(); 
-	public abstract boolean isProfe();
-	boolean esProfe(Socio s, Profesor p, String nickname); 
+	public abstract boolean isProfe(); 
 	
 }

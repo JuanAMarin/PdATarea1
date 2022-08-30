@@ -1,5 +1,4 @@
 package persistencia;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -7,19 +6,11 @@ public class RegistroID implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private UsuarioID socio;
 	private String clase;
+	private String socio;
 	
 	public RegistroID() {
 		super();
-	}
-
-	public UsuarioID getSocio() {
-		return socio;
-	}
-
-	public void setSocio(UsuarioID socio) {
-		this.socio = socio;
 	}
 
 	public String getClase() {
@@ -28,6 +19,14 @@ public class RegistroID implements Serializable{
 
 	public void setClase(String clase) {
 		this.clase = clase;
+	}
+
+	public String getSocio() {
+		return socio;
+	}
+
+	public void setSocio(String socio) {
+		this.socio = socio;
 	}
 
 	@Override
@@ -44,7 +43,9 @@ public class RegistroID implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		RegistroID other = (RegistroID) obj;
-		return Objects.equals(clase, other.clase) && Objects.equals(socio, other.socio);
+		return clase == other.clase && Objects.equals(socio, other.socio);
 	}
-
+	
+	
+	
 }

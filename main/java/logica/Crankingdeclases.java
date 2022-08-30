@@ -1,6 +1,6 @@
 package logica;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import interfaces.ICrankingdeclases;
 
@@ -10,9 +10,6 @@ public class Crankingdeclases implements ICrankingdeclases{
 		super();
 	}
 	
-	public List<String> obtenerRankingC(){
-		ManejadorClases mcla = ManejadorClases.getInstancia();
-		return mcla.obtenerRanking();
-	}
+	//Crear la funcion que carge los datos de la base, y ordenar la lista, luego enviarla la presentacion
 
 }

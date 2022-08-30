@@ -5,6 +5,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import interfaces.*;
+import persistencia.Conexion;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -14,6 +16,8 @@ import javax.swing.UIManager;
 public class Principal {
 
 	private JFrame frmServidorCentral;
+	
+	Conexion cn = Conexion.getInstancia();
 	
 	private ICaltausuario ICau;
 	private Altausuario AltaUsuario;
@@ -233,7 +237,6 @@ public class Principal {
 		menuUsuarioC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarVentanas();
-				consultaUsuario.cargarCombo();
 				consultaUsuario.setVisible(true);
 			}
 		});
