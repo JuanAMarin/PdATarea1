@@ -52,9 +52,9 @@ public class ManejadorUsuarios {
 	public boolean emailRepetido(String email) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select * from Usuario where email='"+email+"'");
-		Usuario usu = (Usuario) query.getResultList();
-		return (usu != null);
+		Query query = em.createQuery("select u from Usuario u where u.email='"+email+"'");
+		List<Usuario> usuarios = query.getResultList();
+		return (usuarios.size() != 0);
 	}
 	
 	public boolean nicknameRepetido(String nick) {
@@ -66,14 +66,14 @@ public class ManejadorUsuarios {
 	public Socio buscarSocioN(String nickname) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select * from Socio where nickname='"+nickname+"'");
+		Query query = em.createQuery("select s from Socio s where s.nickname='"+nickname+"'");
 		return (Socio) query.getResultList();
 	}
 	
 	public Profesor buscarProfesorN(String nickname) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select * from Profesor where nickname='"+nickname+"'");
+		Query query = em.createQuery("select p from Profesor p where p.nickname='"+nickname+"'");
 		return (Profesor) query.getResultList();
 	}
 	

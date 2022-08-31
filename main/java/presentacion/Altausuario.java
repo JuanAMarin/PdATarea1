@@ -11,8 +11,10 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -49,12 +51,11 @@ public class Altausuario extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnAceptar;
 	private JDateChooser dateFechaNac;
-	private JLabel lblUsuarioAñadido;
 	private JLabel lblErrorFecha;
 	private JLabel lblErrorEmail;
 	private JLabel lblErrorNickname;
 	private JLabel lblEmailEnUso;
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -379,12 +380,6 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(lblEmailEnUso);
 		lblEmailEnUso.setVisible(false);
 		
-		lblUsuarioAñadido = new JLabel("Usuario añadido exitosamente!!!");
-		lblUsuarioAñadido.setForeground(new Color(50, 205, 50));
-		lblUsuarioAñadido.setBounds(95, 381, 215, 13);
-		getContentPane().add(lblUsuarioAñadido);
-		lblUsuarioAñadido.setVisible(false);
-		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setEnabled(false);
 		btnAceptar.addActionListener(new ActionListener() {
@@ -408,11 +403,11 @@ public class Altausuario extends JInternalFrame {
 						ICau.datosProfesor(descripcion.toLowerCase(), biografia.toLowerCase(), sitioweb.toLowerCase(), insti, profe);
 					}
 					ICau.altausuario();
-					lblUsuarioAñadido.setVisible(true);
 					int delay = 2000; //milliseconds
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							lblUsuarioAñadido.setVisible(false);
+							//JOptionPane.showMessageDialog(this, "El usuario "+nickname+" se ha creado con éxito", "Alta de Usuario",
+				                    //JOptionPane.INFORMATION_MESSAGE);
 					    }
 					};
 					new javax.swing.Timer(delay, taskPerformer).start();
@@ -433,10 +428,11 @@ public class Altausuario extends JInternalFrame {
 					lblErrorNickname.setVisible(true);
 				}
 			}
-			
 		});
+		
 		btnAceptar.setBounds(297, 376, 98, 23);
 		getContentPane().add(btnAceptar);
+		
 	}
 }
 

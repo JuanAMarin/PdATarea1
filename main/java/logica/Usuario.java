@@ -2,6 +2,7 @@ package logica;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -13,7 +14,11 @@ public class Usuario {
 	@Id
 	protected String nickname;
 	
-	protected String nombre, apellido, email;
+	protected String nombre, apellido;
+	
+	@Column(unique=true)
+	protected String email;
+	
 	protected Date fechaNac;
 	
 	public Usuario() {
