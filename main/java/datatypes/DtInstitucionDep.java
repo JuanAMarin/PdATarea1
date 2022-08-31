@@ -1,12 +1,13 @@
 package datatypes;
-import java.util.Map;
+
+import java.util.List;
 import logica.ActividadDep;
 
 public class DtInstitucionDep {
 	private String nombre, descripcion, url;
-	private Map<String,ActividadDep> actividades;
+	private List<ActividadDep> actividades;
 	
-	public DtInstitucionDep(String nombre, String descripcion, String url, Map<String, ActividadDep> actividades) {
+	public DtInstitucionDep(String nombre, String descripcion, String url, List<ActividadDep> actividades) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -26,7 +27,7 @@ public class DtInstitucionDep {
 		return url;
 	}
 
-	public Map<String, ActividadDep> getActividades() {
+	public List<ActividadDep> getActividades() {
 		return actividades;
 	}
 }

@@ -22,14 +22,13 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 import exceptions.EmailRepetidoException;
 import exceptions.ErrorFechaException;
 import exceptions.NicknameRepetidoException;
 import exceptions.UsuarioRepetidoException;
 import interfaces.ICaltausuario;
-import logica.InstitucionDep;
-import logica.ManejadorInstituciones;
 
 public class Altausuario extends JInternalFrame {
 	
@@ -44,7 +43,7 @@ public class Altausuario extends JInternalFrame {
 	private JTextField textDescripcion;
 	private JTextField textBiografia;
 	private JTextField textSitioWeb;
-	private JComboBox cboInsti;
+	private JComboBox<String> cboInsti;
 	private JRadioButton rdbtnProfesor;
 	private JRadioButton rdbtnSocio;
 	private JButton btnCancelar;
@@ -137,7 +136,8 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(lblErrorEmail);
 		
 		dateFechaNac = new JDateChooser();
-		
+		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateFechaNac.getDateEditor();
+		editor.setEditable(false);
 		dateFechaNac.getDateEditor().addPropertyChangeListener(
 			    new PropertyChangeListener() {
 			        @Override
@@ -303,7 +303,7 @@ public class Altausuario extends JInternalFrame {
 		lblDescripcion.setBounds(43, 222, 125, 14);
 		getContentPane().add(lblDescripcion);
 		
-		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
+		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
 		lblBiografia.setBounds(43, 247, 139, 14);
 		getContentPane().add(lblBiografia);
 		
@@ -344,7 +344,7 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(textSitioWeb);
 		textSitioWeb.setColumns(10);
 		
-		cboInsti = new JComboBox();
+		cboInsti = new JComboBox<String>();
 		cboInsti.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -390,8 +390,6 @@ public class Altausuario extends JInternalFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				ManejadorInstituciones mInst = new ManejadorInstituciones();
-				InstitucionDep institucion;
 				String insti;
 				boolean profe;
 				String nickname=textNickname.getText();
@@ -406,16 +404,15 @@ public class Altausuario extends JInternalFrame {
 						String biografia=textBiografia.getText();
 						String sitioweb=textSitioWeb.getText();
 						insti=(String)cboInsti.getSelectedItem();
-						institucion=mInst.buscarInstitucion(insti.toLowerCase());
 						profe=true;
-						ICau.datosProfesor(descripcion.toLowerCase(), biografia.toLowerCase(), sitioweb.toLowerCase(), institucion, profe);
+						ICau.datosProfesor(descripcion.toLowerCase(), biografia.toLowerCase(), sitioweb.toLowerCase(), insti, profe);
 					}
 					ICau.altausuario();
 					lblUsuarioAñadido.setVisible(true);
 					int delay = 2000; //milliseconds
 					ActionListener taskPerformer = new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-					    	lblUsuarioAñadido.setVisible(false);
+							lblUsuarioAñadido.setVisible(false);
 					    }
 					};
 					new javax.swing.Timer(delay, taskPerformer).start();
@@ -442,3 +439,4 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(btnAceptar);
 	}
 }
+

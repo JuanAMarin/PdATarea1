@@ -1,9 +1,11 @@
 package interfaces;
+
 import logica.Caltaactividaddeportiva;
 import logica.Caltadictadoclase;
 import logica.Caltainstitucion;
 import logica.Caltausuario;
 import logica.Cconsultausuario;
+import logica.Cmodactividaddep;
 import logica.Cmodinstitucion;
 import logica.Cmodusuario;
 import logica.Crankingdeclases;
@@ -50,5 +52,8 @@ public class Fabrica {
 		return new Caltadictadoclase();
 	}
 	
+	public ICmodactividaddep getICmodactividaddep() {
+		return new Cmodactividaddep();
+	}
+	
 }
-

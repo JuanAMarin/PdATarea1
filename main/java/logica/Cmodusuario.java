@@ -2,16 +2,13 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.swing.DefaultComboBoxModel;
-
 import interfaces.ICmodusuario;
 
 public class Cmodusuario implements ICmodusuario {
 
 	public void modProfesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, InstitucionDep institucion) {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		Usuario aux=musus.buscarUsuario(nickname);
+		Profesor aux=musus.buscarProfesor(nickname);
 		Class<? extends Usuario> clase = aux.getClass();
 		String name = clase.getName();
 		if(name == "Profesor") {
@@ -31,7 +28,7 @@ public class Cmodusuario implements ICmodusuario {
 	
 	public void modSocio(String nickname, String nombre, String apellido, String email, Date fechaNac) {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		Usuario aux=musus.buscarUsuario(nickname);
+		Socio aux=musus.buscarSocio(nickname);
 		Class<? extends Usuario> clase = aux.getClass();
 		String name = clase.getName();
 		if(name == "Socio") {
@@ -47,24 +44,56 @@ public class Cmodusuario implements ICmodusuario {
 	}
 	
 
-	public String[] listarUsuarios() {
-		ArrayList<String> usuarios;
+	public ArrayList<String> listarSociosN() {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		usuarios = musus.obtenerUsuarios();
-		String[] inst = new String[usuarios.size()];
-		int i = 0;
-		for (String ins:usuarios) {
-			inst[i]=ins;
-			i++;
-		}
-		return inst;
-	}
-
-	public Usuario obtenerInfo(String nombre) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		return musus.buscarxNick(nombre);
+		ArrayList<String> usuarios = musus.obtenerSociosN();
+		return usuarios;
 	}
 	
+	public ArrayList<String> listarProfesoresN() {
+		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		ArrayList<String> usuarios = musus.obtenerSociosN();
+		return usuarios;
+	}
+	
+	public String[] listarUsuariosN() {
+		ArrayList<String> profes = listarProfesoresN();
+		ArrayList<String> socios = listarSociosN();
+		profes.addAll(socios);
+		String[] usuarios = (String[]) profes.toArray();
+		return usuarios;
+	}
+	
+	public ArrayList<String> listarSociosE() {
+		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		ArrayList<String> usuarios = musus.obtenerSociosE();
+		return usuarios;
+	}
+	
+	public ArrayList<String> listarProfesoresE() {
+		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		ArrayList<String> usuarios = musus.obtenerSociosE();
+		return usuarios;
+	}
+	
+	public String[] listarUsuariosE() {
+		ArrayList<String> profes = listarProfesoresE();
+		ArrayList<String> socios = listarSociosE();
+		profes.addAll(socios);
+		String[] usuarios = (String[]) profes.toArray();
+		return usuarios;
+	}
+	
+	public Profesor obtenerProfesor(String nickname) {
+		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		return musus.buscarProfesor(nickname);
+	}
+	
+	public Socio obtenerSocio(String nickname) {
+		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		return musus.buscarSocio(nickname);
+	}
+
 	public String[] listarInstituciones() {
 		ArrayList<String> instituciones;
 		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();

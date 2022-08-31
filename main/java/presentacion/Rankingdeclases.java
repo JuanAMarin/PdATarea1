@@ -6,6 +6,7 @@ import javax.swing.event.InternalFrameEvent;
 
 import interfaces.ICrankingdeclases;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -16,20 +17,20 @@ import java.awt.Color;
 
 
 public class Rankingdeclases extends JInternalFrame {
-	private ICrankingdeclases ICrc;
+	
 	private static final long serialVersionUID = 1L;
+	
+	private ICrankingdeclases ICrc;
 	
 	/**
 	 * Create the frame.
 	 */
 	
-	//DefaultListModel<String> modelolista = new DefaultListModel;
-	
 	private void formClose(){
 		///sdfsdfsdf
 	}
 	
-	public Rankingdeclases(ICrankingdeclases ICmodi) {
+	public Rankingdeclases(ICrankingdeclases ICranki) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
@@ -40,6 +41,7 @@ public class Rankingdeclases extends JInternalFrame {
 		setClosable(true);
 		
 		setTitle("Ranking de Dictado de Clases");
+		ICrc=ICranki;
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		setBounds(100, 100, 524, 440);
@@ -54,13 +56,16 @@ public class Rankingdeclases extends JInternalFrame {
 		});
 		btnSalir.setBounds(404, 378, 98, 23);
 		getContentPane().add(btnSalir);
-		
-		JList list = new JList();
+		DefaultListModel<String> modelo = new DefaultListModel<String>();
+		JList<String> list = new JList<String>();
 		list.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		list.setBackground(Color.WHITE);
 		list.setBounds(81, 23, 346, 333);
+		list.setModel(modelo);
+		for(String s: ICrc.obtenerRankingC()) {
+			modelo.addElement(s);
+		}
 		getContentPane().add(list);
-		
-		ICrc = ICmodi;
 	}
+	
 }

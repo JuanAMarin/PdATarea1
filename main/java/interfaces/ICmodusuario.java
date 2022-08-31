@@ -1,15 +1,22 @@
 package interfaces;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import logica.InstitucionDep;
-import logica.Usuario;
+import logica.Profesor;
+import logica.Socio;
 
 public interface ICmodusuario {
 	public abstract void modProfesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, InstitucionDep institucion);
 	public abstract void modSocio(String nickname, String nombre, String apellido, String email, Date fechaNac);
-	public abstract String[] listarUsuarios();
+	public ArrayList<String> listarSociosN();
+	public ArrayList<String> listarProfesoresN();
+	public String[] listarUsuariosN();
+	public ArrayList<String> listarSociosE();
+	public ArrayList<String> listarProfesoresE();
+	public String[] listarUsuariosE();
 	public abstract String[] listarInstituciones();
-	public abstract Usuario obtenerInfo(String nombre);
+	public abstract Profesor obtenerProfesor(String nickname);
+	public abstract Socio obtenerSocio(String nickname);
 }
-

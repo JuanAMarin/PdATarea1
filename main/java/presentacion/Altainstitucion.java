@@ -17,23 +17,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import interfaces.ICaltainstitucion;
 
-
-
-
 public class Altainstitucion extends JInternalFrame {
-	private ICaltainstitucion ICai;
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
+	
+	private ICaltainstitucion ICai;
+	
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JTextField textFieldNombre;
 	private JTextField textFieldDesc;
 	private JTextField textFieldUrl;
-	/**
-	 * Launch the application.
-	 */
 
 	/**
 	 * Create the frame.
@@ -90,11 +84,11 @@ public class Altainstitucion extends JInternalFrame {
 		lblMensaje.setBounds(19, 4, 170, 29);
 		getContentPane().add(lblMensaje);
 		
-		JLabel lblIns = new JLabel("NOMBRE INSTITUCION");
+		JLabel lblIns = new JLabel("NOMBRE INSTITUCIÓN");
 		lblIns.setBounds(19, 142, 236, 14);
 		getContentPane().add(lblIns);
 		
-		JLabel lblDesc = new JLabel("DESCRIPCION");
+		JLabel lblDesc = new JLabel("DESCRIPCIÓN");
 		lblDesc.setBounds(19, 177, 111, 14);
 		getContentPane().add(lblDesc);
 		
@@ -143,7 +137,7 @@ public class Altainstitucion extends JInternalFrame {
 			if (checkFormulario()) {
 	            try {
 	                ICai.altaInstitucion(nombre, descripcion, url);
-	                JOptionPane.showMessageDialog(this, "La Institucion "+nombre+" se ha creado con éxito", "Alta de Institucion",
+	                JOptionPane.showMessageDialog(this, "La Institución "+nombre+" se ha creado con éxito", "Alta de Institucion",
 	                        JOptionPane.INFORMATION_MESSAGE);
 	                limpiarFormulario();
 	                btnAceptar.setEnabled(false);

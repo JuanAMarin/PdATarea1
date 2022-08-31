@@ -12,7 +12,6 @@ import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -22,8 +21,13 @@ import java.awt.event.ActionEvent;
 
 public class Altaactividaddeportiva extends JInternalFrame {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private ICaltaactividaddeportiva ICaad;
-	JComboBox<String> cboInsti;
+	
+	private JTextField txtNombre;
+	private JTextField txtCosto;
+	private JComboBox<String> cboInsti;
 	
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
 		addInternalFrameListener(new InternalFrameAdapter() {
@@ -102,13 +106,13 @@ public class Altaactividaddeportiva extends JInternalFrame {
 
 			}
 		});
+		btnAceptar.setEnabled(false);
 		btnAceptar.setBounds(298, 376, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(404, 376, 98, 23);
 		getContentPane().add(btnCancelar);
-		
 		
 	}
 	
@@ -117,10 +121,5 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		cboInsti.setModel(modelinstituciones);
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField txtNombre;
-	private JTextField txtCosto;
 }
+

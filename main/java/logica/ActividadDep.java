@@ -2,8 +2,10 @@ package logica;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class ActividadDep {
@@ -13,7 +15,9 @@ public class ActividadDep {
 	private String descripcion;
 	private Integer duracion;
 	private float costo;
-	//private List<Clase> clases;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Clase> clases;
 	
 	
 	public ActividadDep() {
@@ -26,7 +30,7 @@ public class ActividadDep {
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.costo = costo;
-		//this.clases=new ArrayList<Clase>();
+		this.clases=new ArrayList<Clase>();
 	}
 
 	public String getNombre() {
@@ -45,13 +49,13 @@ public class ActividadDep {
 		return costo;
 	}
 
-	/*public List<Clase> getClases() {
+	public List<Clase> getClases() {
 		return clases;
 	}
 
 	public void setClases(List<Clase> clases) {
 		this.clases = clases;
-	}*/
+	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;

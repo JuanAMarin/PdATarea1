@@ -53,8 +53,4 @@ public class InstitucionDep {
 	public void setActividades(List<ActividadDep> actividades) {
 		this.actividades = actividades;
 	}
-	public ActividadDep buscarActividad(String nombre) {
-		//return actividades;
-		return null;
-	}
 }

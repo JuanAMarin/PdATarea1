@@ -1,12 +1,11 @@
 package presentacion;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import interfaces.*;
-import persistencia.Conexion;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -16,8 +15,6 @@ import javax.swing.UIManager;
 public class Principal {
 
 	private JFrame frmServidorCentral;
-	
-	Conexion cn = Conexion.getInstancia();
 	
 	private ICaltausuario ICau;
 	private Altausuario AltaUsuario;
@@ -33,10 +30,10 @@ public class Principal {
 	private Modusuario ModUsuario;
 	private ICaltaactividaddeportiva ICaad;
 	private Altaactividaddeportiva AltaActividadDeportiva;
-	private Altadictadoclase AltaDictadoClaseInternalFrame;
 	private ICaltadictadoclase ICac;
-
-
+	private Altadictadoclase AltaDictadoClaseInternalFrame;
+	private ICmodactividaddep ICmad;
+	private ModActividadDeportiva ModactividadDep;
 
 	/**
 	 * Launch the application.
@@ -79,6 +76,7 @@ public class Principal {
 		ICmu=fabrica.getICmodusuario();
 		ICaad=fabrica.getICaltaactividaddeportiva();
 		ICac=fabrica.getICaltadictadoclase();
+		ICmad=fabrica.getICmodactividaddep();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -116,6 +114,11 @@ public class Principal {
 		AltaDictadoClaseInternalFrame.setLocation(0,20);
 		AltaDictadoClaseInternalFrame.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
+		
+		ModactividadDep = new ModActividadDeportiva(ICmad);
+		ModactividadDep.setLocation(0,20);
+		ModactividadDep.setVisible(false);
+		frmServidorCentral.getContentPane().add(ModactividadDep);
 	}
 
 	/**
@@ -203,6 +206,14 @@ public class Principal {
 		
 		JMenuItem menuActividadM = new JMenuItem("Actividad");
 		menuModificar.add(menuActividadM);
+		menuActividadM.setSelected(true);
+		menuActividadM.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				ModactividadDep.inicializarComboBoxes();
+				limpiarVentanas();
+				ModactividadDep.setVisible(true);
+			}
+		});
 		
 		JMenuItem menuInstitucionM = new JMenuItem("Institucion");
 		menuInstitucionM.setSelected(true);
@@ -237,6 +248,7 @@ public class Principal {
 		menuUsuarioC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarVentanas();
+				consultaUsuario.cargarCombo();
 				consultaUsuario.setVisible(true);
 			}
 		});

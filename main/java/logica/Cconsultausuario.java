@@ -83,5 +83,4 @@ public class Cconsultausuario implements ICconsultausuario{
 		return profe;
 	}
 	
-	
 }

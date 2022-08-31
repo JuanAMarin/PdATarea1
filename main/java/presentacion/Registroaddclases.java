@@ -13,8 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 public class Registroaddclases extends JInternalFrame {
-	private ICrankingdeclases ICrc;
+	
 	private static final long serialVersionUID = 1L;
+	
+	private ICrankingdeclases ICrc;
 	
 	private JLabel lblUsuarioAñadido;
 	private JButton btnAceptar;
@@ -67,4 +69,3 @@ public class Registroaddclases extends JInternalFrame {
 		ICrc = ICmodi;
 	}
 }
-
