@@ -85,6 +85,11 @@ public class Principal {
 		AltaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaUsuario);
 		
+		consultaUsuario=new Consultausuario(ICcu);
+		consultaUsuario.setLocation(0,20);
+		consultaUsuario.setVisible(false);
+		frmServidorCentral.getContentPane().add(consultaUsuario);
+		
 		AltaInstitucion=new Altainstitucion(ICai);
 		AltaInstitucion.setLocation(0,20);
 		AltaInstitucion.setVisible(false);

@@ -18,6 +18,13 @@ public class ManejadorUsuarios {
         }
         return instancia;
     }
+    
+    public List<String> listarUsuarios() {
+    	List<String> lista = new ArrayList<>();
+    	lista = obtenerProfesoresN();
+    	lista.addAll(obtenerSociosN());
+		return lista;
+    }
 	
 	public void agregarProfesor(Profesor usu) {
 		Conexion conexion = Conexion.getInstancia();
@@ -80,57 +87,29 @@ public class ManejadorUsuarios {
 	public ArrayList<String> obtenerSociosN(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		
-		Query query = em.createQuery("select nickname from Socio");
-		List<Socio> listSocio = (List<Socio>) query.getResultList();
-		
-		ArrayList<String> aRetornar = new ArrayList<>();
-		for(Socio s: listSocio) {
-			aRetornar.add(s.getNickname());
-		}
-		return aRetornar;
+		Query query = em.createQuery("select s.nickname from Socio s");
+		return (ArrayList<String>) query.getResultList();
 	}
 	
 	public ArrayList<String> obtenerProfesoresN(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		
-		Query query = em.createQuery("select nickname from Profesor");
-		List<Profesor> listProfesor = (List<Profesor>) query.getResultList();
-		
-		ArrayList<String> aRetornar = new ArrayList<>();
-		for(Profesor p: listProfesor) {
-			aRetornar.add(p.getNickname());
-		}
-		return aRetornar;
+		Query query = em.createQuery("select p.nickname from Profesor p");
+		return (ArrayList<String>) query.getResultList();
 	}
 	
 	public ArrayList<String> obtenerSociosE(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		
-		Query query = em.createQuery("select email from Socio");
-		List<Socio> listSocio = (List<Socio>) query.getResultList();
-		
-		ArrayList<String> aRetornar = new ArrayList<>();
-		for(Socio s: listSocio) {
-			aRetornar.add(s.getEmail());
-		}
-		return aRetornar;
+		Query query = em.createQuery("select s.email from Socio s");
+		return (ArrayList<String>) query.getResultList();
 	}
 	
 	public ArrayList<String> obtenerProfesoresE(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		
-		Query query = em.createQuery("select email from Profesor");
-		List<Profesor> listProfesor = (List<Profesor>) query.getResultList();
-		
-		ArrayList<String> aRetornar = new ArrayList<>();
-		for(Profesor p: listProfesor) {
-			aRetornar.add(p.getEmail());
-		}
-		return aRetornar;
+		Query query = em.createQuery("select p.email from Profesor p");
+		return (ArrayList<String>) query.getResultList();
 	}
 
 }

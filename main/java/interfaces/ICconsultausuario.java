@@ -2,15 +2,13 @@ package interfaces;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import logica.Profesor;
 import logica.Socio;
 
 public interface ICconsultausuario {
-	public abstract void consultaUsuario(String nickname);
 	public abstract String[] listarUsuarios();
-	public ArrayList<String> listarSocios();
-	public ArrayList<String> listarProfesores();
 	public abstract String getNickname(); 
 	public abstract String getEmail(); 
 	public abstract String getNombre(); 
@@ -20,8 +18,7 @@ public interface ICconsultausuario {
 	public abstract String getSitioweb(); 
 	public abstract String getInstitucion(); 
 	public abstract Date getFechaNac(); 
-	public abstract boolean isProfe();
-	boolean esProfe(Socio s, Profesor p, String nickname); 
-
+	public abstract Profesor buscarProfesor(String nickname);
+	public abstract Socio buscarSocio(String nickname);
 	
 }

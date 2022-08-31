@@ -1,6 +1,8 @@
 package logica;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import interfaces.ICconsultausuario;
 
@@ -12,35 +14,6 @@ public class Cconsultausuario implements ICconsultausuario{
 	
 	public Cconsultausuario() {
 		super();
-	}
-	
-	public void consultaUsuario(String key) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		Usuario usu = musus.buscarUsuario(key);
-		Class<? extends Usuario> clase = usu.getClass();
-		String name = clase.getName();
-		if(name == "Profesor" ) {
-			Profesor prof = (Profesor) usu;
-			InstitucionDep insti;
-			this.profe=true;
-			this.nickname=prof.getNickname();
-			this.email=prof.getEmail();
-			this.nombre=prof.getNombre();
-			this.apellido=prof.getApellido();
-			this.fechaNac=prof.getFechaNac();
-			this.descripcion=prof.getDescripcion();
-			this.biografia=prof.getBiografia();
-			this.sitioweb=prof.getSitioweb();
-			insti=prof.getInstitucion();
-			this.institucion=insti.getNombre();
-		}else {
-			Socio socio = (Socio) usu;
-			this.nickname=socio.getNickname();
-			this.email=socio.getEmail();
-			this.nombre=socio.getNombre();
-			this.apellido=socio.getApellido();
-			this.fechaNac=socio.getFechaNac();
-		}
 	}
 
 	public String getNickname() {
@@ -82,5 +55,34 @@ public class Cconsultausuario implements ICconsultausuario{
 	public boolean isProfe() {
 		return profe;
 	}
+
+	@Override
+	public String[] listarUsuarios() {
+		ManejadorUsuarios mU = ManejadorUsuarios.getInstancia();
+		List<String> lista = mU.listarUsuarios();
+		String[] users = new String[lista.size()];
+		int i = 0;
+		for(String s: lista) {
+			users[i] = s;
+			i++;
+		}
+		return users;
+	}
+	
+	public Profesor buscarProfesor(String nickname) {
+		ManejadorUsuarios mU = ManejadorUsuarios.getInstancia();
+		Usuario user = mU.buscarProfesor(nickname);
+		Profesor profe = (Profesor) user;
+		return profe;
+	}
+	
+	public Socio buscarSocio(String nickname) {
+		ManejadorUsuarios mU = ManejadorUsuarios.getInstancia();
+		Usuario user = mU.buscarSocio(nickname);
+		Socio socio = (Socio) user;
+		return socio;
+	}
+
+	
 	
 }
