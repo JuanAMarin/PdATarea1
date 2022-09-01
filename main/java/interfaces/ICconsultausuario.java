@@ -1,8 +1,6 @@
 package interfaces;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import logica.Profesor;
 import logica.Socio;
@@ -20,5 +18,4 @@ public interface ICconsultausuario {
 	public abstract Date getFechaNac(); 
 	public abstract Profesor buscarProfesor(String nickname);
 	public abstract Socio buscarSocio(String nickname);
-	
 }

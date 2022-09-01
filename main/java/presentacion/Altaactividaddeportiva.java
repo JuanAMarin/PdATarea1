@@ -106,7 +106,6 @@ public class Altaactividaddeportiva extends JInternalFrame {
 
 			}
 		});
-		btnAceptar.setEnabled(false);
 		btnAceptar.setBounds(298, 376, 98, 23);
 		getContentPane().add(btnAceptar);
 		

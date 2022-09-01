@@ -5,6 +5,7 @@ import exceptions.ErrorFechaException;
 import exceptions.NicknameRepetidoException;
 import interfaces.ICaltausuario;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Caltausuario implements ICaltausuario{
@@ -59,5 +60,19 @@ public class Caltausuario implements ICaltausuario{
 			musus.agregarSocio(socio);
 		}
 	}
+	
+	public String[] listarInstituciones() {
+		ArrayList<String> instituciones;
+		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
+		instituciones = mI.obtenerInstituciones();
+		String[] inst = new String[instituciones.size()];
+		int i = 0;
+		for (String ins:instituciones) {
+			inst[i]=ins;
+			i++;
+		}
+		return inst;
+	}
+
 }
 

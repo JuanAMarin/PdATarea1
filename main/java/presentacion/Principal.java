@@ -56,12 +56,19 @@ public class Principal {
 	 */
 	
 	public void limpiarVentanas() {
+		AltaUsuario.formClose();
 		AltaUsuario.setVisible(false);
+		consultaUsuario.formClose();
 		consultaUsuario.setVisible(false);
+		//AltaInstitucion.formClose();
 		AltaInstitucion.setVisible(false);
+		//ModInstitucion.formClose();
 		ModInstitucion.setVisible(false);
+		//RankingClases.formClose();
 		RankingClases.setVisible(false);
+		//ModUsuario.formClose(); 
 		ModUsuario.setVisible(false);
+		//AltaActividadDeportiva.formClose();
 		AltaActividadDeportiva.setVisible(false);
 	}
 	public Principal() {
@@ -157,6 +164,7 @@ public class Principal {
 		menuUsuarioA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarVentanas();
+				AltaUsuario.inicializarComboBox();
 				AltaUsuario.setVisible(true);
 			}
 		});

@@ -64,9 +64,9 @@ public class Consultausuario extends JInternalFrame {
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
 		
-		JLabel lblNickname = new JLabel("Nickname");
+		JLabel lblNickname = new JLabel("NICKNAME");
 		lblNickname.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNickname.setBounds(23, 24, 116, 24);
+		lblNickname.setBounds(23, 24, 200, 24);
 		getContentPane().add(lblNickname);
 		
 		comboBoxNickname = new JComboBox<String>();
@@ -76,13 +76,13 @@ public class Consultausuario extends JInternalFrame {
 				Profesor p = ICcu.buscarProfesor(nickname);
 				if (p==null) {
 					Socio s = ICcu.buscarSocio(nickname);
-					lblMensajito.setText("Es Socio");
+					lblMensajito.setText("ES SOCIO");
 					txtEmail.setText(s.getEmail());
 					txtNombre.setText(s.getNombre());
 					txtApellido.setText(s.getApellido());
 					txtFechaNac.setText(s.getFechaNac().toString());
 				}else{
-					lblMensajito.setText("Es Profesor");
+					lblMensajito.setText("ES PROFESOR");
 					txtEmail.setText(p.getEmail());
 					txtNombre.setText(p.getNombre());
 					txtApellido.setText(p.getApellido());
@@ -139,37 +139,37 @@ public class Consultausuario extends JInternalFrame {
 		txtSitioWeb.setBounds(188, 269, 231, 24);
 		getContentPane().add(txtSitioWeb);
 		
-		JLabel lblEmail = new JLabel("Email");
+		JLabel lblEmail = new JLabel("EMAIL");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblEmail.setBounds(23, 59, 116, 24);
 		getContentPane().add(lblEmail);
 		
-		JLabel lblNombre = new JLabel("Nombre");
+		JLabel lblNombre = new JLabel("NOMBRE");
 		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNombre.setBounds(23, 94, 116, 24);
+		lblNombre.setBounds(23, 94, 179, 24);
 		getContentPane().add(lblNombre);
 		
-		JLabel lblApellido = new JLabel("Apellido");
+		JLabel lblApellido = new JLabel("APELLIDO");
 		lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblApellido.setBounds(23, 130, 116, 24);
+		lblApellido.setBounds(23, 130, 179, 24);
 		getContentPane().add(lblApellido);
 		
-		JLabel lblFechaNac = new JLabel("Fecha Nac.");
+		JLabel lblFechaNac = new JLabel("FECHA DE NACIMIENTO");
 		lblFechaNac.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFechaNac.setBounds(23, 164, 116, 24);
+		lblFechaNac.setBounds(23, 164, 290, 24);
 		getContentPane().add(lblFechaNac);
 		
-		JLabel lblDescripcion = new JLabel("Descripcion");
+		JLabel lblDescripcion = new JLabel("DECRIPCIÓN");
 		lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDescripcion.setBounds(23, 199, 116, 24);
 		getContentPane().add(lblDescripcion);
 		
-		JLabel lblBiografia = new JLabel("Biografia");
+		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
 		lblBiografia.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblBiografia.setBounds(23, 234, 116, 24);
 		getContentPane().add(lblBiografia);
 		
-		JLabel lblSitioWeb = new JLabel("Sitio Web");
+		JLabel lblSitioWeb = new JLabel("SITIO WEB");
 		lblSitioWeb.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblSitioWeb.setBounds(23, 269, 116, 24);
 		getContentPane().add(lblSitioWeb);
@@ -198,7 +198,7 @@ public class Consultausuario extends JInternalFrame {
 		comboBoxNickname.setModel(modelUsuarios);
 	}
 	
-	private void formClose(){
+	public void formClose(){
 		txtEmail.setText("");
 		txtNombre.setText("");
 		txtApellido.setText("");

@@ -8,5 +8,4 @@ public interface ICmodinstitucion {
 	public abstract InstitucionDep obtenerInfo(String nombre);
 	public abstract String[] listarActividades();
 	public abstract void eliminarAct(String nombreAct);
-
 }
