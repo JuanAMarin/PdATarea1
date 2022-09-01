@@ -35,28 +35,21 @@ public class Cregistrodeclases {
 	public void setActi(String acti) {
 		this.acti = acti;
 	}
-	
-	public String[] listarActividades() {
-		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		List<ActividadDep> actividades = mI.buscarInstitucion(this.insti).getActividades();
-		String[] act = new String[mI.buscarInstitucion(this.insti).getActividades().size()];
+		
+	public String[] listarActividades(String nombre) {
+		ArrayList<String> actividades;
+		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
+		actividades = mAD.listarActdeIns(nombre);
+		String[] act = new String[actividades.size()];
 		int i = 0;
-		for(ActividadDep a: actividades) {
-			act[i]=a.getNombre();
+		for (String ad:actividades) {
+			act[i]=ad;
 			i++;
 		}
 		return act;
 	}
 	
 	public List<String> obtInfoClases(String acti){
-		insti.
-	
-		
-		
-		
-		
-		
-		
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		Query query = em.createQuery("select * from Clase");

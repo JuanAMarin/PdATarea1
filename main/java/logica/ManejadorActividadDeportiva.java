@@ -3,6 +3,11 @@ package logica;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import persistencia.Conexion;
+
 public class ManejadorActividadDeportiva {
 	private static ManejadorActividadDeportiva instancia = null;
 	private List<ActividadDep> actividades = new ArrayList<>();
@@ -28,17 +33,16 @@ public class ManejadorActividadDeportiva {
 		return aretornar;
 	}
 	
-	public ArrayList<String> obtenerActividades(){
-		ArrayList<String> retorno = new ArrayList<>();
-		for(ActividadDep aux: actividades) {
-			retorno.add(aux.getNombre());
-		}
-		return retorno;
-	}
-	
 	public void eliminarActividad(String nombre) {
 		ActividadDep aEliminar= buscarActividad(nombre);
 		actividades.remove(aEliminar);
 	}
 
+	
+	public ArrayList<String> listarActdeIns(String nombre) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select  i.actividades_nombre from instituciondep_actividaddep i where i.instituciondep_='"+nombre+"'");
+		return (ArrayList<String>) query.getResultList();
+	}
 }
