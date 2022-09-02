@@ -68,7 +68,7 @@ public class Principal {
 		ModInstitucion.setVisible(false);
 		//RankingClases.formClose();
 		RankingClases.setVisible(false);
-		//ModUsuario.formClose(); 
+		ModUsuario.formClose(); 
 		ModUsuario.setVisible(false);
 		//AltaActividadDeportiva.formClose();
 		AltaActividadDeportiva.setVisible(false);
@@ -226,6 +226,7 @@ public class Principal {
 		menuUsuarioM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarVentanas();
+				ModUsuario.inicializarComboBox();
 				ModUsuario.setVisible(true);
 			}
 		});

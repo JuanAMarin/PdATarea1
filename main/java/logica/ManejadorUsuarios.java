@@ -45,15 +45,13 @@ public class ManejadorUsuarios {
 	public Profesor buscarProfesor(String nickname) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-			Profesor prof = em.find(Profesor.class, nickname);
-		return prof;
+		return em.find(Profesor.class, nickname);
 	}
 	
 	public Socio buscarSocio(String nickname) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-			Socio socio = em.find(Socio.class, nickname);
-		return socio;
+		return em.find(Socio.class, nickname);
 	}
 	
 	public boolean emailRepetido(String email) {
@@ -69,19 +67,6 @@ public class ManejadorUsuarios {
 		EntityManager em = conexion.getEntityManager();
 		Usuario usu = em.find(Usuario.class, nick);
 		return (usu != null);
-	}
-	public Socio buscarSocioN(String nickname) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select s from Socio s where s.nickname='"+nickname+"'");
-		return (Socio) query.getResultList();
-	}
-	
-	public Profesor buscarProfesorN(String nickname) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select p from Profesor p where p.nickname='"+nickname+"'");
-		return (Profesor) query.getResultList();
 	}
 	
 	public ArrayList<String> obtenerSociosN(){
@@ -110,6 +95,33 @@ public class ManejadorUsuarios {
 		EntityManager em = conexion.getEntityManager();
 		Query query = em.createQuery("select p.email from Profesor p");
 		return (ArrayList<String>) query.getResultList();
+	}
+	
+	public void modificarSoc(String nickname, String nombre, String apellido, Date fechaNac) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Socio socio = em.find(Socio.class, nickname);
+		socio.setNombre(nombre);
+		socio.setApellido(apellido);
+		socio.setFechaNac(fechaNac);
+		em.getTransaction().begin();
+		em.merge(socio);
+		em.getTransaction().commit();
+	}
+	
+	public void modificarProf(String nickname, String nombre, String apellido, Date fechaNac, String descripcion, String biografia, String sitioweb) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Profesor profesor = em.find(Profesor.class, nickname);
+		profesor.setNombre(nombre);
+		profesor.setApellido(apellido);
+		profesor.setFechaNac(fechaNac);
+		profesor.setBiografia(biografia);
+		profesor.setDescripcion(descripcion);
+		profesor.setSitioweb(sitioweb);
+		em.getTransaction().begin();
+		em.merge(profesor);
+		em.getTransaction().commit();
 	}
 
 }

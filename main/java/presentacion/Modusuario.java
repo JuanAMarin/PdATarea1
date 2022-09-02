@@ -10,10 +10,9 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 import interfaces.ICmodusuario;
-import logica.InstitucionDep;
-import logica.ManejadorInstituciones;
 import logica.Profesor;
 import logica.Socio;
 
@@ -33,8 +32,6 @@ public class Modusuario extends JInternalFrame {
 	private JTextField txtApellido;
 	private JTextField txtNombre;
 	private JComboBox<String> cboNicknames;
-	private JComboBox<String> cboInsti;
-	private JComboBox<String> cboEmail;
 	private JTextField txtBiografia;
 	private JRadioButton rdbtnProfesor;
 	private JRadioButton rdbtnSocio;
@@ -42,81 +39,88 @@ public class Modusuario extends JInternalFrame {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JButton btnVerInfo;
+	private JTextField txtEmail;
 
 	/**
 	 * Create the frame.
 	 */
-	private void limpiarFormulario() {
-		txtDescripcion.setText("");
-		txtApellido.setText("");
+	public void formClose() {
 		txtNombre.setText("");
+		txtApellido.setText("");
+		dateFechaNac.setCalendar(null);
+		txtEmail.setText("");
+		txtDescripcion.setText("");
 		txtSitioWeb.setText("");
 		txtBiografia.setText("");
+		rdbtnSocio.setSelected(false);
+		rdbtnProfesor.setSelected(false);
+		txtBiografia.setEnabled(false);
+		txtNombre.setEnabled(false);
+		txtApellido.setEnabled(false);
 	}
 	
 	public void inicializarComboBox() {
-		DefaultComboBoxModel<String> modelNicks = new DefaultComboBoxModel<String>(ICmu.listarUsuariosN());
+		DefaultComboBoxModel<String> modelNicks = new DefaultComboBoxModel<String>(ICmu.listarUsuarios());
 		cboNicknames.setModel(modelNicks);
-		
-		DefaultComboBoxModel<String> modelEmail = new DefaultComboBoxModel<String>(ICmu.listarUsuariosE());
-		cboNicknames.setModel(modelEmail);
-	
-		DefaultComboBoxModel<String> modelInsti = new DefaultComboBoxModel<String>(ICmu.listarInstituciones());
-		cboInsti.setModel(modelInsti);
 	}
 	
 	protected void verInfo(ActionEvent arg0) {
 		if(this.cboNicknames.getSelectedItem()!=null) {
 			String nickname = this.cboNicknames.getSelectedItem().toString();
-			String email = this.cboEmail.getSelectedItem().toString();
 			Profesor profe = ICmu.obtenerProfesor(nickname);
 			if(profe==null) {
+				rdbtnSocio.setSelected(true);
+				rdbtnProfesor.setSelected(false);
+				txtBiografia.setEnabled(false);
+				txtSitioWeb.setEnabled(false);
+				txtDescripcion.setEnabled(false);
 				Socio socio = ICmu.obtenerSocio(nickname);
 				txtApellido.setText(socio.getApellido());
 				txtNombre.setText(socio.getNombre());
 				dateFechaNac.setDate(socio.getFechaNac());
+				txtEmail.setText(socio.getEmail());
 			}else {
+				rdbtnSocio.setSelected(false);
+				rdbtnProfesor.setSelected(true);
+				txtBiografia.setEnabled(true);
+				txtSitioWeb.setEnabled(true);
+				txtDescripcion.setEnabled(true);
 				txtApellido.setText(profe.getApellido());
 				txtNombre.setText(profe.getNombre());
 				dateFechaNac.setDate(profe.getFechaNac());
 				txtDescripcion.setText(profe.getDescripcion());
 				txtBiografia.setText(profe.getBiografia());
 				txtSitioWeb.setText(profe.getSitioweb());
+				txtEmail.setText(profe.getEmail());
 			}
+			txtNombre.setEnabled(true);
+			txtApellido.setEnabled(true);
 		}
 	}
 	
 	protected void Aceptar(ActionEvent arg0){
 		String nickname=this.cboNicknames.getSelectedItem().toString();
-		String nombre=this.cboNicknames.getSelectedItem().toString();
-		String apellido=this.txtApellido.getSelectedText().toString();
-		String email=this.cboEmail.getSelectedItem().toString();
+		String nombre=this.txtNombre.getText();
+		String apellido=this.txtApellido.getText();
 		Date fecha=this.dateFechaNac.getDate();
-		String descripcion=this.txtDescripcion.getSelectedText().toString();
-		String biografia=this.txtBiografia.getSelectedText().toString();
-		String sitioweb=this.txtSitioWeb.getSelectedText().toString();
-		String insti=this.cboInsti.getSelectedItem().toString();
-		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		InstitucionDep institucion = mI.buscarInstitucion(insti);
+		
 		if (checkFormulario()) {
 			if(rdbtnProfesor.isSelected()) {
-				ICmu.modProfesor(nickname, nombre, apellido, email, fecha, descripcion, biografia, sitioweb, institucion);
+				String descripcion=this.txtDescripcion.getText();
+				String biografia=this.txtBiografia.getText();
+				String sitioweb=this.txtSitioWeb.getText();
+				ICmu.modProfesor(nickname, nombre, apellido, fecha, descripcion, biografia, sitioweb);
 			} else if(rdbtnSocio.isSelected()) {
-				ICmu.modSocio(nickname, nombre, apellido, email, fecha);
+				ICmu.modSocio(nickname, nombre, apellido, fecha);
 			}
-            JOptionPane.showMessageDialog(this, "La Institución "+nombre+" se ha modificado con Éxito", "Modificar Institución",
+            JOptionPane.showMessageDialog(this, "El Usuario "+nickname+" se ha modificado con Éxito", "Modificar Usuario",
                     JOptionPane.INFORMATION_MESSAGE);
-            limpiarFormulario();    
+            formClose();    
         }
 	}
 	
 	private boolean checkFormulario() {
-		String nombre=this.cboNicknames.getSelectedItem().toString();
-		String apellido=this.txtApellido.getSelectedText().toString();
-		String descripcion=this.txtDescripcion.getSelectedText().toString();
-		String biografia=this.txtBiografia.getSelectedText().toString();
-		String sitioweb=this.txtSitioWeb.getSelectedText().toString();
-        if (descripcion.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || biografia.isEmpty() || sitioweb.isEmpty()) {
+        if (txtDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtBiografia.getText().isEmpty() || txtSitioWeb.getText().isEmpty() || dateFechaNac.getDate()==null) {
             JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -128,7 +132,7 @@ public class Modusuario extends JInternalFrame {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				limpiarFormulario();
+				formClose();
 			}
 		});
 		setClosable(true);
@@ -184,10 +188,6 @@ public class Modusuario extends JInternalFrame {
 		lblSitioWeb.setBounds(31, 246, 139, 14);
 		getContentPane().add(lblSitioWeb);
 		
-		JLabel lblInstitucion = new JLabel("INSTITUCION");
-		lblInstitucion.setBounds(31, 270, 139, 14);
-		getContentPane().add(lblInstitucion);
-		
 		txtDescripcion = new JTextField();
 		txtDescripcion.setEnabled(false);
 		txtDescripcion.setColumns(10);
@@ -200,12 +200,9 @@ public class Modusuario extends JInternalFrame {
 		txtSitioWeb.setBounds(213, 244, 170, 20);
 		getContentPane().add(txtSitioWeb);
 		
-		cboInsti = new JComboBox<String>();
-		cboInsti.setEnabled(false);
-		cboInsti.setBounds(213, 266, 170, 22);
-		getContentPane().add(cboInsti);
-		
 		dateFechaNac = new JDateChooser();
+		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateFechaNac.getDateEditor();
+		editor.setEditable(false);
 		dateFechaNac.setBounds(213, 96, 170, 19);
 		getContentPane().add(dateFechaNac);
 		
@@ -252,16 +249,17 @@ public class Modusuario extends JInternalFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limpiarFormulario();
+				formClose();
 				setVisible(false);
 			}
 		});
 		btnCancelar.setBounds(403, 378, 98, 23);
 		getContentPane().add(btnCancelar);
 		
-		cboEmail = new JComboBox<String>();
-		cboEmail.setBounds(213, 121, 170, 22);
-		getContentPane().add(cboEmail);
+		txtEmail = new JTextField();
+		txtEmail.setEditable(false);
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(213, 120, 170, 20);
+		getContentPane().add(txtEmail);
 	}
-	
 }
