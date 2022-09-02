@@ -12,9 +12,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -55,11 +55,12 @@ public class Altausuario extends JInternalFrame {
 	private JLabel lblErrorEmail;
 	private JLabel lblErrorNickname;
 	private JLabel lblEmailEnUso;
+	private JLabel lblFechaNaci;
 	
 	/**
 	 * Create the frame.
 	 */
-	private void formClose(){
+	public void formClose(){
 		textNickname.setText("");
 		textNombre.setText("");
 		textApellido.setText("");
@@ -70,6 +71,14 @@ public class Altausuario extends JInternalFrame {
 		rdbtnProfesor.setSelected(false);
 		rdbtnSocio.setSelected(false);
 		dateFechaNac.setCalendar(null);
+		cboInsti.setAction(null);
+		textDescripcion.setText("");
+		textBiografia.setText("");
+		textSitioWeb.setText("");
+		cboInsti.setEnabled(false);
+		textDescripcion.setEnabled(false);
+		textBiografia.setEnabled(false);
+		textSitioWeb.setEnabled(false);
 	}
 	
 	private void changeTextFormat(JLabel l, Color c){
@@ -131,7 +140,7 @@ public class Altausuario extends JInternalFrame {
 		lblErrorNickname.setBounds(405, 50, 170, 13);
 		getContentPane().add(lblErrorNickname);
 		
-		lblErrorEmail = new JLabel("*Email incorrecto");
+		lblErrorEmail = new JLabel("*Email Incorrecto");
 		lblErrorEmail.setForeground(Color.RED);
 		lblErrorEmail.setBounds(405, 146, 170, 13);
 		getContentPane().add(lblErrorEmail);
@@ -150,6 +159,7 @@ public class Altausuario extends JInternalFrame {
 		dateFechaNac.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				lblErrorFecha.setVisible(false);
+				changeTextFormat(lblFechaNaci, Color.BLACK);
 			}
 		});
 		dateFechaNac.setBounds(225, 121, 170, 19);
@@ -159,7 +169,7 @@ public class Altausuario extends JInternalFrame {
 		JLabel lblMensaje = new JLabel("Complete los campos a continuación:");
 		lblMensaje.setToolTipText("");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblMensaje.setBounds(33, 10, 170, 29);
+		lblMensaje.setBounds(33, 10, 220, 29);
 		getContentPane().add(lblMensaje);
 		
 		JLabel lblNickname = new JLabel("NICKNAME");
@@ -180,7 +190,7 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(lblEmail);
 		lblErrorEmail.setVisible(false);
 		
-		JLabel lblFechaNaci = new JLabel("FECHA DE NACIMIENTO");
+		lblFechaNaci = new JLabel("FECHA DE NACIMIENTO");
 		lblFechaNaci.setBounds(43, 121, 183, 14);
 		getContentPane().add(lblFechaNaci);
 		
@@ -304,7 +314,7 @@ public class Altausuario extends JInternalFrame {
 		lblDescripcion.setBounds(43, 222, 125, 14);
 		getContentPane().add(lblDescripcion);
 		
-		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
+		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
 		lblBiografia.setBounds(43, 247, 139, 14);
 		getContentPane().add(lblBiografia);
 		
@@ -346,12 +356,6 @@ public class Altausuario extends JInternalFrame {
 		textSitioWeb.setColumns(10);
 		
 		cboInsti = new JComboBox<String>();
-		cboInsti.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
 		cboInsti.setBounds(225, 291, 170, 22);
 		getContentPane().add(cboInsti);
 		
@@ -403,14 +407,7 @@ public class Altausuario extends JInternalFrame {
 						ICau.datosProfesor(descripcion.toLowerCase(), biografia.toLowerCase(), sitioweb.toLowerCase(), insti, profe);
 					}
 					ICau.altausuario();
-					int delay = 2000; //milliseconds
-					ActionListener taskPerformer = new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							//JOptionPane.showMessageDialog(this, "El usuario "+nickname+" se ha creado con éxito", "Alta de Usuario",
-				                    //JOptionPane.INFORMATION_MESSAGE);
-					    }
-					};
-					new javax.swing.Timer(delay, taskPerformer).start();
+					llamadoMensajito(e,nickname);
 					formClose();
 				} catch (UsuarioRepetidoException e1) {
 					changeTextFormat(lblNickname, Color.RED);
@@ -434,5 +431,14 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(btnAceptar);
 		
 	}
+	
+	protected void llamadoMensajito(ActionEvent arg0, String nickname) {
+		JOptionPane.showMessageDialog(this, "El usuario "+nickname+" se ha creado con éxito", "Alta de Usuario",
+                JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void inicializarComboBox() {
+		DefaultComboBoxModel<String> modelInsti = new DefaultComboBoxModel<String>(ICau.listarInstituciones());
+		cboInsti.setModel(modelInsti);
+	}
 }
-
