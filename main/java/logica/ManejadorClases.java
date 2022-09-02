@@ -46,6 +46,20 @@ public class ManejadorClases {
 		return (List<Clase>) query.getResultList();
 	}
 	
+	public ArrayList<String> obtenerClases(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Query query = em.createQuery("select clas from Clase clas");
+		List<Clase> listclas = (List<Clase>) query.getResultList();
+		
+		ArrayList<String> aRetornar = new ArrayList<>();
+		for(Clase clas: listclas) {
+			aRetornar.add(clas.getNombre());
+		}
+		return aRetornar;
+	}
+	
 	/*public List<String> obtenerRanking(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();

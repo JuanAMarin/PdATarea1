@@ -2,6 +2,7 @@ package logica;
 
 import exceptions.ClaseRepetidaException;
 import exceptions.InstitucionRepetidaException;
+import exceptions.NoExisteProfesorException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,10 +42,10 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 	}
 
 	
-	public String[] listarActividades() {
+	public String[] listarActividades(String nombre) {
 		ArrayList<String> actividades;
 		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
-		actividades = mAD.obtenerActividades();
+		actividades = mAD.listarActdeIns(nombre);
 		String[] act = new String[actividades.size()];
 		int i = 0;
 		for (String ad:actividades) {
@@ -54,14 +55,16 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 		return act;
 	}
 	
-	public void altaClase(String nombre, String url, Date fecha, LocalDateTime fechaReg, DtHora HoraInicio, String profesor) throws ClaseRepetidaException {
+	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor) throws ClaseRepetidaException, NoExisteProfesorException {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
 		ManejadorClases mC = ManejadorClases.getInstancia(); 
-		Usuario usu = musus.buscarUsuario(profesor);
+		Profesor usu = musus.buscarProfesor(profesor);
 		Clase nuevaClase = mC.buscarClase(nombre);
 		if (nuevaClase != null)
 			throw new ClaseRepetidaException("La clase de nombre "+ nombre + " ya existe en el Sistema");
-		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio, usu);
+		if (usu == null)
+			throw new NoExisteProfesorException("El profesor con nickname "+ profesor + " no existe en el Sistema");
+		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio);
 		mC.agregarClase(c);	
 	}
 

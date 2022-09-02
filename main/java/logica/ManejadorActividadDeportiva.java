@@ -45,4 +45,11 @@ public class ManejadorActividadDeportiva {
 		Query query = em.createQuery("select a.nombre from InstitucionDep i inner join i.actividades a where i.nombre ='"+nombre+"'");
 		return (ArrayList<String>) query.getResultList();
 	}
+	
+	public ArrayList<String> obtenerActividades() {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select a.nombre from InstitucionDep i inner join i.actividades a");
+		return (ArrayList<String>) query.getResultList();
+	}
 }

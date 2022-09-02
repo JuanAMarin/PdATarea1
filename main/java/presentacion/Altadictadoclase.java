@@ -11,6 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -20,6 +22,7 @@ import datatypes.DtHora;
 
 import java.time.LocalDateTime;
 import exceptions.ClaseRepetidaException;
+import exceptions.NoExisteProfesorException;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -172,12 +175,12 @@ public class Altadictadoclase extends JInternalFrame{
 	public void inicializarComboBoxes() {
 		DefaultComboBoxModel<String> modelinstituciones = new DefaultComboBoxModel<String>(ICac.listarInstituciones());
 		comboBoxID.setModel(modelinstituciones);
-		DefaultComboBoxModel<String> modelactividades = new DefaultComboBoxModel<String>(ICac.listarActividades());
+		DefaultComboBoxModel<String> modelactividades = new DefaultComboBoxModel<String>(ICac.listarActividades((String)comboBoxID.getSelectedItem()));
 		comboBoxAD.setModel(modelactividades);
 	}
 	
 	protected void agregarClaseActionPerformed(ActionEvent arg0) throws ClaseRepetidaException {
-		LocalDateTime fechaReg = LocalDateTime.now();
+		Date fechaReg = new Date();
 		textField.setText(fechaReg.toString());
 		String strID = this.comboBoxID.getSelectedItem().toString();
 		String strAD = this.comboBoxAD.getSelectedItem().toString();
@@ -187,9 +190,25 @@ public class Altadictadoclase extends JInternalFrame{
 		String url = textFieldURL.getText();
 		Integer hora = (Integer) spinnerHora.getValue();
 		Integer min = (Integer) spinnerMin.getValue();
-		DtHora h = new DtHora(hora, min);
+		String sDate1 = "1900/01/01 " + hora + ":" + min + ":00";
+		Date h = null;
+		try {
+			h = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(sDate1);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		//Date h = "'1900-01-01 " + hora + ":" + min + ":00'";
+		//h.setHours(ABORT);
+		//DtHora h = new DtHora(hora, min);
 		if(checkFormulario()) {
-			ICac.altaClase(nombre, url, fecha, fechaReg, h, prof);
+			
+			try {
+				ICac.altaClase(nombre, url, fecha, fechaReg, h, prof);
+			} catch (ClaseRepetidaException e) {
+				e.printStackTrace();
+			} catch (NoExisteProfesorException e) {
+				e.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Éxito", "Alta de Dictado de Clase",
 	                JOptionPane.INFORMATION_MESSAGE);
 			limpiarFormulario();
