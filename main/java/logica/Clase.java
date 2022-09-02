@@ -16,8 +16,8 @@ public class Clase {
 	private String url;
 	private Date fecha, fechaReg, horaInicio;
 	
-	//@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
-	//private List<Registro> registros = new ArrayList<Registro>();;
+	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Registro> registros = new ArrayList<Registro>();;
 	
 	public Clase() {
 		super();
@@ -47,12 +47,12 @@ public class Clase {
 	public Date getHoraInicio() {
 		return horaInicio;
 	}
-	/*public List<Registro> getRegistros() {
+	public List<Registro> getRegistros() {
 		return registros;
 	}
 	public void setRegistros(List<Registro> registros) {
 		this.registros = registros;
-	}*/
+	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}

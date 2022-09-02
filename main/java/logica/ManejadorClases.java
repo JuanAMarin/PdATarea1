@@ -39,6 +39,13 @@ public class ManejadorClases {
 		return clase;
 	}
 	
+	public List<Clase> listarClasesDeAct(String nombre) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select c from ActividadDep a inner join a.clases c where a.nombre ='"+nombre+"'");
+		return (List<Clase>) query.getResultList();
+	}
+	
 	/*public List<String> obtenerRanking(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();

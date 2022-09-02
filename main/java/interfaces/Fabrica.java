@@ -9,6 +9,7 @@ import logica.Cmodactividaddep;
 import logica.Cmodinstitucion;
 import logica.Cmodusuario;
 import logica.Crankingdeclases;
+import logica.Cregistrodeclases;
 
 public class Fabrica {
 	
@@ -54,6 +55,10 @@ public class Fabrica {
 	
 	public ICmodactividaddep getICmodactividaddep() {
 		return new Cmodactividaddep();
+	}
+
+	public ICregistrodeclases getICregistrodeclases() {
+		return new Cregistrodeclases();
 	}
 	
 }

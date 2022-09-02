@@ -8,9 +8,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import interfaces.ICregistrodeclases;
 import persistencia.Conexion;
 
-public class Cregistrodeclases {
+public class Cregistrodeclases implements ICregistrodeclases {
 	
 	private String insti;
 	private String acti;
@@ -48,6 +49,12 @@ public class Cregistrodeclases {
 		}
 		return act;
 	}
+	
+	public List<Clase> listarClases(String nombre){
+		ManejadorClases mC = ManejadorClases.getInstancia();		
+		return mC.listarClasesDeAct(nombre);		
+	}
+
 	
 	public List<String> obtInfoClases(String acti){
 		Conexion conexion = Conexion.getInstancia();

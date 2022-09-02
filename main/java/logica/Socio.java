@@ -10,8 +10,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Socio extends Usuario{
-	//@OneToMany(mappedBy="socio",cascade=CascadeType.ALL,orphanRemoval=true)
-	//private List<Registro> registros = new ArrayList<Registro>();
+	@OneToMany(mappedBy="socio",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Registro> registros = new ArrayList<Registro>();
 	
 	public Socio() {
 		super();
@@ -21,11 +21,11 @@ public class Socio extends Usuario{
 		super(nickname, nombre, apellido, email, fechaNac);
 	}
 
-	/*public List<Registro> getRegistros() {
+	public List<Registro> getRegistros() {
 		return registros;
 	}
 
 	public void setRegistros(List<Registro> registros) {
 		this.registros = registros;
-	}*/
+	}
 }

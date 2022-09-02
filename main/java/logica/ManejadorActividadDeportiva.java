@@ -42,7 +42,7 @@ public class ManejadorActividadDeportiva {
 	public ArrayList<String> listarActdeIns(String nombre) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select  i.actividades_nombre from instituciondep_actividaddep i where i.instituciondep_='"+nombre+"'");
+		Query query = em.createQuery("select a.nombre from InstitucionDep i inner join i.actividades a where i.nombre ='"+nombre+"'");
 		return (ArrayList<String>) query.getResultList();
 	}
 }

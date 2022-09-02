@@ -34,6 +34,8 @@ public class Principal {
 	private Altadictadoclase AltaDictadoClaseInternalFrame;
 	private ICmodactividaddep ICmad;
 	private ModActividadDeportiva ModactividadDep;
+	private ICregistrodeclases ICrcs;
+	private Registroaddclases Registro;
 
 	/**
 	 * Launch the application.
@@ -84,6 +86,7 @@ public class Principal {
 		ICaad=fabrica.getICaltaactividaddeportiva();
 		ICac=fabrica.getICaltadictadoclase();
 		ICmad=fabrica.getICmodactividaddep();
+		ICrcs=fabrica.getICregistrodeclases();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -131,6 +134,11 @@ public class Principal {
 		ModactividadDep.setLocation(0,20);
 		ModactividadDep.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModactividadDep);
+		
+		Registro=new Registroaddclases(ICrcs);
+		Registro.setLocation(0,20);
+		Registro.setVisible(false);
+		frmServidorCentral.getContentPane().add(Registro);
 	}
 
 	/**
@@ -203,6 +211,12 @@ public class Principal {
 		menuPrincipal.add(menuRegistrar);
 		
 		JMenuItem menuInscripcion = new JMenuItem("Inscripcion a clase");
+		menuInscripcion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Registro.inicializarComboBoxes();
+				Registro.setVisible(true);
+			}
+		});
 		menuRegistrar.add(menuInscripcion);
 		
 		JMenu menuModificar = new JMenu("Modificar");
