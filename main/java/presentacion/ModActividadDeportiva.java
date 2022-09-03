@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ModActividadDeportiva extends JInternalFrame {
+public class Modactividaddeportiva extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -37,7 +37,7 @@ public class ModActividadDeportiva extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnVer;
 	
-	public ModActividadDeportiva(ICmodactividaddep ICmad) {
+	public Modactividaddeportiva(ICmodactividaddep ICmad) {
 		ICMad = ICmad; 
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -175,13 +175,13 @@ public class ModActividadDeportiva extends JInternalFrame {
 			ICMad.ModActividadDeportiva(nombre, descripcion, duracion, costo);
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con Ã©xito", "Modificar Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
-            limpiarFormulario();
+			formClose();
             setVisible(false);  
 		}
 	}
 	
 	protected void CancelarActionPerformed(ActionEvent arg0) {
-		limpiarFormulario();
+		formClose();
 		setVisible(false);
 	}
 	
@@ -197,7 +197,7 @@ public class ModActividadDeportiva extends JInternalFrame {
         return true;
     }
 	
-	private void limpiarFormulario() {
+	public void formClose() {
         textFieldNombre.setText(null);
 		textFieldDesc.setText(null);
         textFieldDuracion.setText(null);

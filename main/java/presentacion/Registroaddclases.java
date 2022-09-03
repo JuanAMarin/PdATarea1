@@ -11,9 +11,7 @@ import logica.Clase;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -23,8 +21,6 @@ public class Registroaddclases extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private ICregistrodeclases ICrc;
-	
-	private JLabel lblUsuarioAñadido;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JLabel lblActividad;
@@ -36,9 +32,6 @@ public class Registroaddclases extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	private void formClose(){
-		///sdfsdfsdf
-	}
 	
 	public void inicializarComboBoxes() {
 		DefaultComboBoxModel<String> modelinstituciones = new DefaultComboBoxModel<String>(ICrc.listarInstituciones());
@@ -60,11 +53,9 @@ public class Registroaddclases extends JInternalFrame {
 		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         // The 0 argument is number rows.
 		tabClases = new JTable(tableModel);
-		int i = 0;
 		for (Clase c:ICrc.listarClases(actividad)) {
 			Object[] ob = {c.getNombre(),c.getFecha().toString(),c.getHoraInicio().toString(),c.getUrl()};
 			tableModel.addRow(ob);
-			i++;
 		}
 	}
 	
@@ -72,7 +63,6 @@ public class Registroaddclases extends JInternalFrame {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				formClose();
 				setVisible(false);
 			}
 		});
@@ -84,16 +74,9 @@ public class Registroaddclases extends JInternalFrame {
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
 		
-		lblUsuarioAñadido = new JLabel("Usuario añadido exitosamente!!!");
-		lblUsuarioAñadido.setForeground(new Color(50, 205, 50));
-		lblUsuarioAñadido.setBounds(95, 381, 215, 13);
-		getContentPane().add(lblUsuarioAñadido);
-		lblUsuarioAñadido.setVisible(false);
-		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				formClose();
 				setVisible(false);
 			}
 		});

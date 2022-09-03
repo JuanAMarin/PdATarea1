@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.Color;
 
 @SuppressWarnings("unused")
 public class Consultausuario extends JInternalFrame {
@@ -43,6 +44,13 @@ public class Consultausuario extends JInternalFrame {
 	private JTextField txtSitioWeb;
 	private JRadioButton rdbtnProfe;
 	private JLabel lblMensajito;
+	private JLabel lblNombre;
+	private JLabel lblApellido;
+	private JLabel lblFechaNaci;
+	private JLabel lblEmail;
+	private JLabel lblDescripcion;
+	private JLabel lblBiografia;
+	private JLabel lblSitioWeb;
 
 	/**
 	 * Create the frame.
@@ -63,11 +71,6 @@ public class Consultausuario extends JInternalFrame {
 		getContentPane().setLayout(null);
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
-		
-		JLabel lblNickname = new JLabel("NICKNAME");
-		lblNickname.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNickname.setBounds(23, 24, 200, 24);
-		getContentPane().add(lblNickname);
 		
 		comboBoxNickname = new JComboBox<String>();
 		comboBoxNickname.addActionListener(new ActionListener() {
@@ -139,41 +142,6 @@ public class Consultausuario extends JInternalFrame {
 		txtSitioWeb.setBounds(188, 269, 231, 24);
 		getContentPane().add(txtSitioWeb);
 		
-		JLabel lblEmail = new JLabel("EMAIL");
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblEmail.setBounds(23, 59, 116, 24);
-		getContentPane().add(lblEmail);
-		
-		JLabel lblNombre = new JLabel("NOMBRE");
-		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNombre.setBounds(23, 94, 179, 24);
-		getContentPane().add(lblNombre);
-		
-		JLabel lblApellido = new JLabel("APELLIDO");
-		lblApellido.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblApellido.setBounds(23, 130, 179, 24);
-		getContentPane().add(lblApellido);
-		
-		JLabel lblFechaNac = new JLabel("FECHA DE NACIMIENTO");
-		lblFechaNac.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblFechaNac.setBounds(23, 164, 290, 24);
-		getContentPane().add(lblFechaNac);
-		
-		JLabel lblDescripcion = new JLabel("DECRIPCIÓN");
-		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblDescripcion.setBounds(23, 199, 116, 24);
-		getContentPane().add(lblDescripcion);
-		
-		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
-		lblBiografia.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblBiografia.setBounds(23, 234, 116, 24);
-		getContentPane().add(lblBiografia);
-		
-		JLabel lblSitioWeb = new JLabel("SITIO WEB");
-		lblSitioWeb.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblSitioWeb.setBounds(23, 269, 116, 24);
-		getContentPane().add(lblSitioWeb);
-		
 		lblMensajito = new JLabel("New label");
 		lblMensajito.setVisible(false);
 		lblMensajito.setHorizontalAlignment(SwingConstants.CENTER);
@@ -190,6 +158,38 @@ public class Consultausuario extends JInternalFrame {
 		});
 		btnSalir.setBounds(400, 376, 98, 23);
 		getContentPane().add(btnSalir);
+		
+		JLabel lblNickname = new JLabel("NICKNAME");
+		lblNickname.setBounds(23, 32, 139, 14);
+		getContentPane().add(lblNickname);
+		
+		lblNombre = new JLabel("NOMBRE");
+		lblNombre.setBounds(23, 99, 139, 14);
+		getContentPane().add(lblNombre);
+		
+		lblApellido = new JLabel("APELLIDO");
+		lblApellido.setBounds(23, 133, 125, 14);
+		getContentPane().add(lblApellido);
+		
+		lblFechaNaci = new JLabel("FECHA DE NACIMIENTO");
+		lblFechaNaci.setBounds(23, 168, 183, 14);
+		getContentPane().add(lblFechaNaci);
+		
+		lblEmail = new JLabel("EMAIL");
+		lblEmail.setBounds(23, 63, 99, 14);
+		getContentPane().add(lblEmail);
+		
+		lblDescripcion = new JLabel("DESCRIPCIÓN");
+		lblDescripcion.setBounds(23, 203, 125, 14);
+		getContentPane().add(lblDescripcion);
+		
+		lblBiografia = new JLabel("BIOGRAFÍA");
+		lblBiografia.setBounds(23, 238, 139, 14);
+		getContentPane().add(lblBiografia);
+		
+		lblSitioWeb = new JLabel("SITIO WEB");
+		lblSitioWeb.setBounds(23, 273, 139, 14);
+		getContentPane().add(lblSitioWeb);
 
 	}
 	

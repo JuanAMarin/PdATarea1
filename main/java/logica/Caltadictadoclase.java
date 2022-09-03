@@ -1,15 +1,11 @@
 package logica;
 
 import exceptions.ClaseRepetidaException;
-import exceptions.InstitucionRepetidaException;
-import exceptions.NoExisteProfesorException;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import datatypes.DtClase;
-import datatypes.DtHora;
 import interfaces.ICaltadictadoclase;
 
 public class Caltadictadoclase implements ICaltadictadoclase {
@@ -55,20 +51,29 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 		return act;
 	}
 	
-	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor) throws ClaseRepetidaException, NoExisteProfesorException {
+	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor) throws ClaseRepetidaException {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
 		ManejadorClases mC = ManejadorClases.getInstancia(); 
 		Profesor usu = musus.buscarProfesor(profesor);
 		Clase nuevaClase = mC.buscarClase(nombre);
 		if (nuevaClase != null)
 			throw new ClaseRepetidaException("La clase de nombre "+ nombre + " ya existe en el Sistema");
-		if (usu == null)
-			throw new NoExisteProfesorException("El profesor con nickname "+ profesor + " no existe en el Sistema");
 		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio);
 		mC.agregarClase(c);	
 	}
 
-	
+	@Override
+	public String[] listarProfesores(String insti) {
+		ManejadorUsuarios mU = ManejadorUsuarios.getInstancia();
+		List<String> lista = mU.obtenerProfesoresInst(insti);
+		String[] users = new String[lista.size()];
+		int i = 0;
+		for(String s: lista) {
+			users[i] = s;
+			i++;
+		}
+		return users;
+	}
 
 }
 

@@ -33,7 +33,7 @@ public class Principal {
 	private ICaltadictadoclase ICac;
 	private Altadictadoclase AltaDictadoClaseInternalFrame;
 	private ICmodactividaddep ICmad;
-	private ModActividadDeportiva ModactividadDep;
+	private Modactividaddeportiva ModactividadDep;
 	private ICregistrodeclases ICrcs;
 	private Registroaddclases Registro;
 
@@ -66,12 +66,16 @@ public class Principal {
 		AltaInstitucion.setVisible(false);
 		//ModInstitucion.formClose();
 		ModInstitucion.setVisible(false);
-		//RankingClases.formClose();
 		RankingClases.setVisible(false);
 		ModUsuario.formClose(); 
 		ModUsuario.setVisible(false);
 		//AltaActividadDeportiva.formClose();
 		AltaActividadDeportiva.setVisible(false);
+		AltaDictadoClaseInternalFrame.formClose();
+		AltaDictadoClaseInternalFrame.setVisible(false);
+		Registro.setVisible(false);
+		ModactividadDep.formClose();
+		ModactividadDep.setVisible(false);
 	}
 	public Principal() {
 		initialize();
@@ -130,7 +134,7 @@ public class Principal {
 		AltaDictadoClaseInternalFrame.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
 		
-		ModactividadDep = new ModActividadDeportiva(ICmad);
+		ModactividadDep = new Modactividaddeportiva(ICmad);
 		ModactividadDep.setLocation(0,20);
 		ModactividadDep.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModactividadDep);
@@ -191,7 +195,10 @@ public class Principal {
 		JMenuItem menuClaseA = new JMenuItem("Clase");
 		menuClaseA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AltaDictadoClaseInternalFrame.inicializarComboBoxes();
+				limpiarVentanas();
+				AltaDictadoClaseInternalFrame.inicializarComboBoxID();
+				AltaDictadoClaseInternalFrame.inicializarComboBoxAD();
+				AltaDictadoClaseInternalFrame.inicializarComboBoxP();
 				AltaDictadoClaseInternalFrame.setVisible(true);
 			}
 		});
@@ -213,6 +220,7 @@ public class Principal {
 		JMenuItem menuInscripcion = new JMenuItem("Inscripcion a clase");
 		menuInscripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
 				Registro.inicializarComboBoxes();
 				Registro.setVisible(true);
 			}
@@ -237,8 +245,8 @@ public class Principal {
 		menuActividadM.setSelected(true);
 		menuActividadM.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ModactividadDep.inicializarComboBoxes();
 				limpiarVentanas();
+				ModactividadDep.inicializarComboBoxes();
 				ModactividadDep.setVisible(true);
 			}
 		});
@@ -247,8 +255,8 @@ public class Principal {
 		menuInstitucionM.setSelected(true);
 		menuInstitucionM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModInstitucion.inicializarComboBox();
 				limpiarVentanas();
+				ModInstitucion.inicializarComboBox();
 				ModInstitucion.setVisible(true);
 			}
 		});

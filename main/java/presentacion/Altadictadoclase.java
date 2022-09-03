@@ -11,21 +11,22 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
-import datatypes.DtHora;
-
-import java.time.LocalDateTime;
 import exceptions.ClaseRepetidaException;
-import exceptions.NoExisteProfesorException;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 public class Altadictadoclase extends JInternalFrame{
 
@@ -37,6 +38,7 @@ public class Altadictadoclase extends JInternalFrame{
 	private JLabel lblNewLabelAD;
 	private JComboBox<String> comboBoxID;
 	private JComboBox<String> comboBoxAD;
+	private JComboBox<String> comboBoxProfe;
 	private JButton btnAceptar;
 	private JLabel lblMensaje;
 	private JLabel lblNewLabelNombre;
@@ -47,28 +49,40 @@ public class Altadictadoclase extends JInternalFrame{
 	private JSpinner spinnerHora;
 	private JSpinner spinnerMin;
 	private JLabel lblNewLabelProfesor;
-	private JTextField textFieldProfesor;
 	private JLabel lblNewLabelURL;
 	private JTextField textFieldURL;
 	private JTextField textField;
 	private JButton btnCancelar;
 	private JLabel lblNewLabelFechaR;
-
+	
+	public void habilitarAceptar() {
+		if (!textFieldNombre.getText().isEmpty() && !textFieldURL.getText().isEmpty()
+			&& !((JTextField)dateFecha.getDateEditor().getUiComponent()).getText().isEmpty())
+				btnAceptar.setEnabled(true);
+		else
+				btnAceptar.setEnabled(false);
+	}
 	
 	public Altadictadoclase(ICaltadictadoclase icac) {
-		this.ICac = icac;
+		addInternalFrameListener(new InternalFrameAdapter() {
+			@Override
+			public void internalFrameClosing(InternalFrameEvent e) {
+				formClose();
+			}
+		});
 		setClosable(true);
+		this.ICac = icac;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Alta de Dictado de Clase");
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
 		
 		lblNewLabelID = new JLabel("INSTITUCIÓN DEPORTIVA");
-		lblNewLabelID.setBounds(60, 36, 139, 14);
+		lblNewLabelID.setBounds(60, 36, 194, 14);
 		getContentPane().add(lblNewLabelID);
 		
 		lblNewLabelAD = new JLabel("ACTIVIDADES DEPORTIVAS");
-		lblNewLabelAD.setBounds(60, 76, 139, 14);
+		lblNewLabelAD.setBounds(60, 76, 226, 14);
 		getContentPane().add(lblNewLabelAD);
 		
 		comboBoxID = new JComboBox<String>();
@@ -80,6 +94,7 @@ public class Altadictadoclase extends JInternalFrame{
 		getContentPane().add(comboBoxAD);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setEnabled(false);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -104,7 +119,7 @@ public class Altadictadoclase extends JInternalFrame{
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(245, 166, 170, 20);
+		textFieldNombre.setBounds(245, 167, 170, 20);
 		getContentPane().add(textFieldNombre);
 		
 		lblNewLabelFecha = new JLabel("FECHA DE INICIO");
@@ -112,8 +127,19 @@ public class Altadictadoclase extends JInternalFrame{
 		getContentPane().add(lblNewLabelFecha);
 		
 		dateFecha = new JDateChooser();
-		dateFecha.getCalendarButton().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateFecha.getDateEditor();
+		editor.setEditable(false);
+		dateFecha.getDateEditor().addPropertyChangeListener(
+			    new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			        	habilitarAceptar();
+			        }
+			    });
+		dateFecha.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				//lblErrorFecha.setVisible(false);
+				//changeTextFormat(lblFecha, Color.BLACK);
 			}
 		});
 		dateFecha.setBounds(245, 197, 170, 19);
@@ -136,11 +162,6 @@ public class Altadictadoclase extends JInternalFrame{
 		lblNewLabelProfesor = new JLabel("PROFESOR");
 		lblNewLabelProfesor.setBounds(60, 268, 139, 14);
 		getContentPane().add(lblNewLabelProfesor);
-		
-		textFieldProfesor = new JTextField();
-		textFieldProfesor.setColumns(10);
-		textFieldProfesor.setBounds(245, 265, 170, 20);
-		getContentPane().add(textFieldProfesor);
 		
 		lblNewLabelURL = new JLabel("URL");
 		lblNewLabelURL.setBounds(60, 299, 139, 14);
@@ -170,23 +191,35 @@ public class Altadictadoclase extends JInternalFrame{
 		btnCancelar.setBounds(400, 376, 98, 23);
 		getContentPane().add(btnCancelar);
 		
+		comboBoxProfe = new JComboBox<String>();
+		comboBoxProfe.setBounds(245, 264, 170, 20);
+		getContentPane().add(comboBoxProfe);
+		
 	}
 	
-	public void inicializarComboBoxes() {
+	public void inicializarComboBoxID() {
 		DefaultComboBoxModel<String> modelinstituciones = new DefaultComboBoxModel<String>(ICac.listarInstituciones());
 		comboBoxID.setModel(modelinstituciones);
+	}
+	
+	public void inicializarComboBoxAD() {
 		DefaultComboBoxModel<String> modelactividades = new DefaultComboBoxModel<String>(ICac.listarActividades((String)comboBoxID.getSelectedItem()));
 		comboBoxAD.setModel(modelactividades);
+	}
+	
+	public void inicializarComboBoxP() {
+		DefaultComboBoxModel<String> modelProfesores = new DefaultComboBoxModel<String>(ICac.listarProfesores((String)comboBoxID.getSelectedItem()));
+		comboBoxProfe.setModel(modelProfesores);
 	}
 	
 	protected void agregarClaseActionPerformed(ActionEvent arg0) throws ClaseRepetidaException {
 		Date fechaReg = new Date();
 		textField.setText(fechaReg.toString());
-		String strID = this.comboBoxID.getSelectedItem().toString();
-		String strAD = this.comboBoxAD.getSelectedItem().toString();
+		String strID = comboBoxID.getSelectedItem().toString();
+		String strAD = comboBoxAD.getSelectedItem().toString();
 		String nombre=textFieldNombre.getText();
 		Date fecha = dateFecha.getDate();
-		String prof = textFieldProfesor.getText();
+		String prof = comboBoxProfe.getSelectedItem().toString();
 		String url = textFieldURL.getText();
 		Integer hora = (Integer) spinnerHora.getValue();
 		Integer min = (Integer) spinnerMin.getValue();
@@ -206,29 +239,27 @@ public class Altadictadoclase extends JInternalFrame{
 				ICac.altaClase(nombre, url, fecha, fechaReg, h, prof);
 			} catch (ClaseRepetidaException e) {
 				e.printStackTrace();
-			} catch (NoExisteProfesorException e) {
-				e.printStackTrace();
 			}
 			JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Éxito", "Alta de Dictado de Clase",
 	                JOptionPane.INFORMATION_MESSAGE);
-			limpiarFormulario();
+			formClose();
 			setVisible(false); 
 		}
 			
 	}
 	
 	protected void cancelarActionPerformed(ActionEvent arg0) {
-		limpiarFormulario();
+		formClose();
 		setVisible(false);  
 	}
 	
 	
 	private boolean checkFormulario() {
-		String strID = this.comboBoxID.getSelectedItem().toString();
-		String strAD = this.comboBoxAD.getSelectedItem().toString();
+		String strID = comboBoxID.getSelectedItem().toString();
+		String strAD = comboBoxAD.getSelectedItem().toString();
 		String nombre=textFieldNombre.getText();
 		String fecha = dateFecha.getDateFormatString();
-		String prof = textFieldProfesor.getText();
+		String prof = comboBoxProfe.getSelectedItem().toString();
 		String url = textFieldURL.getText();
 		if(strID.isEmpty() || strAD.isEmpty() || nombre.isEmpty() || fecha.isEmpty() || prof.isEmpty() || url.isEmpty() || url.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Alta Dictado Clase",
@@ -238,12 +269,13 @@ public class Altadictadoclase extends JInternalFrame{
 		return true;
 	}
 	
-	private void limpiarFormulario() {
+	public void formClose() {
         textFieldNombre.setText(null);
-		textFieldProfesor.setText(null);
         textFieldURL.setText(null);
+        dateFecha.setCalendar(null);
+        spinnerHora.setValue(0);
+        spinnerMin.setValue(0);
 	 }
-	
 }
 
 
