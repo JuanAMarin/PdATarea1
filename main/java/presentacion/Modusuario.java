@@ -120,12 +120,22 @@ public class Modusuario extends JInternalFrame {
 	}
 	
 	private boolean checkFormulario() {
-        if (txtDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtBiografia.getText().isEmpty() || txtSitioWeb.getText().isEmpty() || dateFechaNac.getDate()==null) {
-            JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
+		if(rdbtnProfesor.isSelected()) {
+	        if (txtDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtBiografia.getText().isEmpty() || txtSitioWeb.getText().isEmpty() || dateFechaNac.getDate()==null) {
+	            JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
+	                    JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+	        return true;
+		}else {
+			if (txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || dateFechaNac.getDate()==null) {
+	            JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
+	                    JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+	        return true;
+		}
+			
     }
 	
 	public Modusuario(ICmodusuario ICmodusu) {

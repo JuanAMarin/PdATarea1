@@ -86,6 +86,11 @@ public class Altadictadoclase extends JInternalFrame{
 		getContentPane().add(lblNewLabelAD);
 		
 		comboBoxID = new JComboBox<String>();
+		comboBoxID.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				inicializarComboBoxAD();
+			}
+		});
 		comboBoxID.setBounds(245, 33, 170, 20);
 		getContentPane().add(comboBoxID);
 		
@@ -230,9 +235,6 @@ public class Altadictadoclase extends JInternalFrame{
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		//Date h = "'1900-01-01 " + hora + ":" + min + ":00'";
-		//h.setHours(ABORT);
-		//DtHora h = new DtHora(hora, min);
 		if(checkFormulario()) {
 			
 			try {

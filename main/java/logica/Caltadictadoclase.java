@@ -4,6 +4,7 @@ import exceptions.ClaseRepetidaException;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import interfaces.ICaltadictadoclase;
@@ -39,9 +40,13 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 
 	
 	public String[] listarActividades(String nombre) {
-		ArrayList<String> actividades;
-		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
-		actividades = mAD.listarActdeIns(nombre);
+		ArrayList<String> actividades = new ArrayList<>();
+		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
+		List<ActividadDep> actividadesL = mI.buscarInstitucion(nombre).getActividades();
+		Iterator<ActividadDep> it = actividadesL.iterator();
+		while(it.hasNext()) {
+		      actividades.add(it.next().getNombre());
+		}
 		String[] act = new String[actividades.size()];
 		int i = 0;
 		for (String ad:actividades) {
@@ -54,12 +59,11 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor) throws ClaseRepetidaException {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
 		ManejadorClases mC = ManejadorClases.getInstancia(); 
-		Profesor usu = musus.buscarProfesor(profesor);
 		Clase nuevaClase = mC.buscarClase(nombre);
 		if (nuevaClase != null)
 			throw new ClaseRepetidaException("La clase de nombre "+ nombre + " ya existe en el Sistema");
 		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio);
-		mC.agregarClase(c);	
+		musus.addClase(profesor, c);
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Modactividaddeportiva extends JInternalFrame {
+public class ModActividadDeportiva extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -37,7 +37,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnVer;
 	
-	public Modactividaddeportiva(ICmodactividaddep ICmad) {
+	public ModActividadDeportiva(ICmodactividaddep ICmad) {
 		ICMad = ICmad; 
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

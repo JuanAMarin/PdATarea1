@@ -36,6 +36,15 @@ public class ManejadorInstituciones {
 			em.getTransaction().commit();
 	}
 	
+	public void agregarActividad(ActividadDep actividadDep, InstitucionDep insti) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		insti.getActividades().add(actividadDep);
+		em.getTransaction().begin();
+		em.persist(insti);
+		em.getTransaction().commit();
+	}
+	
 	public ArrayList<String> obtenerInstituciones(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();

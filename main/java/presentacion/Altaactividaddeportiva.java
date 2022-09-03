@@ -17,6 +17,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class Altaactividaddeportiva extends JInternalFrame {
@@ -103,7 +104,12 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				String insti = cboInsti.getSelectedItem().toString();
+				String nombre = txtNombre.getText(), descripcion = txtDesc.getText();
+				Integer duracion = (Integer) spnDuracion.getValue();
+				float costo = Float.parseFloat(txtCosto.getText());
+				ICaltaad.datosActividad(nombre, descripcion, duracion, costo, insti);
+				ICaltaad.altaActividad();
 			}
 		});
 		btnAceptar.setBounds(298, 376, 98, 23);

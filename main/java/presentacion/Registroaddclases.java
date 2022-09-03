@@ -41,7 +41,7 @@ public class Registroaddclases extends JInternalFrame {
 	
 	private void getActividades(String institucion) {
 		cboActividad.removeAllItems();
-		DefaultComboBoxModel<String> modelactividades = new DefaultComboBoxModel<String>(ICrc.listarActividades(institucion));
+		DefaultComboBoxModel<String> modelactividades = new DefaultComboBoxModel<String>(ICrc.listarActividades(cboInstitucion.getSelectedItem().toString()));
 		cboActividad.setModel(modelactividades);
 		getClases((String)cboActividad.getSelectedItem());
 

@@ -33,7 +33,7 @@ public class Principal {
 	private ICaltadictadoclase ICac;
 	private Altadictadoclase AltaDictadoClaseInternalFrame;
 	private ICmodactividaddep ICmad;
-	private Modactividaddeportiva ModactividadDep;
+	private ModActividadDeportiva ModactividadDep;
 	private ICregistrodeclases ICrcs;
 	private Registroaddclases Registro;
 
@@ -134,7 +134,7 @@ public class Principal {
 		AltaDictadoClaseInternalFrame.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
 		
-		ModactividadDep = new Modactividaddeportiva(ICmad);
+		ModactividadDep = new ModActividadDeportiva(ICmad);
 		ModactividadDep.setLocation(0,20);
 		ModactividadDep.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModactividadDep);

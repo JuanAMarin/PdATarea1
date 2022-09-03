@@ -130,6 +130,16 @@ public class ManejadorUsuarios {
 		em.merge(profesor);
 		em.getTransaction().commit();
 	}
+	
+	public void addClase(String profe, Clase clase) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Profesor profesor = em.find(Profesor.class, profe);
+		profesor.getClases().add(clase);
+		em.getTransaction().begin();
+		em.persist(profesor);
+		em.getTransaction().commit();
+	}
 
 }
 

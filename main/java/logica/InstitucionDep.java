@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import persistencia.Conexion;
 
 @Entity
 public class InstitucionDep {
@@ -15,7 +18,7 @@ public class InstitucionDep {
 	private String descripcion, url;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<ActividadDep> actividades;
+	private List<ActividadDep> actividades = new ArrayList<ActividadDep>();
 	
 	public InstitucionDep() {
 		super();
@@ -26,7 +29,6 @@ public class InstitucionDep {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.url = url;
-		this.actividades = new ArrayList<ActividadDep>();
 	}
 	
 	public String getNombre() {
@@ -52,5 +54,13 @@ public class InstitucionDep {
 	}
 	public void setActividades(List<ActividadDep> actividades) {
 		this.actividades = actividades;
+	}
+	public ActividadDep buscarActividad(String nombre) {
+		ActividadDep aretornar=null;
+		for(ActividadDep a: actividades) {
+			if (a.getNombre().equals(nombre))
+				aretornar=a;
+		}
+		return aretornar;
 	}
 }

@@ -38,9 +38,13 @@ public class Cregistrodeclases implements ICregistrodeclases {
 	}
 		
 	public String[] listarActividades(String nombre) {
-		ArrayList<String> actividades;
-		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
-		actividades = mAD.listarActdeIns(nombre);
+		ArrayList<String> actividades = new ArrayList<>();
+		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
+		List<ActividadDep> actividadesL = mI.buscarInstitucion(nombre).getActividades();
+		Iterator<ActividadDep> it = actividadesL.iterator();
+		while(it.hasNext()) {
+		      actividades.add(it.next().getNombre());
+		}
 		String[] act = new String[actividades.size()];
 		int i = 0;
 		for (String ad:actividades) {
