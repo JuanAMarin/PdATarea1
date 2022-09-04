@@ -9,11 +9,7 @@ public class Cmodinstitucion implements ICmodinstitucion {
 	@Override
 	public void modInstitucion(String nombreInstitucion, String descripcion, String url) {
 		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		InstitucionDep aux=mI.buscarInstitucion(nombreInstitucion);
-		if(aux!=null) {
-			aux.setDescripcion(descripcion);
-			aux.setUrl(url);
-		}
+		mI.modificarInsti(nombreInstitucion,descripcion,url);
 	}
 
 	@Override

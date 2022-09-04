@@ -58,5 +58,17 @@ public class ManejadorInstituciones {
 		}
 		return aRetornar;
 	}
+	
+	public void modificarInsti(String nombre, String descripcion, String url) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		InstitucionDep insti = em.find(InstitucionDep.class,nombre);
+		insti.setNombre(nombre);
+		insti.setDescripcion(descripcion);
+		insti.setUrl(url);
+		em.getTransaction().begin();
+		em.merge(insti);
+		em.getTransaction().commit();
+	}
 }
 
