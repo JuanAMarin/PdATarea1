@@ -2,9 +2,11 @@ package presentacion;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import exceptions.ActividadRepetidaException;
 import interfaces.ICaltaactividaddeportiva;
 
 import javax.swing.DefaultComboBoxModel;
@@ -17,7 +19,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class Altaactividaddeportiva extends JInternalFrame {
@@ -29,16 +30,17 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	private JTextField txtNombre;
 	private JTextField txtCosto;
 	private JComboBox<String> cboInsti;
+	private JTextArea txtDesc;
+	private JSpinner spnDuracion;
 	
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				//formClose();
+				formClose();
 			}
 		});
 		setClosable(true);
-		
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
 		
@@ -75,7 +77,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		lblDescripcion.setBounds(30, 117, 139, 14);
 		getContentPane().add(lblDescripcion);
 		
-		JTextArea txtDesc = new JTextArea();
+		txtDesc = new JTextArea();
 		txtDesc.setForeground(Color.BLACK);
 		txtDesc.setWrapStyleWord(true);
 		txtDesc.setLineWrap(true);
@@ -83,7 +85,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		txtDesc.setBounds(179, 116, 170, 52);
 		getContentPane().add(txtDesc);
 		
-		JSpinner spnDuracion = new JSpinner();
+		spnDuracion = new JSpinner();
 		spnDuracion.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spnDuracion.setBounds(179, 179, 170, 20);
 		getContentPane().add(spnDuracion);
@@ -104,18 +106,18 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String insti = cboInsti.getSelectedItem().toString();
-				String nombre = txtNombre.getText(), descripcion = txtDesc.getText();
-				Integer duracion = (Integer) spnDuracion.getValue();
-				float costo = Float.parseFloat(txtCosto.getText());
-				ICaltaad.datosActividad(nombre, descripcion, duracion, costo, insti);
-				ICaltaad.altaActividad();
+				AceptarActionPerformed(e);
 			}
 		});
 		btnAceptar.setBounds(298, 376, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CancelarActionPerformed(e);
+			}
+		});
 		btnCancelar.setBounds(404, 376, 98, 23);
 		getContentPane().add(btnCancelar);
 		
@@ -124,6 +126,50 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	public void inicializarComboBox() {
 		DefaultComboBoxModel<String> modelinstituciones = new DefaultComboBoxModel<String>(ICaad.listarInstituciones());
 		cboInsti.setModel(modelinstituciones);
+	}
+	
+	protected void AceptarActionPerformed(ActionEvent arg0) {
+		String insti = cboInsti.getSelectedItem().toString();
+		String nombre = txtNombre.getText(), descripcion = txtDesc.getText();
+		Integer duracion = (Integer) spnDuracion.getValue();
+		float costo = Float.parseFloat(txtCosto.getText());
+		if(checkFormulario()) {
+			try {
+			ICaad.datosActividad(nombre, descripcion, duracion, costo, insti);
+			ICaad.altaActividad();
+			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha creado con exito", "Alta Actividad Deportiva",
+                    JOptionPane.INFORMATION_MESSAGE);
+			formClose();
+		    setVisible(false);
+			}catch (ActividadRepetidaException e1){
+				JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" ya existe", "Alta Actividad Deportiva",
+	                    JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+	}
+	
+	protected void CancelarActionPerformed(ActionEvent arg0) {
+		formClose();
+		setVisible(false);
+	}
+	
+	private boolean checkFormulario() {
+        String nombre = this.txtNombre.getText().toString();
+        String descripcion = this.txtDesc.getText().toString();
+        String costo = String.valueOf(this.txtCosto.getText());
+        if (nombre.isEmpty() || descripcion.isEmpty() || costo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Alta Actividad Deportiva",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+	
+	public void formClose() {
+		txtNombre.setText(null);
+		txtDesc.setText(null);
+		spnDuracion.setValue(1);
+		txtCosto.setText(null);
 	}
 
 }

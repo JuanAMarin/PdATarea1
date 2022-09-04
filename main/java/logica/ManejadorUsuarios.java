@@ -83,10 +83,10 @@ public class ManejadorUsuarios {
 		return (ArrayList<String>) query.getResultList();
 	}
 	
-	public ArrayList<String> obtenerProfesoresInst(String insti){
+	public ArrayList<String> obtenerProfesoresInst(String institucion){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select p.nickname from Profesor p where p.institucion ='"+insti+"'");
+		Query query = em.createQuery("select p.nickname from Profesor p where p.institucion ='"+institucion+"'");
 		return (ArrayList<String>) query.getResultList();
 	}
 	

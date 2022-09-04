@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 import interfaces.ICaltadictadoclase;
+import logica.ManejadorUsuarios;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -51,9 +53,8 @@ public class Altadictadoclase extends JInternalFrame{
 	private JLabel lblNewLabelProfesor;
 	private JLabel lblNewLabelURL;
 	private JTextField textFieldURL;
-	private JTextField textField;
 	private JButton btnCancelar;
-	private JLabel lblNewLabelFechaR;
+	private JButton btnConfirmar;
 	
 	public void habilitarAceptar() {
 		if (!textFieldNombre.getText().isEmpty() && !textFieldURL.getText().isEmpty()
@@ -177,16 +178,6 @@ public class Altadictadoclase extends JInternalFrame{
 		textFieldURL.setBounds(245, 296, 170, 20);
 		getContentPane().add(textFieldURL);
 		
-		lblNewLabelFechaR = new JLabel("FECHA REGISTRO");
-		lblNewLabelFechaR.setBounds(60, 327, 139, 14);
-		getContentPane().add(lblNewLabelFechaR);
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(245, 324, 170, 20);
-		getContentPane().add(textField);
-		textField.setEnabled(false);
-		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -200,6 +191,16 @@ public class Altadictadoclase extends JInternalFrame{
 		comboBoxProfe.setBounds(245, 264, 170, 20);
 		getContentPane().add(comboBoxProfe);
 		
+		btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.setEnabled(false);
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				confirmarActionPerformed(e);
+			}
+		});
+		btnConfirmar.setBounds(317, 104, 98, 23);
+		getContentPane().add(btnConfirmar);
+		
 	}
 	
 	public void inicializarComboBoxID() {
@@ -210,6 +211,11 @@ public class Altadictadoclase extends JInternalFrame{
 	public void inicializarComboBoxAD() {
 		DefaultComboBoxModel<String> modelactividades = new DefaultComboBoxModel<String>(ICac.listarActividades((String)comboBoxID.getSelectedItem()));
 		comboBoxAD.setModel(modelactividades);
+		if ((comboBoxID.getItemCount() != 0) && (comboBoxAD.getItemCount() !=0))
+			btnConfirmar.setEnabled(true);
+		else
+			btnConfirmar.setEnabled(false);
+
 	}
 	
 	public void inicializarComboBoxP() {
@@ -219,7 +225,7 @@ public class Altadictadoclase extends JInternalFrame{
 	
 	protected void agregarClaseActionPerformed(ActionEvent arg0) throws ClaseRepetidaException {
 		Date fechaReg = new Date();
-		textField.setText(fechaReg.toString());
+		//textField.setText(fechaReg.toString());
 		String strID = comboBoxID.getSelectedItem().toString();
 		String strAD = comboBoxAD.getSelectedItem().toString();
 		String nombre=textFieldNombre.getText();
@@ -239,13 +245,14 @@ public class Altadictadoclase extends JInternalFrame{
 			
 			try {
 				ICac.altaClase(nombre, url, fecha, fechaReg, h, prof);
+				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Éxito", "Alta de Dictado de Clase",
+		                JOptionPane.INFORMATION_MESSAGE);
+				formClose();
+				setVisible(false); 
 			} catch (ClaseRepetidaException e) {
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" ya existe", "Alta Dictado Clase",
+	                    JOptionPane.INFORMATION_MESSAGE);
 			}
-			JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Éxito", "Alta de Dictado de Clase",
-	                JOptionPane.INFORMATION_MESSAGE);
-			formClose();
-			setVisible(false); 
 		}
 			
 	}
@@ -255,6 +262,9 @@ public class Altadictadoclase extends JInternalFrame{
 		setVisible(false);  
 	}
 	
+	protected void confirmarActionPerformed (ActionEvent arg0) {
+		inicializarComboBoxP();
+	}
 	
 	private boolean checkFormulario() {
 		String strID = comboBoxID.getSelectedItem().toString();

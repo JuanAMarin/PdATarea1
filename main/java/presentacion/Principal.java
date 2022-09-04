@@ -198,7 +198,7 @@ public class Principal {
 				limpiarVentanas();
 				AltaDictadoClaseInternalFrame.inicializarComboBoxID();
 				AltaDictadoClaseInternalFrame.inicializarComboBoxAD();
-				AltaDictadoClaseInternalFrame.inicializarComboBoxP();
+				//AltaDictadoClaseInternalFrame.inicializarComboBoxP();
 				AltaDictadoClaseInternalFrame.setVisible(true);
 			}
 		});

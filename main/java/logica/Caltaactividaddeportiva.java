@@ -3,6 +3,10 @@ package logica;
 import java.util.ArrayList;
 import java.util.Date;
 
+import exceptions.ActividadRepetidaException;
+import exceptions.EmailRepetidoException;
+import exceptions.NicknameRepetidoException;
+import exceptions.UsuarioRepetidoException;
 import interfaces.ICaltaactividaddeportiva;
 
 public class Caltaactividaddeportiva implements ICaltaactividaddeportiva{
@@ -12,7 +16,10 @@ public class Caltaactividaddeportiva implements ICaltaactividaddeportiva{
 	private Integer duracion;
 	private float costo;
 	
-	public void datosActividad(String nombre, String descripcion, Integer duracion, float costo, String insti){
+	public void datosActividad(String nombre, String descripcion, Integer duracion, float costo, String insti)throws ActividadRepetidaException{
+		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
+		if(mAD.buscarActividad(nombre)!= null)
+			throw new ActividadRepetidaException("La actividad de nombre " + nombre + " ya ha sido ingresada");
 		this.costo=costo;
 		this.descripcion=descripcion;
 		this.duracion=duracion;

@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -25,12 +26,9 @@ public class ManejadorActividadDeportiva {
 	}
 	
 	public ActividadDep buscarActividad(String nombre) {
-		ActividadDep aretornar=null;
-		for(ActividadDep a: actividades) {
-			if (a.getNombre().equals(nombre))
-				aretornar=a;
-		}
-		return aretornar;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		return em.find(ActividadDep.class, nombre);
 	}
 	
 	public void eliminarActividad(String nombre) {
@@ -51,5 +49,18 @@ public class ManejadorActividadDeportiva {
 		EntityManager em = conexion.getEntityManager();
 		Query query = em.createQuery("select a.nombre from InstitucionDep i inner join i.actividades a");
 		return (ArrayList<String>) query.getResultList();
+	}
+	
+	public void modificarAD(String nombre, String descripcion, Integer duracion, float costo) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		ActividadDep actividadDep = em.find(ActividadDep.class, nombre);
+		actividadDep.setNombre(nombre);
+		actividadDep.setDescripcion(descripcion);
+		actividadDep.setDuracion(duracion);
+		actividadDep.setCosto(costo);
+		em.getTransaction().begin();
+		em.merge(actividadDep);
+		em.getTransaction().commit();
 	}
 }

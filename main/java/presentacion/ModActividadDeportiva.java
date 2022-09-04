@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -24,14 +26,12 @@ public class ModActividadDeportiva extends JInternalFrame {
 	private JTextField textFieldDesc;
 	private JTextField textFieldDuracion;
 	private JTextField textFieldCosto;
-	private JTextField textFieldFechaReg;
 	private JLabel lblDescripcion;
 	private JLabel lblNewLabelAD;
 	private JComboBox<String> comboBoxAD;
 	private JLabel lblNewLabelNombre;
 	private JLabel lblDuracion;
 	private JLabel lblNewLabelCosto;
-	private JLabel lblNewLabelFecha;
 	private JButton btnModificar;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
@@ -39,6 +39,12 @@ public class ModActividadDeportiva extends JInternalFrame {
 	
 	public ModActividadDeportiva(ICmodactividaddep ICmad) {
 		ICMad = ICmad; 
+		addInternalFrameListener(new InternalFrameAdapter() {
+			@Override
+			public void internalFrameClosing(InternalFrameEvent e) {
+				formClose();
+			}
+		});
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Modificar Actividad Deportiva");
@@ -89,22 +95,13 @@ public class ModActividadDeportiva extends JInternalFrame {
 		textFieldCosto.setBounds(230, 236, 170, 20);
 		getContentPane().add(textFieldCosto);
 		
-		lblNewLabelFecha = new JLabel("FECHA DE REGISTRO");
-		lblNewLabelFecha.setBounds(56, 283, 139, 14);
-		getContentPane().add(lblNewLabelFecha);
-		
-		textFieldFechaReg = new JTextField();
-		textFieldFechaReg.setColumns(10);
-		textFieldFechaReg.setBounds(230, 280, 170, 20);
-		getContentPane().add(textFieldFechaReg);
-		
 		btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ModificarActividadActionPerformed(e);
 			}
 		});
-		btnModificar.setBounds(310, 311, 90, 23);
+		btnModificar.setBounds(310, 267, 90, 23);
 		getContentPane().add(btnModificar);
 		
 		btnAceptar = new JButton("Aceptar");
@@ -173,7 +170,7 @@ public class ModActividadDeportiva extends JInternalFrame {
 		//agregar fecha de registro 
 		if(checkFormulario()) {
 			ICMad.ModActividadDeportiva(nombre, descripcion, duracion, costo);
-			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con Ã©xito", "Modificar Actividad Deportiva",
+			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con exito", "Modificar Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();
             setVisible(false);  
@@ -190,7 +187,7 @@ public class ModActividadDeportiva extends JInternalFrame {
         String duracion = String.valueOf(this.textFieldDuracion.getText());
         String costo = String.valueOf(this.textFieldCosto.getText());
         if (descripcion.isEmpty() || duracion.isEmpty() || costo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No puede haber campos vacÃ­os", "Modificar Actividad Deportiva",
+            JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Modificar Actividad Deportiva",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -202,6 +199,5 @@ public class ModActividadDeportiva extends JInternalFrame {
 		textFieldDesc.setText(null);
         textFieldDuracion.setText(null);
         textFieldCosto.setText(null);
-        //agregarRegistro
 	 }
 }
