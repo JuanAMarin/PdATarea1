@@ -13,6 +13,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
@@ -124,6 +126,12 @@ public class Altadictadoclase extends JInternalFrame{
 		getContentPane().add(lblNewLabelNombre);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		textFieldNombre.setColumns(10);
 		textFieldNombre.setBounds(245, 167, 170, 20);
 		getContentPane().add(textFieldNombre);
@@ -135,13 +143,13 @@ public class Altadictadoclase extends JInternalFrame{
 		dateFecha = new JDateChooser();
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateFecha.getDateEditor();
 		editor.setEditable(false);
-		dateFecha.getDateEditor().addPropertyChangeListener(
-			    new PropertyChangeListener() {
-			        @Override
-			        public void propertyChange(PropertyChangeEvent e) {
-			        	habilitarAceptar();
-			        }
-			    });
+		dateFecha.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+	        @Override
+	        public void propertyChange(PropertyChangeEvent e) {
+	        	habilitarAceptar();
+	        }
+	    });
+				
 		dateFecha.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				//lblErrorFecha.setVisible(false);
@@ -174,6 +182,12 @@ public class Altadictadoclase extends JInternalFrame{
 		getContentPane().add(lblNewLabelURL);
 		
 		textFieldURL = new JTextField();
+		textFieldURL.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		textFieldURL.setColumns(10);
 		textFieldURL.setBounds(245, 296, 170, 20);
 		getContentPane().add(textFieldURL);
@@ -188,6 +202,12 @@ public class Altadictadoclase extends JInternalFrame{
 		getContentPane().add(btnCancelar);
 		
 		comboBoxProfe = new JComboBox<String>();
+		comboBoxProfe.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		comboBoxProfe.setBounds(245, 264, 170, 20);
 		getContentPane().add(comboBoxProfe);
 		

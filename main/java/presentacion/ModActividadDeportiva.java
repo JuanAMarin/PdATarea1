@@ -32,7 +32,6 @@ public class ModActividadDeportiva extends JInternalFrame {
 	private JLabel lblNewLabelNombre;
 	private JLabel lblDuracion;
 	private JLabel lblNewLabelCosto;
-	private JButton btnModificar;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JButton btnVer;
@@ -60,49 +59,40 @@ public class ModActividadDeportiva extends JInternalFrame {
 		getContentPane().add(comboBoxAD);
 		
 		lblNewLabelNombre = new JLabel("NOMBRE");
-		lblNewLabelNombre.setBounds(56, 113, 139, 14);
+		lblNewLabelNombre.setBounds(56, 138, 139, 14);
 		getContentPane().add(lblNewLabelNombre);
 		
 		lblDescripcion = new JLabel("DESCRIPCION");
-		lblDescripcion.setBounds(56, 152, 139, 14);
+		lblDescripcion.setBounds(56, 182, 139, 14);
 		getContentPane().add(lblDescripcion);
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(230, 110, 170, 20);
+		textFieldNombre.setBounds(230, 135, 170, 20);
 		getContentPane().add(textFieldNombre);
 		
 		textFieldDesc = new JTextField();
 		textFieldDesc.setColumns(10);
-		textFieldDesc.setBounds(230, 149, 170, 20);
+		textFieldDesc.setBounds(230, 179, 170, 20);
 		getContentPane().add(textFieldDesc);
 		
 		textFieldDuracion = new JTextField();
 		textFieldDuracion.setColumns(10);
-		textFieldDuracion.setBounds(230, 191, 170, 20);
+		textFieldDuracion.setBounds(230, 223, 170, 20);
 		getContentPane().add(textFieldDuracion);
 		
 		lblDuracion = new JLabel("DURACION");
-		lblDuracion.setBounds(56, 194, 139, 14);
+		lblDuracion.setBounds(56, 226, 139, 14);
 		getContentPane().add(lblDuracion);
 		
 		lblNewLabelCosto = new JLabel("COSTO");
-		lblNewLabelCosto.setBounds(56, 239, 139, 14);
+		lblNewLabelCosto.setBounds(56, 269, 139, 14);
 		getContentPane().add(lblNewLabelCosto);
 		
 		textFieldCosto = new JTextField();
 		textFieldCosto.setColumns(10);
-		textFieldCosto.setBounds(230, 236, 170, 20);
+		textFieldCosto.setBounds(230, 266, 170, 20);
 		getContentPane().add(textFieldCosto);
-		
-		btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ModificarActividadActionPerformed(e);
-			}
-		});
-		btnModificar.setBounds(310, 267, 90, 23);
-		getContentPane().add(btnModificar);
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
@@ -146,22 +136,20 @@ public class ModActividadDeportiva extends JInternalFrame {
 		textFieldNombre.setText(act1.getNombre());
 		textFieldNombre.setEnabled(false);
 		textFieldDesc.setText(act1.getDescripcion());
-		textFieldDesc.setEnabled(false);
+		//textFieldDesc.setEnabled(false);
 		textFieldDuracion.setText(act1.getDuracion().toString());
-		textFieldDuracion.setEnabled(false);
+		//textFieldDuracion.setEnabled(false);
 		float c = act1.getCosto();
 		String str = String.valueOf(c);
 		textFieldCosto.setText(str);
-		textFieldCosto.setEnabled(false);
+		//textFieldCosto.setEnabled(false);
 		
-	}
-	protected void ModificarActividadActionPerformed(ActionEvent arg0) {
-		//textFieldNombre.setEnabled(true);
 		textFieldDesc.setEnabled(true);
 		textFieldDuracion.setEnabled(true);
 		textFieldCosto.setEnabled(true);
+		
 	}
-	
+
 	protected void AceptarActionPerformed(ActionEvent arg0) {
 		String nombre = this.textFieldNombre.getText();
 		String descripcion = this.textFieldDesc.getText();
