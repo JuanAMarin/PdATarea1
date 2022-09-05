@@ -56,14 +56,17 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 		return act;
 	}
 	
-	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor) throws ClaseRepetidaException {
+	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor, String actividad) throws ClaseRepetidaException {
 		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
 		ManejadorClases mC = ManejadorClases.getInstancia(); 
+		ActividadDep activity = mAD.buscarActividad(actividad);
 		Clase nuevaClase = mC.buscarClase(nombre);
 		if (nuevaClase != null)
 			throw new ClaseRepetidaException("La clase de nombre "+ nombre + " ya existe en el Sistema");
 		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio);
 		musus.addClase(profesor, c);
+		mAD.addClase(activity, c);
 	}
 
 	@Override

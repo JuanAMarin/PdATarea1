@@ -235,7 +235,6 @@ public class Altadictadoclase extends JInternalFrame{
 			btnConfirmar.setEnabled(true);
 		else
 			btnConfirmar.setEnabled(false);
-
 	}
 	
 	public void inicializarComboBoxP() {
@@ -256,15 +255,15 @@ public class Altadictadoclase extends JInternalFrame{
 		Integer min = (Integer) spinnerMin.getValue();
 		String sDate1 = "1900/01/01 " + hora + ":" + min + ":00";
 		Date h = null;
+		String actividad = comboBoxAD.getSelectedItem().toString();
 		try {
-			h = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(sDate1);
+			h = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(sDate1);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		if(checkFormulario()) {
-			
 			try {
-				ICac.altaClase(nombre, url, fecha, fechaReg, h, prof);
+				ICac.altaClase(nombre, url, fecha, fechaReg, h, prof, actividad);
 				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Éxito", "Alta de Dictado de Clase",
 		                JOptionPane.INFORMATION_MESSAGE);
 				formClose();

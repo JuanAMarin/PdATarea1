@@ -54,9 +54,27 @@ public class Cregistrodeclases implements ICregistrodeclases {
 		return act;
 	}
 	
-	public List<Clase> listarClases(String nombre){
-		ManejadorClases mC = ManejadorClases.getInstancia();		
-		return mC.listarClasesDeAct(nombre);		
+	@Override
+	public Clase buscarClase(String clase) {
+		ManejadorClases mC = ManejadorClases.getInstancia();
+		return mC.buscarClase(clase);
+	}
+	
+	public String[] listarClases(String actividad){
+		ArrayList<String> clases = new ArrayList<>();
+		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
+		List<Clase> clasesL = mAD.buscarActividad(actividad).getClases();
+		Iterator<Clase> it = clasesL.iterator();
+		while(it.hasNext()) {
+			clases.add(it.next().getNombre());
+		}
+		String[] cla = new String[clases.size()];
+		int i = 0;
+		for (String ad:clases) {
+			cla[i]=ad;
+			i++;
+		}
+		return cla;	
 	}
 
 	

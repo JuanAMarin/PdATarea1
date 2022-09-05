@@ -84,6 +84,10 @@ public class ActividadDep {
 		this.fecha = fecha;
 	}
 	
+	public void addClase(Clase clase) {
+		clases.add(clase);
+	}
+	
 	//-----------------------------------------------------------------------------------
 	// Funciones ...
 	

@@ -35,6 +35,15 @@ public class ManejadorActividadDeportiva {
 		ActividadDep aEliminar= buscarActividad(nombre);
 		actividades.remove(aEliminar);
 	}
+	
+	public void addClase (ActividadDep actividad, Clase clase) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		actividad.addClase(clase);
+		em.getTransaction().begin();
+		em.persist(actividad);
+		em.getTransaction().commit();
+	}
 
 	
 	public ArrayList<String> listarActdeIns(String nombre) {
