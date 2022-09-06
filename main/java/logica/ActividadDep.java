@@ -6,9 +6,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import datatypes.DtActividadDep;
 
 @Entity
 public class ActividadDep {
@@ -87,10 +87,9 @@ public class ActividadDep {
 	public void addClase(Clase clase) {
 		clases.add(clase);
 	}
-	
-	//-----------------------------------------------------------------------------------
-	// Funciones ...
-	
-	
+
+	public DtActividadDep getDT() {
+		return new DtActividadDep(this.getNombre(), this.descripcion, this.getDuracion(), this.getCosto());
+	}
 	
 }

@@ -10,11 +10,13 @@ import javax.swing.JTextField;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import datatypes.DtInstitucionDep;
 import interfaces.ICmodinstitucion;
-import logica.InstitucionDep;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Modinstitucion extends JInternalFrame {
 	
@@ -25,22 +27,30 @@ public class Modinstitucion extends JInternalFrame {
 	private JTextField textFieldDescripcion;
 	private JTextField textFieldUrl;
 	private JComboBox<String> comboBoxIns;
+	private JButton btnAceptar;
 
 	/**
 	 * Create the frame.
 	 */
-	/*public void habilitarEliminar(){
-		if (comboBoxAct.getSelectedItem()!=null)
-			btnEliminar.setEnabled(true);
+	
+	public void habilitarAceptar() {
+		if (!textFieldDescripcion.getText().isEmpty() && !textFieldUrl.getText().isEmpty())
+				btnAceptar.setEnabled(true);
 		else
-			btnEliminar.setEnabled(false);
-	}*/
+				btnAceptar.setEnabled(false);
+	}
+	
+	public void formClose() {
+		btnAceptar.setEnabled(false);
+		textFieldDescripcion.setText("");
+		textFieldUrl.setText("");
+	}
 	
 	public Modinstitucion(ICmodinstitucion ICmodi) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				limpiarFormulario();
+				formClose();
 			}
 		});
 		setClosable(true);
@@ -57,7 +67,7 @@ public class Modinstitucion extends JInternalFrame {
 		lblInstitucion.setBounds(10, 39, 141, 14);
 		getContentPane().add(lblInstitucion);
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modInstitucionAceptarActionPerformed(e);
@@ -68,6 +78,9 @@ public class Modinstitucion extends JInternalFrame {
 		btnVerInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modInstitucionVerInfoActionPerformed(e);
+				btnAceptar.setEnabled(true);
+				textFieldDescripcion.setEnabled(true);
+				textFieldUrl.setEnabled(true);
 			}
 		});
 		btnVerInfo.setBounds(329, 34, 117, 25);
@@ -79,6 +92,13 @@ public class Modinstitucion extends JInternalFrame {
 		getContentPane().add(comboBoxIns);
 		
 		textFieldDescripcion = new JTextField();
+		textFieldDescripcion.setEnabled(false);
+		textFieldDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		textFieldDescripcion.setBounds(129, 90, 190, 20);
 		getContentPane().add(textFieldDescripcion);
 		textFieldDescripcion.setColumns(10);
@@ -92,6 +112,7 @@ public class Modinstitucion extends JInternalFrame {
 		getContentPane().add(lblUrl);
 		
 		textFieldUrl = new JTextField();
+		textFieldUrl.setEnabled(false);
 		textFieldUrl.setBounds(129, 135, 190, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
@@ -103,7 +124,7 @@ public class Modinstitucion extends JInternalFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limpiarFormulario();
+				formClose();
 				setVisible(false);
 			}
 		});
@@ -119,11 +140,10 @@ public class Modinstitucion extends JInternalFrame {
 	protected void modInstitucionVerInfoActionPerformed(ActionEvent arg0) {
 		if(this.comboBoxIns.getSelectedItem()!=null) {
 			String strId = this.comboBoxIns.getSelectedItem().toString();
-			InstitucionDep ins;
-			
-				ins = ICmi.obtenerInfo(strId);
-				textFieldDescripcion.setText(ins.getDescripcion());
-				textFieldUrl.setText(ins.getUrl());
+			DtInstitucionDep ins;
+			ins = ICmi.obtenerInfo(strId);
+			textFieldDescripcion.setText(ins.getDescripcion());
+			textFieldUrl.setText(ins.getUrl());
 		}
 	}
 	
@@ -132,10 +152,10 @@ public class Modinstitucion extends JInternalFrame {
 		String descripcion=this.textFieldDescripcion.getText();
 		String url=this.textFieldUrl.getText();
 		if (checkFormulario()) {
-            ICmi.modInstitucion(nombre, descripcion, url);
+            ICmi.modInstitucion(nombre.toLowerCase(), descripcion, url);
             JOptionPane.showMessageDialog(this, "La Institución "+nombre+" se ha modificado con Éxito", "Modificar Institucion",
                     JOptionPane.INFORMATION_MESSAGE);
-            limpiarFormulario();
+            formClose();
             setVisible(false);     
         }
 	}
@@ -150,10 +170,5 @@ public class Modinstitucion extends JInternalFrame {
         }
         return true;
     }
-	
-	private void limpiarFormulario() {
-        textFieldDescripcion.setText("");
-        textFieldUrl.setText("");
-	 }
 	
 }

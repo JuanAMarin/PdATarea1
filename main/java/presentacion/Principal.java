@@ -33,7 +33,7 @@ public class Principal {
 	private ICaltadictadoclase ICac;
 	private Altadictadoclase AltaDictadoClaseInternalFrame;
 	private ICmodactividaddep ICmad;
-	private ModActividadDeportiva ModactividadDep;
+	private Modactividaddeportiva ModactividadDep;
 	private ICregistrodeclases ICrcs;
 	private Registroaddclases Registro;
 
@@ -62,17 +62,18 @@ public class Principal {
 		AltaUsuario.setVisible(false);
 		consultaUsuario.formClose();
 		consultaUsuario.setVisible(false);
-		//AltaInstitucion.formClose();
+		AltaInstitucion.formClose();
 		AltaInstitucion.setVisible(false);
-		//ModInstitucion.formClose();
+		ModInstitucion.formClose();
 		ModInstitucion.setVisible(false);
 		RankingClases.setVisible(false);
 		ModUsuario.formClose(); 
 		ModUsuario.setVisible(false);
-		//AltaActividadDeportiva.formClose();
+		AltaActividadDeportiva.formClose();
 		AltaActividadDeportiva.setVisible(false);
 		AltaDictadoClaseInternalFrame.formClose();
 		AltaDictadoClaseInternalFrame.setVisible(false);
+		Registro.formClose();
 		Registro.setVisible(false);
 		ModactividadDep.formClose();
 		ModactividadDep.setVisible(false);
@@ -134,7 +135,7 @@ public class Principal {
 		AltaDictadoClaseInternalFrame.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
 		
-		ModactividadDep = new ModActividadDeportiva(ICmad);
+		ModactividadDep = new Modactividaddeportiva(ICmad);
 		ModactividadDep.setLocation(0,20);
 		ModactividadDep.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModactividadDep);
@@ -198,7 +199,6 @@ public class Principal {
 				limpiarVentanas();
 				AltaDictadoClaseInternalFrame.inicializarComboBoxID();
 				AltaDictadoClaseInternalFrame.inicializarComboBoxAD();
-				//AltaDictadoClaseInternalFrame.inicializarComboBoxP();
 				AltaDictadoClaseInternalFrame.setVisible(true);
 			}
 		});

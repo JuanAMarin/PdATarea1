@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import datatypes.DtProfesor;
+
 @Entity
 public class Profesor extends Usuario{
 	private String descripcion, biografia, sitioweb;
@@ -72,6 +74,10 @@ public class Profesor extends Usuario{
 
 	public void setClases(List<Clase> clases) {
 		this.clases = clases;
+	}
+
+	public DtProfesor getDT() {
+		return new DtProfesor(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac(),this.getDescripcion(),this.getBiografia(),this.getSitioweb(),this.getInstitucion());
 	}
 	
 }

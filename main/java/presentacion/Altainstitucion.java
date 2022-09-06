@@ -32,6 +32,13 @@ public class Altainstitucion extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	public void formClose() {
+		textFieldNombre.setText("");
+		textFieldDesc.setText("");
+		textFieldUrl.setText("");
+	}
+	
 	public void habilitarAceptar() {
 		if (!textFieldNombre.getText().isEmpty() && !textFieldDesc.getText().isEmpty() && !textFieldUrl.getText().isEmpty())
 				btnAceptar.setEnabled(true);
@@ -136,7 +143,7 @@ public class Altainstitucion extends JInternalFrame {
 			String url=this.textFieldUrl.getText();
 			if (checkFormulario()) {
 	            try {
-	                ICai.altaInstitucion(nombre, descripcion, url);
+	                ICai.altaInstitucion(nombre.toLowerCase(), descripcion, url);
 	                JOptionPane.showMessageDialog(this, "La Institución "+nombre+" se ha creado con éxito", "Alta de Institucion",
 	                        JOptionPane.INFORMATION_MESSAGE);
 	                limpiarFormulario();

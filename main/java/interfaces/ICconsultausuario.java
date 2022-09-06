@@ -2,8 +2,8 @@ package interfaces;
 
 import java.util.Date;
 
-import logica.Profesor;
-import logica.Socio;
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
 
 public interface ICconsultausuario {
 	public abstract String[] listarUsuarios();
@@ -16,6 +16,6 @@ public interface ICconsultausuario {
 	public abstract String getSitioweb(); 
 	public abstract String getInstitucion(); 
 	public abstract Date getFechaNac(); 
-	public abstract Profesor buscarProfesor(String nickname);
-	public abstract Socio buscarSocio(String nickname);
+	public abstract DtProfesor buscarProfesor(String nickname);
+	public abstract DtSocio buscarSocio(String nickname);
 }

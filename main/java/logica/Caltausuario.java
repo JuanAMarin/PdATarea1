@@ -8,6 +8,8 @@ import interfaces.ICaltausuario;
 import java.util.ArrayList;
 import java.util.Date;
 
+import datatypes.DtInstitucionDep;
+
 public class Caltausuario implements ICaltausuario{
 
 	protected String nickname, nombre, apellido, email;
@@ -19,12 +21,12 @@ public class Caltausuario implements ICaltausuario{
 	
 	@SuppressWarnings("deprecation")
 	public void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac) throws UsuarioRepetidoException, NicknameRepetidoException, EmailRepetidoException, ErrorFechaException{
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		if(musus.buscarProfesor(nickname) != null && musus.buscarSocio(nickname) != null)
+		Manejador m = Manejador.getInstancia();
+		if(m.nicknameRepetido(nickname) && m.emailRepetido(email))
 			throw new UsuarioRepetidoException("El nickname " + nickname + " y el email " + email + " ya ha sido ingresado");
-		if(musus.emailRepetido(email)) {
+		if(m.emailRepetido(email)) {
 			throw new EmailRepetidoException("El email " + email + " ya ha sido ingresado");
-		} else if(musus.nicknameRepetido(nickname)) {
+		} else if(m.nicknameRepetido(nickname)) {
 			throw new NicknameRepetidoException("El nickname " + nickname + " ya ha sido ingresado");
 		}
         Date century = new Date();
@@ -50,21 +52,22 @@ public class Caltausuario implements ICaltausuario{
 	}
 	
 	public void altausuario() {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
+		Manejador m = Manejador.getInstancia();
 		if(profe) {
-			ManejadorInstituciones minsti = ManejadorInstituciones.getInstancia();
-			Profesor profesor = new Profesor(nickname, nombre, apellido, email, fechaNac, descripcion, biografia, sitioweb, minsti.buscarInstitucion(institucion));
-			musus.agregarProfesor(profesor);
+			DtInstitucionDep DtInsti = m.buscarInstitucion(institucion);
+			InstitucionDep insti = new InstitucionDep(DtInsti.getNombre(),DtInsti.getDescripcion(),DtInsti.getUrl());
+			Profesor profesor = new Profesor(nickname, nombre, apellido, email, fechaNac, descripcion, biografia, sitioweb, insti);
+			m.agregarProfesor(profesor);
 		}else {
 			Socio socio = new Socio(nickname, nombre, apellido, email, fechaNac);
-			musus.agregarSocio(socio);
+			m.agregarSocio(socio);
 		}
 	}
 	
 	public String[] listarInstituciones() {
 		ArrayList<String> instituciones;
-		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		instituciones = mI.obtenerInstituciones();
+		Manejador m = Manejador.getInstancia();
+		instituciones = m.obtenerInstituciones();
 		String[] inst = new String[instituciones.size()];
 		int i = 0;
 		for (String ins:instituciones) {

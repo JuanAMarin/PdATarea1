@@ -4,8 +4,6 @@ import javax.swing.JInternalFrame;
 
 import interfaces.ICconsultausuario;
 import logica.InstitucionDep;
-import logica.Profesor;
-import logica.Socio;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -16,6 +14,9 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -76,9 +77,9 @@ public class Consultausuario extends JInternalFrame {
 		comboBoxNickname.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nickname=(String) comboBoxNickname.getSelectedItem();
-				Profesor p = ICcu.buscarProfesor(nickname);
+				DtProfesor p = ICcu.buscarProfesor(nickname);
 				if (p==null) {
-					Socio s = ICcu.buscarSocio(nickname);
+					DtSocio s = ICcu.buscarSocio(nickname);
 					lblMensajito.setText("ES SOCIO");
 					txtEmail.setText(s.getEmail());
 					txtNombre.setText(s.getNombre());

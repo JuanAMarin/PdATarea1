@@ -3,6 +3,8 @@ package logica;
 import java.util.Date;
 import java.util.List;
 
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
 import interfaces.ICconsultausuario;
 
 public class Cconsultausuario implements ICconsultausuario{
@@ -57,7 +59,7 @@ public class Cconsultausuario implements ICconsultausuario{
 
 	@Override
 	public String[] listarUsuarios() {
-		ManejadorUsuarios mU = ManejadorUsuarios.getInstancia();
+		Manejador mU = Manejador.getInstancia();
 		List<String> lista = mU.listarUsuarios();
 		String[] users = new String[lista.size()];
 		int i = 0;
@@ -68,18 +70,14 @@ public class Cconsultausuario implements ICconsultausuario{
 		return users;
 	}
 	
-	public Profesor buscarProfesor(String nickname) {
-		ManejadorUsuarios mU = ManejadorUsuarios.getInstancia();
-		Usuario user = mU.buscarProfesor(nickname);
-		Profesor profe = (Profesor) user;
-		return profe;
+	public DtProfesor buscarProfesor(String nickname) {
+		Manejador mU = Manejador.getInstancia();
+		return mU.buscarProfesor(nickname);
 	}
 	
-	public Socio buscarSocio(String nickname) {
-		ManejadorUsuarios mU = ManejadorUsuarios.getInstancia();
-		Usuario user = mU.buscarSocio(nickname);
-		Socio socio = (Socio) user;
-		return socio;
+	public DtSocio buscarSocio(String nickname) {
+		Manejador mU = Manejador.getInstancia();
+		return mU.buscarSocio(nickname);
 	}
 
 	

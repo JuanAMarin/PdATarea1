@@ -1,9 +1,9 @@
 package interfaces;
 
-import logica.InstitucionDep;
+import datatypes.DtInstitucionDep;
 
 public interface ICmodinstitucion {
 	public abstract void modInstitucion(String nombreInstitucion, String descripcion, String url);
 	public abstract String[] listarInstituciones();
-	public abstract InstitucionDep obtenerInfo(String nombre);
+	public abstract DtInstitucionDep obtenerInfo(String nombre);
 }

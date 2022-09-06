@@ -32,6 +32,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	private JComboBox<String> cboInsti;
 	private JTextArea txtDesc;
 	private JSpinner spnDuracion;
+	private JButton btnAceptar;
 	
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
 		addInternalFrameListener(new InternalFrameAdapter() {
@@ -103,7 +104,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		txtCosto.setBounds(179, 210, 170, 20);
 		getContentPane().add(txtCosto);
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AceptarActionPerformed(e);
@@ -135,12 +136,11 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		float costo = Float.parseFloat(txtCosto.getText());
 		if(checkFormulario()) {
 			try {
-			ICaad.datosActividad(nombre, descripcion, duracion, costo, insti);
+			ICaad.datosActividad(nombre.toLowerCase(), descripcion, duracion, costo, insti.toLowerCase());
 			ICaad.altaActividad();
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha creado con exito", "Alta Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();
-		    setVisible(false);
 			}catch (ActividadRepetidaException e1){
 				JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" ya existe", "Alta Actividad Deportiva",
 	                    JOptionPane.INFORMATION_MESSAGE);
@@ -166,10 +166,11 @@ public class Altaactividaddeportiva extends JInternalFrame {
     }
 	
 	public void formClose() {
-		txtNombre.setText(null);
-		txtDesc.setText(null);
+		txtNombre.setText("");
+		txtDesc.setText("");
 		spnDuracion.setValue(1);
-		txtCosto.setText(null);
+		txtCosto.setText("");
+		btnAceptar.setEnabled(false);
 	}
 
 }

@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 import interfaces.ICaltadictadoclase;
-import logica.ManejadorUsuarios;
+import logica.Manejador;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -263,11 +263,10 @@ public class Altadictadoclase extends JInternalFrame{
 		}
 		if(checkFormulario()) {
 			try {
-				ICac.altaClase(nombre, url, fecha, fechaReg, h, prof, actividad);
+				ICac.altaClase(nombre.toLowerCase(), url, fecha, fechaReg, h, prof.toLowerCase(), actividad.toLowerCase());
 				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Éxito", "Alta de Dictado de Clase",
 		                JOptionPane.INFORMATION_MESSAGE);
 				formClose();
-				setVisible(false); 
 			} catch (ClaseRepetidaException e) {
 				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" ya existe", "Alta Dictado Clase",
 	                    JOptionPane.INFORMATION_MESSAGE);
@@ -306,6 +305,7 @@ public class Altadictadoclase extends JInternalFrame{
         dateFecha.setCalendar(null);
         spinnerHora.setValue(0);
         spinnerMin.setValue(0);
+        comboBoxProfe.removeAllItems();
 	 }
 }
 

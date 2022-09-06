@@ -3,24 +3,26 @@ package logica;
 import java.util.Date;
 import java.util.List;
 
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
 import interfaces.ICmodusuario;
 
 public class Cmodusuario implements ICmodusuario {
 
 	public void modProfesor(String nickname, String nombre, String apellido, Date fechaNac, String descripcion, String biografia, String sitioweb) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		musus.modificarProf(nickname, nombre, apellido, fechaNac, descripcion, biografia, sitioweb);
+		Manejador m = Manejador.getInstancia();
+		m.modificarProf(nickname, nombre, apellido, fechaNac, descripcion, biografia, sitioweb);
 	}
 	
 	public void modSocio(String nickname, String nombre, String apellido, Date fechaNac) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		musus.modificarSoc(nickname, nombre, apellido, fechaNac);
+		Manejador m = Manejador.getInstancia();
+		m.modificarSoc(nickname, nombre, apellido, fechaNac);
 	}
 	
 	@Override
 	public String[] listarUsuarios() {
-		ManejadorUsuarios mU = ManejadorUsuarios.getInstancia();
-		List<String> lista = mU.listarUsuarios();
+		Manejador m = Manejador.getInstancia();
+		List<String> lista = m.listarUsuarios();
 		String[] users = new String[lista.size()];
 		int i = 0;
 		for(String s: lista) {
@@ -30,14 +32,14 @@ public class Cmodusuario implements ICmodusuario {
 		return users;
 	}
 	
-	public Profesor obtenerProfesor(String nickname) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		return musus.buscarProfesor(nickname);
+	public DtProfesor obtenerProfesor(String nickname) {
+		Manejador m = Manejador.getInstancia();
+		return m.buscarProfesor(nickname);
 	}
 	
-	public Socio obtenerSocio(String nickname) {
-		ManejadorUsuarios musus = ManejadorUsuarios.getInstancia();
-		return musus.buscarSocio(nickname);
+	public DtSocio obtenerSocio(String nickname) {
+		Manejador m = Manejador.getInstancia();
+		return m.buscarSocio(nickname);
 	}
 	
 }

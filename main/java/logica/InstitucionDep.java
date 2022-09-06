@@ -4,11 +4,10 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import persistencia.Conexion;
+import datatypes.DtInstitucionDep;
 
 @Entity
 public class InstitucionDep {
@@ -62,5 +61,9 @@ public class InstitucionDep {
 				aretornar=a;
 		}
 		return aretornar;
+	}
+
+	public DtInstitucionDep getDT() {
+		return new DtInstitucionDep(this.getNombre(), this.getDescripcion(), this.getUrl());
 	}
 }

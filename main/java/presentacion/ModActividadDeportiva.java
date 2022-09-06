@@ -4,19 +4,23 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 import interfaces.ICmodactividaddep;
-import logica.ActividadDep;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+
+import datatypes.DtActividadDep;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class ModActividadDeportiva extends JInternalFrame {
+public class Modactividaddeportiva extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -36,7 +40,14 @@ public class ModActividadDeportiva extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnVer;
 	
-	public ModActividadDeportiva(ICmodactividaddep ICmad) {
+	public void habilitarAceptar() {
+		if (!textFieldDesc.getText().isEmpty() && !textFieldDuracion.getText().isEmpty() && !textFieldCosto.getText().isEmpty())
+				btnAceptar.setEnabled(true);
+		else
+				btnAceptar.setEnabled(false);
+	}
+	
+	public Modactividaddeportiva(ICmodactividaddep ICmad) {
 		ICMad = ICmad; 
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
@@ -67,16 +78,31 @@ public class ModActividadDeportiva extends JInternalFrame {
 		getContentPane().add(lblDescripcion);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.setEnabled(false);
 		textFieldNombre.setColumns(10);
 		textFieldNombre.setBounds(230, 135, 170, 20);
 		getContentPane().add(textFieldNombre);
 		
 		textFieldDesc = new JTextField();
+		textFieldDesc.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		textFieldDesc.setEnabled(false);
 		textFieldDesc.setColumns(10);
 		textFieldDesc.setBounds(230, 179, 170, 20);
 		getContentPane().add(textFieldDesc);
 		
 		textFieldDuracion = new JTextField();
+		textFieldDuracion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		textFieldDuracion.setEnabled(false);
 		textFieldDuracion.setColumns(10);
 		textFieldDuracion.setBounds(230, 223, 170, 20);
 		getContentPane().add(textFieldDuracion);
@@ -90,11 +116,19 @@ public class ModActividadDeportiva extends JInternalFrame {
 		getContentPane().add(lblNewLabelCosto);
 		
 		textFieldCosto = new JTextField();
+		textFieldCosto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		textFieldCosto.setEnabled(false);
 		textFieldCosto.setColumns(10);
 		textFieldCosto.setBounds(230, 266, 170, 20);
 		getContentPane().add(textFieldCosto);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setEnabled(false);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AceptarActionPerformed(e);
@@ -117,6 +151,10 @@ public class ModActividadDeportiva extends JInternalFrame {
 		btnVer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VerInfoActividadActionPerformed(e);
+				btnAceptar.setEnabled(true);
+				textFieldDesc.setEnabled(true);
+				textFieldDuracion.setEnabled(true);
+				textFieldCosto.setEnabled(true);
 			}
 		});
 		btnVer.setBounds(310, 59, 90, 23);
@@ -131,18 +169,15 @@ public class ModActividadDeportiva extends JInternalFrame {
 	
 	protected void VerInfoActividadActionPerformed(ActionEvent arg0){
 		String act = this.comboBoxAD.getSelectedItem().toString();
-		ActividadDep act1;
+		DtActividadDep act1;
 		act1 = ICMad.obtenerInfo(act);
 		textFieldNombre.setText(act1.getNombre());
 		textFieldNombre.setEnabled(false);
 		textFieldDesc.setText(act1.getDescripcion());
-		//textFieldDesc.setEnabled(false);
 		textFieldDuracion.setText(act1.getDuracion().toString());
-		//textFieldDuracion.setEnabled(false);
 		float c = act1.getCosto();
 		String str = String.valueOf(c);
 		textFieldCosto.setText(str);
-		//textFieldCosto.setEnabled(false);
 		
 		textFieldDesc.setEnabled(true);
 		textFieldDuracion.setEnabled(true);
@@ -155,9 +190,8 @@ public class ModActividadDeportiva extends JInternalFrame {
 		String descripcion = this.textFieldDesc.getText();
 		Integer duracion = Integer.valueOf(this.textFieldDuracion.getText());
 		Float costo = Float.parseFloat(this.textFieldCosto.getText());
-		//agregar fecha de registro 
 		if(checkFormulario()) {
-			ICMad.ModActividadDeportiva(nombre, descripcion, duracion, costo);
+			ICMad.ModActividadDeportiva(nombre.toLowerCase(), descripcion, duracion, serialVersionUID);
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con exito", "Modificar Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import datatypes.DtClase;
+
 @Entity
 public class Clase {
 	@Id
@@ -67,5 +69,9 @@ public class Clase {
 	}
 	public void setHoraInicio(Date horaInicio) {
 		this.horaInicio = horaInicio;
+	}
+
+	public DtClase getDT() {
+		return new DtClase(this.getNombre(),this.getUrl(),this.getFecha(),this.getFechaReg(),this.getHoraInicio());
 	}
 }

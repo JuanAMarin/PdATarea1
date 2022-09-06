@@ -1,12 +1,8 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import exceptions.ActividadRepetidaException;
-import exceptions.EmailRepetidoException;
-import exceptions.NicknameRepetidoException;
-import exceptions.UsuarioRepetidoException;
 import interfaces.ICaltaactividaddeportiva;
 
 public class Caltaactividaddeportiva implements ICaltaactividaddeportiva{
@@ -17,8 +13,8 @@ public class Caltaactividaddeportiva implements ICaltaactividaddeportiva{
 	private float costo;
 	
 	public void datosActividad(String nombre, String descripcion, Integer duracion, float costo, String insti)throws ActividadRepetidaException{
-		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
-		if(mAD.buscarActividad(nombre)!= null)
+		Manejador m = Manejador.getInstancia();
+		if(m.buscarActividad(nombre)!= null)
 			throw new ActividadRepetidaException("La actividad de nombre " + nombre + " ya ha sido ingresada");
 		this.costo=costo;
 		this.descripcion=descripcion;
@@ -27,16 +23,15 @@ public class Caltaactividaddeportiva implements ICaltaactividaddeportiva{
 		this.insti=insti;
 	}
 	public void altaActividad(){
-		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		InstitucionDep institucion = mI.buscarInstitucion(this.insti);
+		Manejador m = Manejador.getInstancia();
 		ActividadDep actividad = new ActividadDep(this.nombre, this.descripcion, this.duracion, this.costo);
-		mI.agregarActividad(actividad, institucion);
+		m.agregarActividad(actividad, this.insti);
 	}
 	
 	public String[] listarInstituciones() {
 		ArrayList<String> instituciones;
-		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		instituciones = mI.obtenerInstituciones();
+		Manejador m = Manejador.getInstancia();
+		instituciones = m.obtenerInstituciones();
 		String[] inst = new String[instituciones.size()];
 		int i = 0;
 		for (String ins:instituciones) {
