@@ -26,15 +26,10 @@ public class Rankingdeclases extends JInternalFrame {
 	 * Create the frame.
 	 */
 	
-	private void formClose(){
-		///sdfsdfsdf
-	}
-	
 	public Rankingdeclases(ICrankingdeclases ICranki) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				formClose();
 				setVisible(false);
 			}
 		});
@@ -50,7 +45,6 @@ public class Rankingdeclases extends JInternalFrame {
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				formClose();
 				setVisible(false);
 			}
 		});

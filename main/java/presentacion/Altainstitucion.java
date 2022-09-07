@@ -32,6 +32,13 @@ public class Altainstitucion extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	public void formClose() {
+		textFieldNombre.setText("");
+		textFieldDesc.setText("");
+		textFieldUrl.setText("");
+	}
+	
 	public void habilitarAceptar() {
 		if (!textFieldNombre.getText().isEmpty() && !textFieldDesc.getText().isEmpty() && !textFieldUrl.getText().isEmpty())
 				btnAceptar.setEnabled(true);
@@ -81,19 +88,19 @@ public class Altainstitucion extends JInternalFrame {
 		JLabel lblMensaje = new JLabel("Complete los campos a continuación:");
 		lblMensaje.setToolTipText("");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblMensaje.setBounds(19, 4, 170, 29);
+		lblMensaje.setBounds(21, 28, 170, 29);
 		getContentPane().add(lblMensaje);
 		
 		JLabel lblIns = new JLabel("NOMBRE INSTITUCIÓN");
-		lblIns.setBounds(19, 142, 236, 14);
+		lblIns.setBounds(21, 110, 236, 14);
 		getContentPane().add(lblIns);
 		
 		JLabel lblDesc = new JLabel("DESCRIPCIÓN");
-		lblDesc.setBounds(19, 177, 111, 14);
+		lblDesc.setBounds(21, 145, 111, 14);
 		getContentPane().add(lblDesc);
 		
 		JLabel lblUrl = new JLabel("URL");
-		lblUrl.setBounds(19, 213, 124, 14);
+		lblUrl.setBounds(21, 181, 124, 14);
 		getContentPane().add(lblUrl);
 		
 		textFieldNombre = new JTextField();
@@ -103,7 +110,7 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldNombre.setBounds(196, 140, 170, 20);
+		textFieldNombre.setBounds(197, 110, 170, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
@@ -114,7 +121,7 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldDesc.setBounds(196, 175, 170, 20);
+		textFieldDesc.setBounds(197, 145, 170, 20);
 		getContentPane().add(textFieldDesc);
 		textFieldDesc.setColumns(10);
 		
@@ -125,7 +132,7 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldUrl.setBounds(196, 211, 170, 20);
+		textFieldUrl.setBounds(197, 181, 170, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 	}
@@ -136,7 +143,7 @@ public class Altainstitucion extends JInternalFrame {
 			String url=this.textFieldUrl.getText();
 			if (checkFormulario()) {
 	            try {
-	                ICai.altaInstitucion(nombre, descripcion, url);
+	                ICai.altaInstitucion(nombre.toLowerCase(), descripcion, url);
 	                JOptionPane.showMessageDialog(this, "La Institución "+nombre+" se ha creado con éxito", "Alta de Institucion",
 	                        JOptionPane.INFORMATION_MESSAGE);
 	                limpiarFormulario();

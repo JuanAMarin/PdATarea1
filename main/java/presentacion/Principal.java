@@ -33,10 +33,11 @@ public class Principal {
 	private ICaltadictadoclase ICac;
 	private Altadictadoclase AltaDictadoClaseInternalFrame;
 	private ICmodactividaddep ICmad;
-	private ModActividadDeportiva ModactividadDep;
+	private Modactividaddeportiva ModactividadDep;
 	private ICregistrodeclases ICrcs;
 	private Registroaddclases Registro;
-
+	private ICconsultaactividad ICcas;
+	private Consultaactividad consultaActividad;
 	/**
 	 * Launch the application.
 	 */
@@ -62,23 +63,30 @@ public class Principal {
 		AltaUsuario.setVisible(false);
 		consultaUsuario.formClose();
 		consultaUsuario.setVisible(false);
-		//AltaInstitucion.formClose();
+		AltaInstitucion.formClose();
 		AltaInstitucion.setVisible(false);
-		//ModInstitucion.formClose();
+		ModInstitucion.formClose();
 		ModInstitucion.setVisible(false);
-		//RankingClases.formClose();
 		RankingClases.setVisible(false);
 		ModUsuario.formClose(); 
 		ModUsuario.setVisible(false);
-		//AltaActividadDeportiva.formClose();
+		AltaActividadDeportiva.formClose();
 		AltaActividadDeportiva.setVisible(false);
+		AltaDictadoClaseInternalFrame.formClose();
+		AltaDictadoClaseInternalFrame.setVisible(false);
+		Registro.formClose();
+		Registro.setVisible(false);
+		ModactividadDep.formClose();
+		ModactividadDep.setVisible(false);
+		consultaActividad.formClose();
+		consultaActividad.setVisible(false);
 	}
 	public Principal() {
 		initialize();
 		
 		Fabrica fabrica = Fabrica.getInstancia();
 		ICau=fabrica.getICaltausuario();
-		ICcu=fabrica.getICconsultaUsuario();
+		ICcu=fabrica.getICconsultausuario();
 		ICai=fabrica.getICaltainstitucion();
 		ICmi=fabrica.getICmodinstitucion();
 		ICrc=fabrica.getICrankingdeclases();
@@ -87,6 +95,7 @@ public class Principal {
 		ICac=fabrica.getICaltadictadoclase();
 		ICmad=fabrica.getICmodactividaddep();
 		ICrcs=fabrica.getICregistrodeclases();
+		ICcas=fabrica.getICconsultaactividad();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -130,7 +139,7 @@ public class Principal {
 		AltaDictadoClaseInternalFrame.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
 		
-		ModactividadDep = new ModActividadDeportiva(ICmad);
+		ModactividadDep = new Modactividaddeportiva(ICmad);
 		ModactividadDep.setLocation(0,20);
 		ModactividadDep.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModactividadDep);
@@ -139,6 +148,19 @@ public class Principal {
 		Registro.setLocation(0,20);
 		Registro.setVisible(false);
 		frmServidorCentral.getContentPane().add(Registro);
+		
+		consultaActividad=new Consultaactividad(ICcas);
+		consultaActividad.setLocation(0,20);
+		consultaActividad.setVisible(false);
+		frmServidorCentral.getContentPane().add(consultaActividad);
+		
+		consultaUsuario=new Consultausuario(ICcu);
+		consultaUsuario.setBorder(UIManager.getBorder("OptionPane.border"));
+		consultaUsuario.setBackground(Color.GRAY);
+		consultaUsuario.setSize(524, 440);
+		consultaUsuario.setLocation(0, 20);
+		consultaUsuario.setVisible(false);
+		frmServidorCentral.getContentPane().add(consultaUsuario);
 	}
 
 	/**
@@ -150,14 +172,6 @@ public class Principal {
 		frmServidorCentral.setBounds(100, 100, 538, 496);
 		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmServidorCentral.getContentPane().setLayout(null);
-		consultaUsuario=new Consultausuario(ICcu);
-		consultaUsuario.setBorder(UIManager.getBorder("OptionPane.border"));
-		consultaUsuario.setBackground(Color.GRAY);
-		consultaUsuario.setSize(524, 440);
-		consultaUsuario.setLocation(0, 20);
-		
-		consultaUsuario.setVisible(false);
-		frmServidorCentral.getContentPane().add(consultaUsuario);
 		
 		JMenuBar menuPrincipal = new JMenuBar();
 		menuPrincipal.setForeground(Color.BLACK);
@@ -191,7 +205,9 @@ public class Principal {
 		JMenuItem menuClaseA = new JMenuItem("Clase");
 		menuClaseA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AltaDictadoClaseInternalFrame.inicializarComboBoxes();
+				limpiarVentanas();
+				AltaDictadoClaseInternalFrame.inicializarComboBoxID();
+				AltaDictadoClaseInternalFrame.inicializarComboBoxAD();
 				AltaDictadoClaseInternalFrame.setVisible(true);
 			}
 		});
@@ -213,6 +229,7 @@ public class Principal {
 		JMenuItem menuInscripcion = new JMenuItem("Inscripcion a clase");
 		menuInscripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
 				Registro.inicializarComboBoxes();
 				Registro.setVisible(true);
 			}
@@ -237,8 +254,8 @@ public class Principal {
 		menuActividadM.setSelected(true);
 		menuActividadM.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ModactividadDep.inicializarComboBoxes();
 				limpiarVentanas();
+				ModactividadDep.inicializarComboBoxes();
 				ModactividadDep.setVisible(true);
 			}
 		});
@@ -247,8 +264,8 @@ public class Principal {
 		menuInstitucionM.setSelected(true);
 		menuInstitucionM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModInstitucion.inicializarComboBox();
 				limpiarVentanas();
+				ModInstitucion.inicializarComboBox();
 				ModInstitucion.setVisible(true);
 			}
 		});
@@ -283,6 +300,13 @@ public class Principal {
 		menuConsultar.add(menuUsuarioC);
 		
 		JMenuItem menuActividadC = new JMenuItem("Actividad");
+		menuActividadC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
+				consultaActividad.cargarCombo();
+				consultaActividad.setVisible(true);
+			}
+		});
 		menuConsultar.add(menuActividadC);
 		
 		JMenuItem menuClaseC = new JMenuItem("Clase");

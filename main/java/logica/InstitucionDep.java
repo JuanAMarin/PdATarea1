@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import datatypes.DtInstitucionDep;
+
 @Entity
 public class InstitucionDep {
 	@Id
@@ -15,7 +17,7 @@ public class InstitucionDep {
 	private String descripcion, url;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<ActividadDep> actividades;
+	private List<ActividadDep> actividades = new ArrayList<ActividadDep>();
 	
 	public InstitucionDep() {
 		super();
@@ -26,7 +28,6 @@ public class InstitucionDep {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.url = url;
-		this.actividades = new ArrayList<ActividadDep>();
 	}
 	
 	public String getNombre() {
@@ -52,5 +53,17 @@ public class InstitucionDep {
 	}
 	public void setActividades(List<ActividadDep> actividades) {
 		this.actividades = actividades;
+	}
+	public ActividadDep buscarActividad(String nombre) {
+		ActividadDep aretornar=null;
+		for(ActividadDep a: actividades) {
+			if (a.getNombre().equals(nombre))
+				aretornar=a;
+		}
+		return aretornar;
+	}
+
+	public DtInstitucionDep getDT() {
+		return new DtInstitucionDep(this.getNombre(), this.getDescripcion(), this.getUrl());
 	}
 }

@@ -12,7 +12,7 @@ public class Crankingdeclases implements ICrankingdeclases{
 	}
 	
 	public List<String> obtenerRankingC(){
-		ManejadorClases mcla = ManejadorClases.getInstancia();
+		Manejador m = Manejador.getInstancia();
 		//return mcla.obtenerRanking();
 		List<String> socios = new ArrayList<String>();
 		return socios;

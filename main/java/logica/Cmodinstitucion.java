@@ -2,14 +2,16 @@ package logica;
 
 import java.util.ArrayList;
 
+import datatypes.DtInstitucionDep;
 import interfaces.ICmodinstitucion;
 
 public class Cmodinstitucion implements ICmodinstitucion {
 
 	@Override
 	public void modInstitucion(String nombreInstitucion, String descripcion, String url) {
-		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		InstitucionDep aux=mI.buscarInstitucion(nombreInstitucion);
+		Manejador m = Manejador.getInstancia();
+		DtInstitucionDep inst = m.buscarInstitucion(nombreInstitucion);
+		InstitucionDep aux= new InstitucionDep(inst.getNombre(),inst.getDescripcion(),inst.getUrl());
 		if(aux!=null) {
 			aux.setDescripcion(descripcion);
 			aux.setUrl(url);
@@ -19,8 +21,8 @@ public class Cmodinstitucion implements ICmodinstitucion {
 	@Override
 	public String[] listarInstituciones() {
 		ArrayList<String> instituciones;
-		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		instituciones = mI.obtenerInstituciones();
+		Manejador m = Manejador.getInstancia();
+		instituciones = m.obtenerInstituciones();
 		String[] inst = new String[instituciones.size()];
 		int i = 0;
 		for (String ins:instituciones) {
@@ -31,10 +33,9 @@ public class Cmodinstitucion implements ICmodinstitucion {
 	}
 
 	@Override
-	public InstitucionDep obtenerInfo(String nombre) {
-		ManejadorInstituciones mI = ManejadorInstituciones.getInstancia();
-		InstitucionDep aux=mI.buscarInstitucion(nombre);
-		return aux;
+	public DtInstitucionDep obtenerInfo(String nombre) {
+		Manejador m = Manejador.getInstancia();
+		return m.buscarInstitucion(nombre);
 	}
 	
 }

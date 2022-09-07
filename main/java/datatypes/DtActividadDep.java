@@ -1,21 +1,20 @@
 package datatypes;
 
-import java.util.Map;
-import logica.Clase;
+import java.util.Date;
 
 public class DtActividadDep {
 	private String nombre, descripcion;
 	private Integer duracion;
 	private float costo;
-	private Map<String,Clase> clases;
+	private Date fechaReg;
 	
-	public DtActividadDep(String nombre, String descripcion, Integer duracion, float costo, Map<String, Clase> clases) {
+	public DtActividadDep(String nombre, String descripcion, Integer duracion, float costo, Date fechaReg) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.costo = costo;
-		this.clases = clases;
+		this.fechaReg = fechaReg;
 	}
 
 	public String getNombre() {
@@ -34,8 +33,10 @@ public class DtActividadDep {
 		return costo;
 	}
 
-	public Map<String, Clase> getClases() {
-		return clases;
+	public Date getFechaReg() {
+		return fechaReg;
 	}
+	
+	
 	
 }

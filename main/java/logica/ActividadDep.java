@@ -1,12 +1,14 @@
 package logica;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import datatypes.DtActividadDep;
 
 @Entity
 public class ActividadDep {
@@ -16,10 +18,10 @@ public class ActividadDep {
 	private String descripcion;
 	private Integer duracion;
 	private float costo;
+	private Date fecha;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Clase> clases;
-	
+	private List<Clase> clases=new ArrayList<Clase>();;
 	
 	public ActividadDep() {
 		super();
@@ -31,7 +33,7 @@ public class ActividadDep {
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.costo = costo;
-		this.clases=new ArrayList<Clase>();
+		this.fecha=new Date();
 	}
 
 	public String getNombre() {
@@ -73,10 +75,21 @@ public class ActividadDep {
 	public void setCosto(float costo) {
 		this.costo = costo;
 	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 	
-	//-----------------------------------------------------------------------------------
-	// Funciones ...
-	
-	
+	public void addClase(Clase clase) {
+		clases.add(clase);
+	}
+
+	public DtActividadDep getDT() {
+		return new DtActividadDep(this.getNombre(), this.descripcion, this.getDuracion(), this.getCosto(), this.getFecha());
+	}
 	
 }

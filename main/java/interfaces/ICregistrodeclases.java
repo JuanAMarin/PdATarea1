@@ -1,13 +1,11 @@
 package interfaces;
 
-import java.util.List;
-
-import logica.Clase;
+import datatypes.DtClase;
 
 public interface ICregistrodeclases {
 	public abstract String[] listarInstituciones();
 	public abstract String[] listarActividades(String nombre);
-	public abstract List<Clase> listarClases(String nombre);
-	public abstract void setInsti(String insti);
-	public abstract void setActi(String acti);
+	public abstract String[] listarClases(String actividad);
+	public abstract DtClase buscarClase(String clase);
+	public abstract String[] listarSocios();
 }

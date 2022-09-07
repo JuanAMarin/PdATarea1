@@ -56,6 +56,8 @@ public class Altausuario extends JInternalFrame {
 	private JLabel lblErrorNickname;
 	private JLabel lblEmailEnUso;
 	private JLabel lblFechaNaci;
+	private JLabel lblNickname;
+	private JLabel lblEmail;
 	
 	/**
 	 * Create the frame.
@@ -79,6 +81,13 @@ public class Altausuario extends JInternalFrame {
 		textDescripcion.setEnabled(false);
 		textBiografia.setEnabled(false);
 		textSitioWeb.setEnabled(false);
+		lblEmailEnUso.setVisible(false);
+		lblErrorEmail.setVisible(false);
+		lblErrorFecha.setVisible(false);
+		lblErrorNickname.setVisible(false);
+		changeTextFormat(lblEmail, Color.BLACK);
+		changeTextFormat(lblNickname, Color.BLACK);
+		changeTextFormat(lblFechaNaci, Color.BLACK);
 	}
 	
 	private void changeTextFormat(JLabel l, Color c){
@@ -172,7 +181,7 @@ public class Altausuario extends JInternalFrame {
 		lblMensaje.setBounds(33, 10, 220, 29);
 		getContentPane().add(lblMensaje);
 		
-		JLabel lblNickname = new JLabel("NICKNAME");
+		lblNickname = new JLabel("NICKNAME");
 		lblNickname.setBounds(43, 49, 139, 14);
 		getContentPane().add(lblNickname);
 		lblErrorNickname.setVisible(false);
@@ -185,7 +194,7 @@ public class Altausuario extends JInternalFrame {
 		lblApellido.setBounds(43, 97, 125, 14);
 		getContentPane().add(lblApellido);
 		
-		JLabel lblEmail = new JLabel("EMAIL");
+		lblEmail = new JLabel("EMAIL");
 		lblEmail.setBounds(43, 145, 99, 14);
 		getContentPane().add(lblEmail);
 		lblErrorEmail.setVisible(false);
@@ -397,7 +406,7 @@ public class Altausuario extends JInternalFrame {
 				String email=textEmail.getText();
 				Date fecha = dateFechaNac.getDate();
 				try {
-					ICau.datosUsuario(nickname.toLowerCase(), nombre.toLowerCase(), apellido.toLowerCase(), email.toLowerCase(), fecha);
+					ICau.datosUsuario(nickname.toLowerCase(), nombre, apellido, email.toLowerCase(), fecha);
 					if(rdbtnProfesor.isSelected()){
 						String descripcion=textDescripcion.getText();
 						String biografia=textBiografia.getText();

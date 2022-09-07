@@ -4,6 +4,7 @@ import logica.Caltaactividaddeportiva;
 import logica.Caltadictadoclase;
 import logica.Caltainstitucion;
 import logica.Caltausuario;
+import logica.Cconsultaactividad;
 import logica.Cconsultausuario;
 import logica.Cmodactividaddep;
 import logica.Cmodinstitucion;
@@ -26,7 +27,7 @@ public class Fabrica {
         return new Caltausuario();
     }
 	
-	public ICconsultausuario getICconsultaUsuario() {
+	public ICconsultausuario getICconsultausuario() {
         return new Cconsultausuario();
     }
 	
@@ -61,4 +62,7 @@ public class Fabrica {
 		return new Cregistrodeclases();
 	}
 	
+	public ICconsultaactividad getICconsultaactividad() {
+		return new Cconsultaactividad();
+	}
 }

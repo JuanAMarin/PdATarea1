@@ -1,21 +1,16 @@
 package logica;
 
 import java.util.ArrayList;
+
+import datatypes.DtActividadDep;
 import interfaces.ICmodactividaddep;
 
 public class Cmodactividaddep implements ICmodactividaddep {
 	
-	public ActividadDep obtenerInfo(String nombre) {
-		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
-		ActividadDep a=mAD.buscarActividad(nombre);
-		
-		return a;
-	}
-
 	public String[] listarActividades() {
 		ArrayList<String> actividades;
-		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
-		actividades = mAD.obtenerActividades();
+		Manejador m = Manejador.getInstancia();
+		actividades = m.obtenerActividades();
 		String[] act = new String[actividades.size()];
 		int i = 0;
 		for (String ad:actividades) {
@@ -27,14 +22,13 @@ public class Cmodactividaddep implements ICmodactividaddep {
 	
 	@Override
 	public void ModActividadDeportiva(String nombre, String descripcion, Integer duracion, float costo) {
-		ManejadorActividadDeportiva mAD = ManejadorActividadDeportiva.getInstancia();
-		ActividadDep aD = mAD.buscarActividad(nombre);
-		if(aD!=null) {
-			aD.setDescripcion(descripcion);
-			aD.setDuracion(duracion);
-			aD.setCosto(costo);
-		}	
+		Manejador m = Manejador.getInstancia();
+		m.modificarAD(nombre, descripcion, duracion, costo);	
 	}
 	
+	public DtActividadDep obtenerInfo(String nombre) {
+		Manejador m = Manejador.getInstancia();
+		return m.buscarActividad(nombre);
+	}
 }
 

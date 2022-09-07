@@ -12,14 +12,18 @@ import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
 import interfaces.ICmodusuario;
-import logica.Profesor;
-import logica.Socio;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class Modusuario extends JInternalFrame {
 	
@@ -59,6 +63,15 @@ public class Modusuario extends JInternalFrame {
 		txtApellido.setEnabled(false);
 	}
 	
+	public void habilitarAceptar() {
+		if (!txtDescripcion.getText().isEmpty() && !txtSitioWeb.getText().isEmpty() 
+			&& !txtApellido.getText().isEmpty() && !txtNombre.getText().isEmpty() 
+			&& !txtBiografia.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty())
+				btnAceptar.setEnabled(true);
+		else
+				btnAceptar.setEnabled(false);
+	}
+	
 	public void inicializarComboBox() {
 		DefaultComboBoxModel<String> modelNicks = new DefaultComboBoxModel<String>(ICmu.listarUsuarios());
 		cboNicknames.setModel(modelNicks);
@@ -67,14 +80,14 @@ public class Modusuario extends JInternalFrame {
 	protected void verInfo(ActionEvent arg0) {
 		if(this.cboNicknames.getSelectedItem()!=null) {
 			String nickname = this.cboNicknames.getSelectedItem().toString();
-			Profesor profe = ICmu.obtenerProfesor(nickname);
+			DtProfesor profe = ICmu.obtenerProfesor(nickname);
 			if(profe==null) {
 				rdbtnSocio.setSelected(true);
 				rdbtnProfesor.setSelected(false);
 				txtBiografia.setEnabled(false);
 				txtSitioWeb.setEnabled(false);
 				txtDescripcion.setEnabled(false);
-				Socio socio = ICmu.obtenerSocio(nickname);
+				DtSocio socio = ICmu.obtenerSocio(nickname);
 				txtApellido.setText(socio.getApellido());
 				txtNombre.setText(socio.getNombre());
 				dateFechaNac.setDate(socio.getFechaNac());
@@ -109,9 +122,9 @@ public class Modusuario extends JInternalFrame {
 				String descripcion=this.txtDescripcion.getText();
 				String biografia=this.txtBiografia.getText();
 				String sitioweb=this.txtSitioWeb.getText();
-				ICmu.modProfesor(nickname, nombre, apellido, fecha, descripcion, biografia, sitioweb);
+				ICmu.modProfesor(nickname.toLowerCase(), nombre, apellido, fecha, descripcion, biografia, sitioweb);
 			} else if(rdbtnSocio.isSelected()) {
-				ICmu.modSocio(nickname, nombre, apellido, fecha);
+				ICmu.modSocio(nickname.toLowerCase(), nombre, apellido, fecha);
 			}
             JOptionPane.showMessageDialog(this, "El Usuario "+nickname+" se ha modificado con Éxito", "Modificar Usuario",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -120,12 +133,22 @@ public class Modusuario extends JInternalFrame {
 	}
 	
 	private boolean checkFormulario() {
-        if (txtDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtBiografia.getText().isEmpty() || txtSitioWeb.getText().isEmpty() || dateFechaNac.getDate()==null) {
-            JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
+		if(rdbtnProfesor.isSelected()) {
+	        if (txtDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtBiografia.getText().isEmpty() || txtSitioWeb.getText().isEmpty() || dateFechaNac.getDate()==null) {
+	            JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
+	                    JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+	        return true;
+		}else {
+			if (txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || dateFechaNac.getDate()==null) {
+	            JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
+	                    JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+	        return true;
+		}
+			
     }
 	
 	public Modusuario(ICmodusuario ICmodusu) {
@@ -189,29 +212,60 @@ public class Modusuario extends JInternalFrame {
 		getContentPane().add(lblSitioWeb);
 		
 		txtDescripcion = new JTextField();
+		txtDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		txtDescripcion.setEnabled(false);
 		txtDescripcion.setColumns(10);
 		txtDescripcion.setBounds(213, 195, 170, 20);
 		getContentPane().add(txtDescripcion);
 		
 		txtSitioWeb = new JTextField();
+		txtSitioWeb.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		txtSitioWeb.setEnabled(false);
 		txtSitioWeb.setColumns(10);
 		txtSitioWeb.setBounds(213, 244, 170, 20);
 		getContentPane().add(txtSitioWeb);
 		
 		dateFechaNac = new JDateChooser();
+		dateFechaNac.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				habilitarAceptar();
+			}
+		});
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateFechaNac.getDateEditor();
 		editor.setEditable(false);
 		dateFechaNac.setBounds(213, 96, 170, 19);
 		getContentPane().add(dateFechaNac);
 		
 		txtApellido = new JTextField();
+		txtApellido.setEnabled(false);
+		txtApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		txtApellido.setColumns(10);
 		txtApellido.setBounds(213, 70, 170, 20);
 		getContentPane().add(txtApellido);
 		
 		txtNombre = new JTextField();
+		txtNombre.setEnabled(false);
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		txtNombre.setColumns(10);
 		txtNombre.setBounds(213, 46, 170, 20);
 		getContentPane().add(txtNombre);
@@ -231,6 +285,12 @@ public class Modusuario extends JInternalFrame {
 		getContentPane().add(btnVerInfo);
 		
 		txtBiografia = new JTextField();
+		txtBiografia.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		txtBiografia.setEnabled(false);
 		txtBiografia.setColumns(10);
 		txtBiografia.setBounds(213, 219, 170, 20);
