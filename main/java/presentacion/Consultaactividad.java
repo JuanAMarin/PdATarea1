@@ -51,7 +51,7 @@ import java.awt.event.MouseEvent;
 public class Consultaactividad extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
-	
+	private ICconsultaactividad ICca;
 	private JComboBox<String> cboInstitucion;
 	private JTextArea textAreaUsu;
 	private JRadioButton rdbtnProfe;

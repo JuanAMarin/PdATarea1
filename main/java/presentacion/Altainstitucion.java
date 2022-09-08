@@ -162,7 +162,7 @@ public class Altainstitucion extends JInternalFrame {
 	                btnAceptar.setEnabled(false);
 	            } catch (InstitucionRepetidaException e) {
 	            	lblErrorNombre.setVisible(true);
-	                //JOptionPane.showMessageDialog(this, e.getMessage(), "Alta de Institucion", JOptionPane.ERROR_MESSAGE);  
+	            	btnAceptar.setEnabled(false);
 	            }       
 	        }
 	}
