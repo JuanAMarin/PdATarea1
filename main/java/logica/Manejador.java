@@ -316,6 +316,17 @@ public class Manejador {
 		return aRetornar;
 	}
 	
+	public void modificarID(String nombre, String descripcion, String url) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		InstitucionDep institucionDep = em.find(InstitucionDep.class, nombre);
+		institucionDep.setDescripcion(descripcion);
+		institucionDep.setUrl(url);
+		em.getTransaction().begin();
+		em.merge(institucionDep);
+		em.getTransaction().commit();
+	}
+	
 	//REGISTRO
 	
 	public ArrayList<DtRegistro> buscarRegistros(String clase) {

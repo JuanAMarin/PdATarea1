@@ -156,7 +156,7 @@ public class Modinstitucion extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "La Institución "+nombre+" se ha modificado con Éxito", "Modificar Institucion",
                     JOptionPane.INFORMATION_MESSAGE);
             formClose();
-            setVisible(false);     
+            //setVisible(false);     
         }
 	}
 	
