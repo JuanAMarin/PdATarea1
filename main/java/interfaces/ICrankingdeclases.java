@@ -3,5 +3,5 @@ package interfaces;
 import java.util.List;
 
 public interface ICrankingdeclases {
-	public abstract List<String> obtenerRankingC();
+	public abstract List<String> obtRankClasesC();
 }

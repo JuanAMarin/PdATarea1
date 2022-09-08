@@ -189,9 +189,7 @@ public class Manejador {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
-		
 		em.persist(clase);
-		
 		em.getTransaction().commit();
 	}
 	
@@ -213,31 +211,33 @@ public class Manejador {
 		em.getTransaction().commit();
 	}
 	
-	/*public List<String> obtenerRanking(){
-	Conexion conexion = Conexion.getInstancia();
-	EntityManager em = conexion.getEntityManager();
-	Query query = em.createQuery("select * from Clase");
-	List<Clase> listClases = (List<Clase>) query.getResultList();
-	ArrayList<Integer> orden = new ArrayList<>();
-	for(Clase c: listClases) {
-		orden.add(c.getRegistros().size());
-	}
-	orden.sort(Comparator.naturalOrder());
-	Iterator<Integer> it = orden.iterator();
-	List<String> ranking = new ArrayList<>();
-    while(it.hasNext()) {
+	public List<String> obtRankClases(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select c from Clase c");
+		List<Clase> listClases = (List<Clase>) query.getResultList();
+		ArrayList<Integer> orden = new ArrayList<>();
 		for(Clase c: listClases) {
-			if((Integer)c.getRegistros().size()==it.next()) {
-				ranking.add(c.getNombre());
-				ranking.add(c.getFecha().getDay()+"/"+c.getFecha().getMonth()+"/"+c.getFecha().getYear());
-				ranking.add(c.getUrl());
-				ranking.add("");
-				listClases.remove(c);
-			}
+			orden.add(c.getRegistros().size());
 		}
-    }
-	return ranking;
-}*/
+		orden.sort(Comparator.naturalOrder());
+		Iterator<Integer> it = orden.iterator();
+		List<String> ranking = new ArrayList<>();
+		Clase c;
+	    while(it.hasNext()) {
+			for(int i=0;i<orden.size();i++) {
+				c=listClases.get(0);
+				if((Integer)c.getRegistros().size()==it.next()) {
+					ranking.add(c.getNombre());
+					ranking.add(c.getFecha().getDay()+"/"+c.getFecha().getMonth()+"/"+c.getFecha().getYear());
+					ranking.add(c.getUrl());
+					ranking.add("");
+					listClases.remove(c);
+				}
+			}
+	    }
+		return ranking;
+	}
 	
 	//Actividades
 	
@@ -345,7 +345,7 @@ public class Manejador {
 		EntityManager em = conexion.getEntityManager();
 		clase.addRegistro(socio);
 		em.getTransaction().begin();
-		em.merge(clase);
+		em.persist(clase);
 		em.getTransaction().commit();
 	}
 	

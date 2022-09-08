@@ -101,6 +101,14 @@ public class Modactividaddeportiva extends JInternalFrame {
 			public void keyReleased(KeyEvent e) {
 				habilitarAceptar();
 			}
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				char c=evt.getKeyChar();
+				if(Character.isLetter(c)) {
+					getToolkit().beep();
+					evt.consume();
+				}
+			}
 		});
 		textFieldDuracion.setEnabled(false);
 		textFieldDuracion.setColumns(10);
@@ -120,6 +128,14 @@ public class Modactividaddeportiva extends JInternalFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				habilitarAceptar();
+			}
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				char c=evt.getKeyChar();
+				if(Character.isLetter(c)) {
+					getToolkit().beep();
+					evt.consume();
+				}
 			}
 		});
 		textFieldCosto.setEnabled(false);

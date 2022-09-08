@@ -43,9 +43,7 @@ public class RegistroID implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		RegistroID other = (RegistroID) obj;
-		return clase == other.clase && Objects.equals(socio, other.socio);
+		return Objects.equals(clase, other.clase) && Objects.equals(socio, other.socio);
 	}
-	
-	
-	
+
 }

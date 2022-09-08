@@ -31,6 +31,7 @@ public class Altainstitucion extends JInternalFrame {
 	private JTextField textFieldDesc;
 	private JTextField textFieldUrl;
 	private JLabel lblErrorNombre;
+	private JLabel lblIns;
 
 	/**
 	 * Create the frame.
@@ -41,6 +42,11 @@ public class Altainstitucion extends JInternalFrame {
 		textFieldDesc.setText("");
 		textFieldUrl.setText("");
 		lblErrorNombre.setVisible(false);
+		changeTextFormat(lblIns, Color.BLACK);
+	}
+	
+	private void changeTextFormat(JLabel l, Color c){
+		l.setForeground(c);
 	}
 	
 	public void habilitarAceptar() {
@@ -89,7 +95,7 @@ public class Altainstitucion extends JInternalFrame {
 		btnCancelar.setBounds(409, 376, 89, 23);
 		getContentPane().add(btnCancelar);
 		
-		lblErrorNombre = new JLabel("*Institucion ya existente");
+		lblErrorNombre = new JLabel("*Esa institucion ya existe");
 		lblErrorNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		lblErrorNombre.setForeground(Color.RED);
 		lblErrorNombre.setBounds(376, 111, 170, 13);
@@ -101,7 +107,7 @@ public class Altainstitucion extends JInternalFrame {
 		lblMensaje.setBounds(21, 28, 170, 29);
 		getContentPane().add(lblMensaje);
 		
-		JLabel lblIns = new JLabel("NOMBRE INSTITUCIÓN");
+		lblIns = new JLabel("NOMBRE INSTITUCIÓN");
 		lblIns.setBounds(21, 110, 236, 14);
 		getContentPane().add(lblIns);
 		lblErrorNombre.setVisible(false);
@@ -118,11 +124,12 @@ public class Altainstitucion extends JInternalFrame {
 		textFieldNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				changeTextFormat(lblIns,Color.BLACK);
 				lblErrorNombre.setVisible(false);
 				habilitarAceptar();
 			}
 		});
-		textFieldNombre.setBounds(197, 110, 170, 20);
+		textFieldNombre.setBounds(196, 108, 170, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
@@ -133,7 +140,7 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldDesc.setBounds(197, 145, 170, 20);
+		textFieldDesc.setBounds(196, 143, 170, 20);
 		getContentPane().add(textFieldDesc);
 		textFieldDesc.setColumns(10);
 		
@@ -144,7 +151,7 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldUrl.setBounds(197, 181, 170, 20);
+		textFieldUrl.setBounds(196, 179, 170, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 	}
@@ -161,6 +168,7 @@ public class Altainstitucion extends JInternalFrame {
 	                limpiarFormulario();
 	                btnAceptar.setEnabled(false);
 	            } catch (InstitucionRepetidaException e) {
+	            	changeTextFormat(lblIns,Color.RED);
 	            	lblErrorNombre.setVisible(true);
 	            	btnAceptar.setEnabled(false);
 	            }       

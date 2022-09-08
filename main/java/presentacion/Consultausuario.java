@@ -66,22 +66,8 @@ public class Consultausuario extends JInternalFrame {
 				DtProfesor p = ICcu.buscarProfesor(nickname);
 				if (p==null) {
 					DtSocio s = ICcu.buscarSocio(nickname);
-					lblMensajito.setText("ES SOCIO");
-					txtEmail.setText(s.getEmail());
-					txtNombre.setText(s.getNombre());
-					txtApellido.setText(s.getApellido());
-					txtFechaNac.setText(s.getFechaNac().toString());
 				}else{
-					lblMensajito.setText("ES PROFESOR");
-					txtEmail.setText(p.getEmail());
-					txtNombre.setText(p.getNombre());
-					txtApellido.setText(p.getApellido());
-					txtFechaNac.setText(p.getFechaNac().toString());
-					txtDescripcion.setText(p.getDescripcion());
-					txtBiografia.setText(p.getBiografia());
-					txtSitioWeb.setText(p.getSitioweb());
 				}
-				lblMensajito.setVisible(true);
 			}
 		});
 		comboBoxNickname.setBounds(74, 7, 231, 22);
@@ -109,13 +95,5 @@ public class Consultausuario extends JInternalFrame {
 	}
 	
 	public void formClose(){
-		txtEmail.setText("");
-		txtNombre.setText("");
-		txtApellido.setText("");
-		txtFechaNac.setText("");
-		txtDescripcion.setText("");
-		txtBiografia.setText("");
-		txtSitioWeb.setText("");
-		lblMensajito.setVisible(false);
 	}
 }

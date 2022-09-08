@@ -1,6 +1,7 @@
 package logica;
 
 import exceptions.ClaseRepetidaException;
+import exceptions.ErrorFechaException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,11 +49,14 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 		return act;
 	}
 	
-	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor, String actividad) throws ClaseRepetidaException {
+	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor, String actividad) throws ClaseRepetidaException, ErrorFechaException {
 		Manejador m = Manejador.getInstancia();
 		DtClase nuevaClase = m.buscarClase(nombre);
 		if (nuevaClase != null)
 			throw new ClaseRepetidaException("La clase de nombre "+ nombre + " ya existe en el Sistema");
+        
+		if(fecha.after(new Date()) || fecha.before(new Date()))
+    		throw new ErrorFechaException("La fecha es incorrecta");
 		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio);
 		m.addClase(profesor, c);
 		m.addClaseA(actividad, c);

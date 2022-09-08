@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 import interfaces.ICaltadictadoclase;
-import logica.Manejador;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,13 +21,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
 import exceptions.ClaseRepetidaException;
+import exceptions.ErrorFechaException;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -57,6 +59,8 @@ public class Altadictadoclase extends JInternalFrame{
 	private JTextField textFieldURL;
 	private JButton btnCancelar;
 	private JButton btnConfirmar;
+	private JLabel lblErrorNombre;
+	private JLabel lblErrorFecha;
 	
 	public void habilitarAceptar() {
 		if (!textFieldNombre.getText().isEmpty() && !textFieldURL.getText().isEmpty()
@@ -80,6 +84,17 @@ public class Altadictadoclase extends JInternalFrame{
 		setBounds(100, 100, 524, 440);
 		getContentPane().setLayout(null);
 		
+		lblErrorFecha = new JLabel("*Fecha Incorrecta");
+		lblErrorFecha.setForeground(Color.RED);
+		lblErrorFecha.setBounds(410, 203, 170, 13);
+		getContentPane().add(lblErrorFecha);
+		
+		lblErrorNombre = new JLabel("*Nombre en uso");
+		lblErrorNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		lblErrorNombre.setForeground(Color.RED);
+		lblErrorNombre.setBounds(410, 170, 170, 13);
+		getContentPane().add(lblErrorNombre);
+		
 		lblNewLabelID = new JLabel("INSTITUCIÓN DEPORTIVA");
 		lblNewLabelID.setBounds(60, 36, 194, 14);
 		getContentPane().add(lblNewLabelID);
@@ -94,11 +109,11 @@ public class Altadictadoclase extends JInternalFrame{
 				inicializarComboBoxAD();
 			}
 		});
-		comboBoxID.setBounds(245, 33, 170, 20);
+		comboBoxID.setBounds(233, 33, 170, 20);
 		getContentPane().add(comboBoxID);
 		
 		comboBoxAD = new JComboBox<String>();
-		comboBoxAD.setBounds(245, 73, 170, 20);
+		comboBoxAD.setBounds(233, 73, 170, 20);
 		getContentPane().add(comboBoxAD);
 		
 		btnAceptar = new JButton("Aceptar");
@@ -109,6 +124,8 @@ public class Altadictadoclase extends JInternalFrame{
 					agregarClaseActionPerformed(e);
 				} catch (ClaseRepetidaException e1) {
 					e1.printStackTrace();
+				}catch (ErrorFechaException e2) {
+					e2.printStackTrace();
 				}
 			}
 		});
@@ -124,16 +141,19 @@ public class Altadictadoclase extends JInternalFrame{
 		lblNewLabelNombre = new JLabel("NOMBRE");
 		lblNewLabelNombre.setBounds(60, 169, 139, 14);
 		getContentPane().add(lblNewLabelNombre);
+		lblErrorNombre.setVisible(false);
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				changeTextFormat(lblNewLabelNombre, Color.BLACK);
+				lblErrorNombre.setVisible(false);
 				habilitarAceptar();
 			}
 		});
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(245, 167, 170, 20);
+		textFieldNombre.setBounds(233, 167, 170, 20);
 		getContentPane().add(textFieldNombre);
 		
 		lblNewLabelFecha = new JLabel("FECHA DE INICIO");
@@ -152,11 +172,11 @@ public class Altadictadoclase extends JInternalFrame{
 				
 		dateFecha.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				//lblErrorFecha.setVisible(false);
-				//changeTextFormat(lblFecha, Color.BLACK);
+				lblErrorFecha.setVisible(false);
+				changeTextFormat(lblNewLabelFecha, Color.BLACK);
 			}
 		});
-		dateFecha.setBounds(245, 197, 170, 19);
+		dateFecha.setBounds(233, 197, 170, 19);
 		getContentPane().add(dateFecha);
 		
 		lblNewLabelHora = new JLabel("HORA DE INICIO");
@@ -165,12 +185,12 @@ public class Altadictadoclase extends JInternalFrame{
 		
 		spinnerHora = new JSpinner();
 		spinnerHora.setModel(new SpinnerNumberModel(0, 0, 23, 1));
-		spinnerHora.setBounds(245, 234, 41, 20);
+		spinnerHora.setBounds(233, 235, 41, 20);
 		getContentPane().add(spinnerHora);
 		
 		spinnerMin = new JSpinner();
 		spinnerMin.setModel(new SpinnerNumberModel(0, 0, 59, 1));
-		spinnerMin.setBounds(296, 234, 41, 20);
+		spinnerMin.setBounds(284, 235, 41, 20);
 		getContentPane().add(spinnerMin);
 		
 		lblNewLabelProfesor = new JLabel("PROFESOR");
@@ -185,11 +205,13 @@ public class Altadictadoclase extends JInternalFrame{
 		textFieldURL.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				changeTextFormat(lblNewLabelNombre, Color.BLACK);
+				lblErrorNombre.setVisible(false);
 				habilitarAceptar();
 			}
 		});
 		textFieldURL.setColumns(10);
-		textFieldURL.setBounds(245, 296, 170, 20);
+		textFieldURL.setBounds(233, 297, 170, 20);
 		getContentPane().add(textFieldURL);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -208,7 +230,7 @@ public class Altadictadoclase extends JInternalFrame{
 				habilitarAceptar();
 			}
 		});
-		comboBoxProfe.setBounds(245, 264, 170, 20);
+		comboBoxProfe.setBounds(233, 265, 170, 20);
 		getContentPane().add(comboBoxProfe);
 		
 		btnConfirmar = new JButton("Confirmar");
@@ -242,11 +264,8 @@ public class Altadictadoclase extends JInternalFrame{
 		comboBoxProfe.setModel(modelProfesores);
 	}
 	
-	protected void agregarClaseActionPerformed(ActionEvent arg0) throws ClaseRepetidaException {
+	protected void agregarClaseActionPerformed(ActionEvent arg0) throws ClaseRepetidaException, ErrorFechaException {
 		Date fechaReg = new Date();
-		//textField.setText(fechaReg.toString());
-		String strID = comboBoxID.getSelectedItem().toString();
-		String strAD = comboBoxAD.getSelectedItem().toString();
 		String nombre=textFieldNombre.getText();
 		Date fecha = dateFecha.getDate();
 		String prof = comboBoxProfe.getSelectedItem().toString();
@@ -264,12 +283,16 @@ public class Altadictadoclase extends JInternalFrame{
 		if(checkFormulario()) {
 			try {
 				ICac.altaClase(nombre.toLowerCase(), url, fecha, fechaReg, h, prof.toLowerCase(), actividad.toLowerCase());
-				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Éxito", "Alta de Dictado de Clase",
+				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Ã‰xito", "Alta de Dictado de Clase",
 		                JOptionPane.INFORMATION_MESSAGE);
 				formClose();
 			} catch (ClaseRepetidaException e) {
-				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" ya existe", "Alta Dictado Clase",
-	                    JOptionPane.INFORMATION_MESSAGE);
+				changeTextFormat(lblNewLabelNombre, Color.RED);
+				lblErrorNombre.setVisible(true);
+			}
+			catch (ErrorFechaException e) {
+				changeTextFormat(lblNewLabelFecha, Color.RED);
+				lblErrorFecha.setVisible(true);
 			}
 		}
 			
@@ -292,7 +315,7 @@ public class Altadictadoclase extends JInternalFrame{
 		String prof = comboBoxProfe.getSelectedItem().toString();
 		String url = textFieldURL.getText();
 		if(strID.isEmpty() || strAD.isEmpty() || nombre.isEmpty() || fecha.isEmpty() || prof.isEmpty() || url.isEmpty() || url.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Alta Dictado Clase",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacÃ­os", "Alta Dictado Clase",
                     JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -306,7 +329,15 @@ public class Altadictadoclase extends JInternalFrame{
         spinnerHora.setValue(0);
         spinnerMin.setValue(0);
         comboBoxProfe.removeAllItems();
-	 }
+        lblErrorFecha.setVisible(false);
+        lblErrorNombre.setVisible(false);
+        changeTextFormat(lblNewLabelFecha,Color.BLACK);
+        changeTextFormat(lblNewLabelNombre,Color.BLACK);
+	}
+	
+	private void changeTextFormat(JLabel l, Color c){
+		l.setForeground(c);
+	}
 }
 
 

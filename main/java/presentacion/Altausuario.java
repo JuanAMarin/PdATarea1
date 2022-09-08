@@ -292,6 +292,10 @@ public class Altausuario extends JInternalFrame {
 				textDescripcion.setEnabled(true);
 				textBiografia.setEnabled(true);
 				textSitioWeb.setEnabled(true);
+				if(ICau.listarInstituciones()==null) {
+					rdbtnSocio.setSelected(true);
+					rdbtnProfesor.setSelected(false);
+				}
 			}
 		});
 		rdbtnProfesor.setBounds(33, 186, 109, 23);

@@ -4,8 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import interfaces.Fabrica;
-
+@SuppressWarnings("static-access")
 public class Conexion {
 	private static Conexion instancia = null;
 	private static EntityManagerFactory emf;

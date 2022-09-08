@@ -17,9 +17,12 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Altaactividaddeportiva extends JInternalFrame {
 	
@@ -33,6 +36,20 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	private JTextArea txtDesc;
 	private JSpinner spnDuracion;
 	private JButton btnAceptar;
+	private JLabel lblErrorNombre;
+	private JLabel lblNombre;
+	
+	private void changeTextFormat(JLabel l, Color c){
+		l.setForeground(c);
+	}
+	
+	public void habilitarAceptar() {
+		if (!txtNombre.getText().isEmpty() && !txtCosto.getText().isEmpty()
+			&& !txtDesc.getText().isEmpty())
+				btnAceptar.setEnabled(true);
+		else
+				btnAceptar.setEnabled(false);
+	}
 	
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
 		addInternalFrameListener(new InternalFrameAdapter() {
@@ -65,20 +82,40 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		lblMensaje.setBounds(20, 11, 170, 29);
 		getContentPane().add(lblMensaje);
 		
-		JLabel lblNombre = new JLabel("NOMBRE");
+		lblNombre = new JLabel("NOMBRE");
 		lblNombre.setBounds(30, 89, 139, 14);
 		getContentPane().add(lblNombre);
 		
 		txtNombre = new JTextField();
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				lblErrorNombre.setVisible(false);
+				changeTextFormat(lblNombre,Color.BLACK);
+				habilitarAceptar();
+			}
+		});
 		txtNombre.setBounds(179, 86, 170, 20);
 		getContentPane().add(txtNombre);
 		txtNombre.setColumns(10);
+		
+		lblErrorNombre = new JLabel("*Esa actividad ya existe");
+		lblErrorNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		lblErrorNombre.setForeground(Color.RED);
+		lblErrorNombre.setBounds(359, 90, 170, 13);
+		getContentPane().add(lblErrorNombre);
 		
 		JLabel lblDescripcion = new JLabel("DESCRIPCIÓN");
 		lblDescripcion.setBounds(30, 117, 139, 14);
 		getContentPane().add(lblDescripcion);
 		
 		txtDesc = new JTextArea();
+		txtDesc.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		txtDesc.setForeground(Color.BLACK);
 		txtDesc.setWrapStyleWord(true);
 		txtDesc.setLineWrap(true);
@@ -100,11 +137,26 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		getContentPane().add(lblCosto);
 		
 		txtCosto = new JTextField();
+		txtCosto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				char c=evt.getKeyChar();
+				if(Character.isLetter(c)) {
+					getToolkit().beep();
+					evt.consume();
+				}
+			}
+		});
 		txtCosto.setColumns(10);
 		txtCosto.setBounds(179, 210, 170, 20);
 		getContentPane().add(txtCosto);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setEnabled(false);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AceptarActionPerformed(e);
@@ -142,8 +194,8 @@ public class Altaactividaddeportiva extends JInternalFrame {
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();
 			}catch (ActividadRepetidaException e1){
-				JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" ya existe", "Alta Actividad Deportiva",
-	                    JOptionPane.INFORMATION_MESSAGE);
+				lblErrorNombre.setVisible(true);
+				changeTextFormat(lblNombre,Color.RED);
 			}
 		}
 	}
@@ -170,6 +222,8 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		txtDesc.setText("");
 		spnDuracion.setValue(1);
 		txtCosto.setText("");
+		lblErrorNombre.setVisible(false);
+		changeTextFormat(lblNombre,Color.BLACK);
 	}
 
 }

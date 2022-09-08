@@ -56,7 +56,7 @@ public class Rankingdeclases extends JInternalFrame {
 		list.setBackground(Color.WHITE);
 		list.setBounds(81, 23, 346, 333);
 		list.setModel(modelo);
-		for(String s: ICrc.obtenerRankingC()) {
+		for(String s: ICrc.obtRankClasesC()) {
 			modelo.addElement(s);
 		}
 		getContentPane().add(list);
