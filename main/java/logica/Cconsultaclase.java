@@ -5,18 +5,20 @@ import java.util.List;
 
 import datatypes.DtActividadDep;
 import datatypes.DtClase;
+import datatypes.DtRegistro;
 import interfaces.ICconsultaactividad;
+import interfaces.ICconsultaclase;
 
-public class Cconsultaactividad implements ICconsultaactividad{	
+public class Cconsultaclase implements ICconsultaclase{	
 	
-	private DtActividadDep dtad;
+	private DtClase dtc;
 	
-	public Cconsultaactividad() {
+	public Cconsultaclase() {
 		super();
 	}
 
-	public DtActividadDep getDtad() {
-		return dtad;
+	public DtClase getDtad() {
+		return dtc;
 	}
 
 	public String[] listarInstituciones() {
@@ -43,17 +45,29 @@ public class Cconsultaactividad implements ICconsultaactividad{
 		return activ;
 	}
 	
-	public void buscarActividad(String actividad){
+	public String[] listarClases(String actividad) {
 		Manejador m = Manejador.getInstancia();
-		dtad = m.buscarActividad(actividad);
+		List<String> l = m.listarClasesDeAct(actividad);
+		String[] clas = new String[l.size()];
+		int i = 0;
+		for(String s: l) {
+			clas[i] = s;
+			i++;
+		}
+		return clas;
+	}
+	
+	public void buscarClase(String clase){
+		Manejador m = Manejador.getInstancia();
+		dtc = m.buscarClase(clase);
 	}
 
-	public ArrayList<Object[]> listarClases(String actividad) {
+	public ArrayList<Object[]> listarRegistros(String clase) {
 		Manejador m = Manejador.getInstancia();
-		ArrayList<DtClase> dtc = m.buscarClases(m.listarClasesDeAct(actividad));
+		ArrayList<DtRegistro> dtr = m.buscarRegistros(clase);
 		ArrayList<Object[]> r = new ArrayList<>();
-		for(DtClase dt: dtc) {
-			Object[] o = {dt.getNombre(), dt.getUrl(), dt.getFecha(), dt.getFechaReg(), dt.getHoraInicio()};
+		for(DtRegistro dt: dtr) {
+			Object[] o = {dt.getNickname(),dt.getFecha()};
 			r.add(o);
 		}
 		return r;

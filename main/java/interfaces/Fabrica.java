@@ -5,6 +5,7 @@ import logica.Caltadictadoclase;
 import logica.Caltainstitucion;
 import logica.Caltausuario;
 import logica.Cconsultaactividad;
+import logica.Cconsultaclase;
 import logica.Cconsultausuario;
 import logica.Cmodactividaddep;
 import logica.Cmodinstitucion;
@@ -64,5 +65,9 @@ public class Fabrica {
 	
 	public ICconsultaactividad getICconsultaactividad() {
 		return new Cconsultaactividad();
+	}
+	
+	public ICconsultaclase getICconsultaclase() {
+		return new Cconsultaclase();
 	}
 }

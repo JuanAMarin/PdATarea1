@@ -47,7 +47,7 @@ public class Cregistrodeclases implements ICregistrodeclases {
 	public String[] listarClases(String actividad){
 		ArrayList<String> clases = new ArrayList<>();
 		Manejador m = Manejador.getInstancia();
-		List<DtClase> clasesL = m.listarClasesDeAct(actividad);
+		List<DtClase> clasesL = m.buscarClases(m.listarClasesDeAct(actividad));
 		Iterator<DtClase> it = clasesL.iterator();
 		while(it.hasNext()) {
 			clases.add(it.next().getNombre());

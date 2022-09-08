@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import datatypes.DtRegistro;
+import datatypes.DtSocio;
 import persistencia.RegistroID;
 
 @Entity
@@ -66,6 +68,10 @@ public class Registro {
 
 	public void setClase(Clase clase) {
 		this.clase = clase;
+	}
+	
+	public DtRegistro getDT() {
+		return new DtRegistro(this.getSocio().getNickname(),this.getFechaReg());
 	}
 	
 }
