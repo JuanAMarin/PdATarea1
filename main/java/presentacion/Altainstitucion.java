@@ -3,12 +3,14 @@ package presentacion;
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import exceptions.InstitucionRepetidaException;
@@ -28,6 +30,7 @@ public class Altainstitucion extends JInternalFrame {
 	private JTextField textFieldNombre;
 	private JTextField textFieldDesc;
 	private JTextField textFieldUrl;
+	private JLabel lblErrorNombre;
 
 	/**
 	 * Create the frame.
@@ -37,6 +40,7 @@ public class Altainstitucion extends JInternalFrame {
 		textFieldNombre.setText("");
 		textFieldDesc.setText("");
 		textFieldUrl.setText("");
+		lblErrorNombre.setVisible(false);
 	}
 	
 	public void habilitarAceptar() {
@@ -85,6 +89,12 @@ public class Altainstitucion extends JInternalFrame {
 		btnCancelar.setBounds(409, 376, 89, 23);
 		getContentPane().add(btnCancelar);
 		
+		lblErrorNombre = new JLabel("*Institucion ya existente");
+		lblErrorNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		lblErrorNombre.setForeground(Color.RED);
+		lblErrorNombre.setBounds(376, 111, 170, 13);
+		getContentPane().add(lblErrorNombre);
+		
 		JLabel lblMensaje = new JLabel("Complete los campos a continuación:");
 		lblMensaje.setToolTipText("");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -94,6 +104,7 @@ public class Altainstitucion extends JInternalFrame {
 		JLabel lblIns = new JLabel("NOMBRE INSTITUCIÓN");
 		lblIns.setBounds(21, 110, 236, 14);
 		getContentPane().add(lblIns);
+		lblErrorNombre.setVisible(false);
 		
 		JLabel lblDesc = new JLabel("DESCRIPCIÓN");
 		lblDesc.setBounds(21, 145, 111, 14);
@@ -107,6 +118,7 @@ public class Altainstitucion extends JInternalFrame {
 		textFieldNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				lblErrorNombre.setVisible(false);
 				habilitarAceptar();
 			}
 		});
@@ -149,7 +161,8 @@ public class Altainstitucion extends JInternalFrame {
 	                limpiarFormulario();
 	                btnAceptar.setEnabled(false);
 	            } catch (InstitucionRepetidaException e) {
-	                JOptionPane.showMessageDialog(this, e.getMessage(), "Alta de Institucion", JOptionPane.ERROR_MESSAGE);  
+	            	lblErrorNombre.setVisible(true);
+	                //JOptionPane.showMessageDialog(this, e.getMessage(), "Alta de Institucion", JOptionPane.ERROR_MESSAGE);  
 	            }       
 	        }
 	}

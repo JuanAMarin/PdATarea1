@@ -191,7 +191,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 		Integer duracion = Integer.valueOf(this.textFieldDuracion.getText());
 		Float costo = Float.parseFloat(this.textFieldCosto.getText());
 		if(checkFormulario()) {
-			ICMad.ModActividadDeportiva(nombre.toLowerCase(), descripcion, duracion, serialVersionUID);
+			ICMad.ModActividadDeportiva(nombre.toLowerCase(), descripcion, duracion, costo);
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con exito", "Modificar Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();
