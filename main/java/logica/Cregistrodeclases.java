@@ -72,32 +72,12 @@ public class Cregistrodeclases implements ICregistrodeclases {
 		}
 		return soc;	
 	}
-
 	
-	public List<String> obtInfoClases(String acti){
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select * from Clase");
-		List<Clase> listClases = (List<Clase>) query.getResultList();
-		ArrayList<Integer> orden = new ArrayList<>();
-		for(Clase c: listClases) {
-			orden.add(c.getRegistros().size());
-		}
-		orden.sort(Comparator.naturalOrder());
-		Iterator<Integer> it = orden.iterator();
-		List<String> ranking = new ArrayList<>();
-	    while(it.hasNext()) {
-			for(Clase c: listClases) {
-				if((Integer)c.getRegistros().size()==it.next()) {
-					ranking.add(c.getNombre());
-					ranking.add(c.getFecha().getDay()+"/"+c.getFecha().getMonth()+"/"+c.getFecha().getYear());
-					ranking.add(c.getUrl());
-					ranking.add("");
-					listClases.remove(c);
-				}
-			}
-	    }
-		return ranking;
+	public void Registro (String clase, String socio) {
+		Manejador m = Manejador.getInstancia();
+		Clase clas = new Clase(m.buscarClase(clase).getNombre(), m.buscarClase(clase).getUrl(), m.buscarClase(clase).getFecha(), m.buscarClase(clase).getFechaReg(), m.buscarClase(clase).getHoraInicio());
+		Socio socii = new Socio(m.buscarSocio(socio).getNickname(), m.buscarSocio(socio).getNombre(), m.buscarSocio(socio).getApellido(), m.buscarSocio(socio).getEmail(), m.buscarSocio(socio).getFechaNac());
+		m.addRegistro(clas, socii);
 	}
 	
 	

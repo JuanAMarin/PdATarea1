@@ -36,27 +36,13 @@ public class Consultausuario extends JInternalFrame {
 	
 	private JComboBox<String> comboBoxNickname;
 	private JTextArea textAreaUsu;
-	private JTextField txtEmail;
-	private JTextField txtNombre;
-	private JTextField txtApellido;
-	private JTextField txtFechaNac;
-	private JTextField txtDescripcion;
-	private JTextField txtBiografia;
-	private JTextField txtSitioWeb;
 	private JRadioButton rdbtnProfe;
-	private JLabel lblMensajito;
-	private JLabel lblNombre;
-	private JLabel lblApellido;
-	private JLabel lblFechaNaci;
-	private JLabel lblEmail;
-	private JLabel lblDescripcion;
-	private JLabel lblBiografia;
-	private JLabel lblSitioWeb;
 
 	/**
 	 * Create the frame.
 	 */
-	public Consultausuario(ICconsultausuario ICcus) {	
+	public Consultausuario(ICconsultausuario ICcus) {
+		getContentPane().setBackground(Color.WHITE);	
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
@@ -98,57 +84,8 @@ public class Consultausuario extends JInternalFrame {
 				lblMensajito.setVisible(true);
 			}
 		});
-		comboBoxNickname.setBounds(188, 27, 231, 22);
+		comboBoxNickname.setBounds(74, 7, 231, 22);
 		getContentPane().add(comboBoxNickname);
-		
-		txtEmail = new JTextField();
-		txtEmail.setEditable(false);
-		txtEmail.setBounds(188, 59, 231, 24);
-		getContentPane().add(txtEmail);
-		txtEmail.setColumns(10);
-		
-		txtNombre = new JTextField();
-		txtNombre.setEditable(false);
-		txtNombre.setColumns(10);
-		txtNombre.setBounds(188, 95, 231, 24);
-		getContentPane().add(txtNombre);
-		
-		txtApellido = new JTextField();
-		txtApellido.setEditable(false);
-		txtApellido.setColumns(10);
-		txtApellido.setBounds(188, 129, 231, 24);
-		getContentPane().add(txtApellido);
-		
-		txtFechaNac = new JTextField();
-		txtFechaNac.setEditable(false);
-		txtFechaNac.setColumns(10);
-		txtFechaNac.setBounds(188, 164, 231, 24);
-		getContentPane().add(txtFechaNac);
-		
-		txtDescripcion = new JTextField();
-		txtDescripcion.setEditable(false);
-		txtDescripcion.setColumns(10);
-		txtDescripcion.setBounds(188, 199, 231, 24);
-		getContentPane().add(txtDescripcion);
-		
-		txtBiografia = new JTextField();
-		txtBiografia.setEditable(false);
-		txtBiografia.setColumns(10);
-		txtBiografia.setBounds(188, 234, 231, 24);
-		getContentPane().add(txtBiografia);
-		
-		txtSitioWeb = new JTextField();
-		txtSitioWeb.setEditable(false);
-		txtSitioWeb.setColumns(10);
-		txtSitioWeb.setBounds(188, 269, 231, 24);
-		getContentPane().add(txtSitioWeb);
-		
-		lblMensajito = new JLabel("New label");
-		lblMensajito.setVisible(false);
-		lblMensajito.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMensajito.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblMensajito.setBounds(188, 304, 231, 38);
-		getContentPane().add(lblMensajito);
 		
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
@@ -161,36 +98,8 @@ public class Consultausuario extends JInternalFrame {
 		getContentPane().add(btnSalir);
 		
 		JLabel lblNickname = new JLabel("NICKNAME");
-		lblNickname.setBounds(23, 32, 139, 14);
+		lblNickname.setBounds(10, 11, 139, 14);
 		getContentPane().add(lblNickname);
-		
-		lblNombre = new JLabel("NOMBRE");
-		lblNombre.setBounds(23, 99, 139, 14);
-		getContentPane().add(lblNombre);
-		
-		lblApellido = new JLabel("APELLIDO");
-		lblApellido.setBounds(23, 133, 125, 14);
-		getContentPane().add(lblApellido);
-		
-		lblFechaNaci = new JLabel("FECHA DE NACIMIENTO");
-		lblFechaNaci.setBounds(23, 168, 183, 14);
-		getContentPane().add(lblFechaNaci);
-		
-		lblEmail = new JLabel("EMAIL");
-		lblEmail.setBounds(23, 63, 99, 14);
-		getContentPane().add(lblEmail);
-		
-		lblDescripcion = new JLabel("DESCRIPCIÓN");
-		lblDescripcion.setBounds(23, 203, 125, 14);
-		getContentPane().add(lblDescripcion);
-		
-		lblBiografia = new JLabel("BIOGRAFÍA");
-		lblBiografia.setBounds(23, 238, 139, 14);
-		getContentPane().add(lblBiografia);
-		
-		lblSitioWeb = new JLabel("SITIO WEB");
-		lblSitioWeb.setBounds(23, 273, 139, 14);
-		getContentPane().add(lblSitioWeb);
 
 	}
 	

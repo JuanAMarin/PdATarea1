@@ -40,7 +40,7 @@ public class Registroaddclases extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	public void formClose() {
 		DefaultComboBoxModel<String> modelol = new DefaultComboBoxModel<String>();
 		cboActividad.setModel(modelol);
@@ -91,6 +91,11 @@ public class Registroaddclases extends JInternalFrame {
 		getContentPane().add(btnCancelar);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ICrc.Registro(cboClases.getSelectedItem().toString(), cboSocios.getSelectedItem().toString());
+			}
+		});
 		btnAceptar.setEnabled(false);
 		btnAceptar.setBounds(295, 376, 98, 23);
 		getContentPane().add(btnAceptar);

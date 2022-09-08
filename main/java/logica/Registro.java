@@ -39,9 +39,9 @@ public class Registro {
 		super();
 	}
 
-	public Registro(Date fechaReg, Socio socio, Clase clase) {
+	public Registro(Socio socio, Clase clase) {
 		super();
-		this.fechaReg = fechaReg;
+		this.fechaReg = new Date();
 		this.socio = socio;
 		this.clase = clase;
 	}

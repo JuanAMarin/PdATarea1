@@ -34,4 +34,5 @@ public class Socio extends Usuario{
 	public DtSocio getDT() {
 		return new DtSocio(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac());
 	}
+	
 }

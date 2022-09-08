@@ -74,4 +74,10 @@ public class Clase {
 	public DtClase getDT() {
 		return new DtClase(this.getNombre(),this.getUrl(),this.getFecha(),this.getFechaReg(),this.getHoraInicio());
 	}
+	
+	public void addRegistro(Socio socio) {
+		Registro r = new Registro(socio,this);
+		registros.add(r);
+		socio.getRegistros().add(r);
+	}
 }

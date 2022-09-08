@@ -340,5 +340,14 @@ public class Manejador {
 		return ret;
 	}
 	
+	public void addRegistro(Clase clase, Socio socio) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		clase.addRegistro(socio);
+		em.getTransaction().begin();
+		em.merge(clase);
+		em.getTransaction().commit();
+	}
+	
 }
 
