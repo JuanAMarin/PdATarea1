@@ -2,12 +2,10 @@ package presentacion;
 
 import javax.swing.JInternalFrame;
 
-import interfaces.Fabrica;
 import interfaces.ICconsultaactividad;
 import interfaces.ICconsultaclase;
 import interfaces.ICconsultausuario;
 import logica.InstitucionDep;
-import net.bytebuddy.asm.Advice.This;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -16,13 +14,10 @@ import java.awt.TextArea;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
-
-import org.hibernate.annotations.Parent;
 
 import datatypes.DtClase;
 import datatypes.DtProfesor;
@@ -35,7 +30,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JList;
@@ -48,19 +42,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 @SuppressWarnings("unused")
-public class Consultaactividad extends JInternalFrame {
+public class Consultaclase extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private ICconsultaclase ICcc;
 	
 	private JComboBox<String> cboInstitucion;
 	private JTextArea textAreaUsu;
 	private JRadioButton rdbtnProfe;
-	private JTable tbClases;
+	private JTable tbRegistros;
 	private JComboBox<String> cboActividad;
 	private JButton btnBuscarClase;
-	private JButton btnBuscarActividad;
+	private JComboBox<String> cboClase;
 	private DefaultListModel<String> modelo = new DefaultListModel<String>();
-	private String col[] = {"Nom","URL","Fecha", "FechaR", "HoraI"};
+	private String col[] = {"Nickname","FechaR"};
 	private DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 	
 	// The 0 argument is number rows.	
@@ -68,7 +64,7 @@ public class Consultaactividad extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Consultaactividad(ICconsultaactividad ICcas) {	
+	public Consultaclase(ICconsultaclase ICccs) {	
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
@@ -77,8 +73,8 @@ public class Consultaactividad extends JInternalFrame {
 		});
 		setClosable(true);
 		
-		setTitle("Consulta de actividad");
-		this.ICca = ICcas;
+		setTitle("Consulta de clase");
+		this.ICcc = ICccs;
 		
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
@@ -100,46 +96,56 @@ public class Consultaactividad extends JInternalFrame {
 		getContentPane().add(lblInstitucion);
 		
 		JLabel lblActividad = new JLabel("ACTIVIDAD");
-		lblActividad.setBounds(23, 61, 74, 14);
+		lblActividad.setBounds(23, 56, 74, 14);
 		getContentPane().add(lblActividad);
 		
-		btnBuscarActividad = new JButton("🔍︎");
-		btnBuscarActividad.setEnabled(false);
-		btnBuscarActividad.addActionListener(new ActionListener() {
+		cboClase = new JComboBox<String>();
+		cboClase.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (cboClase.getSelectedItem() == null || cboClase.getSelectedItem().toString() == "")
+					btnBuscarClase.setEnabled(false);
+				else
+					btnBuscarClase.setEnabled(true);
+			}
+		});
+		cboClase.setBounds(107, 80, 312, 22);
+		getContentPane().add(cboClase);
+		
+		btnBuscarClase = new JButton("🔍︎");
+		btnBuscarClase.setEnabled(false);
+		btnBuscarClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ICca.buscarActividad(cboActividad.getSelectedItem().toString());
+				ICcc.buscarClase(cboClase.getSelectedItem().toString());
 				modelo.clear();
-				modelo.addElement("Nombre: " + ICca.getDtad().getNombre());
-				modelo.addElement("Descripcion: " + ICca.getDtad().getDescripcion());
-				modelo.addElement("Duracion: " + ICca.getDtad().getDuracion());
-				modelo.addElement("Costo: " + ICca.getDtad().getCosto());
-				modelo.addElement("Fecha de registro: " + ICca.getDtad().getFechaReg());
+				modelo.addElement("Nombre: " + ICcc.getDtad().getNombre());
+				modelo.addElement("URL: " + ICcc.getDtad().getUrl());
+				modelo.addElement("Fecha: " + ICcc.getDtad().getFecha());
+				modelo.addElement("Hora de inicio: " + ICcc.getDtad().getHoraInicio());
+				modelo.addElement("Fecha de registro: " + ICcc.getDtad().getFechaReg());
 				
 				tableModel.setRowCount(0);
-				for(Object[] o: ICca.listarClases(cboActividad.getSelectedItem().toString())) {
+				for(Object[] o: ICcc.listarRegistros(cboClase.getSelectedItem().toString())) {
 					tableModel.addRow(o);
 				}
 			}
 		});
-		btnBuscarActividad.setBounds(429, 32, 69, 32);
-		getContentPane().add(btnBuscarActividad);
+		btnBuscarClase.setBounds(429, 47, 69, 32);
+		getContentPane().add(btnBuscarClase);
 		
 		cboActividad = new JComboBox<String>();
-		cboActividad.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (cboActividad.getSelectedItem() == null || cboActividad.getSelectedItem().toString() == "")
-					btnBuscarActividad.setEnabled(false);
-				else
-					btnBuscarActividad.setEnabled(true);
+		cboActividad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultComboBoxModel<String> modelClases = new DefaultComboBoxModel<String>(ICcc.listarClases(cboActividad.getSelectedItem().toString()));
+				cboClase.setModel(modelClases);
 			}
 		});
-		cboActividad.setBounds(107, 57, 312, 22);
+		cboActividad.setBounds(107, 52, 312, 22);
 		getContentPane().add(cboActividad);
 		
 		cboInstitucion = new JComboBox<String>();
 		cboInstitucion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultComboBoxModel<String> modelActividades = new DefaultComboBoxModel<String>(ICca.listarActividades(cboInstitucion.getSelectedItem().toString()));
+				DefaultComboBoxModel<String> modelActividades = new DefaultComboBoxModel<String>(ICcc.listarActividades(cboInstitucion.getSelectedItem().toString()));
 				cboActividad.setModel(modelActividades);
 			}
 		});
@@ -147,29 +153,29 @@ public class Consultaactividad extends JInternalFrame {
 		getContentPane().add(cboInstitucion);
 		
 		JLabel lblInformacion = new JLabel("INFORMACION");
-		lblInformacion.setBounds(23, 97, 103, 14);
+		lblInformacion.setBounds(23, 130, 103, 14);
 		getContentPane().add(lblInformacion);
 		
 		JList<String> lstInformacion = new JList<String>();
 		lstInformacion.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lstInformacion.setBackground(Color.WHITE);
-		lstInformacion.setBounds(23, 122, 463, 91);
+		lstInformacion.setBounds(23, 155, 463, 91);
 		lstInformacion.setModel(modelo);
 		getContentPane().add(lstInformacion);
 		
-		JLabel lblClases = new JLabel("CLASES");
-		lblClases.setBounds(23, 224, 74, 14);
-		getContentPane().add(lblClases);
+		JLabel lblRegistros = new JLabel("REGISTROS");
+		lblRegistros.setBounds(23, 257, 74, 14);
+		getContentPane().add(lblRegistros);
 		
-		tbClases = new JTable(tableModel){
+		tbRegistros = new JTable(tableModel){
 		private static final long serialVersionUID = 1L;
 		public boolean editCellAt(int row, int column, java.util.EventObject e) {
 			return false;
 		}};
-		tbClases.addMouseListener(new MouseAdapter() {
+		tbRegistros.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (tbClases.getSelectedRow()==-1)
+				if (tbRegistros.getSelectedRow()==-1)
 					btnBuscarClase.setEnabled(false);
 				else
 					btnBuscarClase.setEnabled(true);
@@ -177,34 +183,37 @@ public class Consultaactividad extends JInternalFrame {
 		});
 		
 		
-		tbClases.setBounds(23, 249, 463, 102);
+		tbRegistros.setBounds(23, 249, 463, 102);
 		
-		btnBuscarClase = new JButton("🔍︎");
-		btnBuscarClase.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		btnBuscarClase.setBounds(23, 362, 69, 32);
-		getContentPane().add(btnBuscarClase);
-		
-		JScrollPane scp = new JScrollPane(tbClases);
-		scp.setBounds(23, 249, 463, 91);
+		JScrollPane scp = new JScrollPane(tbRegistros);
+		scp.setBounds(23, 282, 463, 84);
 		getContentPane().add(scp);
+		
+		JLabel lblClase = new JLabel("CLASE");
+		lblClase.setBounds(23, 84, 74, 14);
+		getContentPane().add(lblClase);
+		
+		
 
 	}
 	
 	public void cargarCombo() {
-		DefaultComboBoxModel<String> modelInstituciones = new DefaultComboBoxModel<String>(ICca.listarInstituciones());
+		DefaultComboBoxModel<String> modelInstituciones = new DefaultComboBoxModel<String>(ICcc.listarInstituciones());
 		cboInstitucion.setModel(modelInstituciones);
 	}
 	
+	public void cargarClase(String inst, String act, String clas){
+		
+		cargarCombo();
+		cboInstitucion.setSelectedItem(inst);
+		
+	}
+	
 	public void formClose(){
-		cboActividad.removeAllItems();
 		tableModel.setRowCount(0);
 		modelo.clear();
-		btnBuscarActividad.setEnabled(false);
+		cboClase.setModel(new DefaultComboBoxModel<>());
+		cboActividad.setModel(new DefaultComboBoxModel<>());
 		btnBuscarClase.setEnabled(false);
-
 	}
 }

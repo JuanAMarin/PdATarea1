@@ -8,6 +8,7 @@ import datatypes.DtActividadDep;
 import datatypes.DtClase;
 import datatypes.DtInstitucionDep;
 import datatypes.DtProfesor;
+import datatypes.DtRegistro;
 import datatypes.DtSocio;
 import persistencia.Conexion;
 
@@ -155,15 +156,19 @@ public class Manejador {
 		em.getTransaction().commit();
 	}
 	
-	public ArrayList<DtClase> listarClasesDeAct(String nombre) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select c from ActividadDep a inner join a.clases c where a.nombre ='"+nombre+"'");
+	public ArrayList<DtClase> buscarClases(ArrayList<String> clases) {
 		ArrayList<DtClase> ret = new ArrayList<>();
-		for(Clase c: (List<Clase>)query.getResultList()) {
-			ret.add(c.getDT());
+		for(String c: clases) {
+			ret.add(buscarClase(c));
 		}
 		return ret;
+	}
+	
+	public ArrayList<String> listarClasesDeAct(String actividad) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select c.nombre from ActividadDep a inner join a.clases c where a.nombre ='"+actividad+"'");
+		return (ArrayList<String>) query.getResultList();
 	}
 	
 	public ArrayList<String> obtenerClases(){
@@ -309,6 +314,19 @@ public class Manejador {
 			aRetornar.add(insti.getNombre());
 		}
 		return aRetornar;
+	}
+	
+	//REGISTRO
+	
+	public ArrayList<DtRegistro> buscarRegistros(String clase) {
+		ArrayList<DtRegistro> ret = new ArrayList<>();
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select r from Clase c inner join c.registros r where c.nombre ='"+clase+"'");
+		for(Registro reg: (ArrayList<Registro>) query.getResultList()) {
+			ret.add(reg.getDT());
+		}
+		return ret;
 	}
 	
 }

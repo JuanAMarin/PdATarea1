@@ -6,6 +6,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import interfaces.*;
+import logica.Cconsultaclase;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -38,6 +40,8 @@ public class Principal {
 	private Registroaddclases Registro;
 	private ICconsultaactividad ICcas;
 	private Consultaactividad consultaActividad;
+	private ICconsultaclase ICccs;
+	private Consultaclase consultaClase;
 	/**
 	 * Launch the application.
 	 */
@@ -80,6 +84,8 @@ public class Principal {
 		ModactividadDep.setVisible(false);
 		consultaActividad.formClose();
 		consultaActividad.setVisible(false);
+		consultaClase.formClose();
+		consultaClase.setVisible(false);
 	}
 	public Principal() {
 		initialize();
@@ -96,6 +102,7 @@ public class Principal {
 		ICmad=fabrica.getICmodactividaddep();
 		ICrcs=fabrica.getICregistrodeclases();
 		ICcas=fabrica.getICconsultaactividad();
+		ICccs=fabrica.getICconsultaclase();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -161,6 +168,11 @@ public class Principal {
 		consultaUsuario.setLocation(0, 20);
 		consultaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(consultaUsuario);
+		
+		consultaClase=new Consultaclase(ICccs);
+		consultaClase.setLocation(0,20);
+		consultaClase.setVisible(false);
+		frmServidorCentral.getContentPane().add(consultaClase);
 	}
 
 	/**
@@ -310,6 +322,13 @@ public class Principal {
 		menuConsultar.add(menuActividadC);
 		
 		JMenuItem menuClaseC = new JMenuItem("Clase");
+		menuClaseC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
+				consultaClase.cargarCombo();
+				consultaClase.setVisible(true);
+			}
+		});
 		menuConsultar.add(menuClaseC);
 		
 	}
