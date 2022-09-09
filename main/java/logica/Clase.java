@@ -19,7 +19,7 @@ public class Clase {
 	private Date fecha, fechaReg, horaInicio;
 	
 	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Registro> registros = new ArrayList<Registro>();;
+	private List<Registro> registros = new ArrayList<>();;
 	
 	public Clase() {
 		super();
@@ -75,9 +75,7 @@ public class Clase {
 		return new DtClase(this.getNombre(),this.getUrl(),this.getFecha(),this.getFechaReg(),this.getHoraInicio());
 	}
 	
-	public void addRegistro(Socio socio) {
-		Registro r = new Registro(socio,this);
+	public void addRegistro(Registro r) {
 		registros.add(r);
-		socio.getRegistros().add(r);
 	}
 }

@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import datatypes.DtClase;
+import exceptions.ClaseRepetidaException;
+import exceptions.SocioYaRegistradoException;
+import exceptions.UsuarioRepetidoException;
 import interfaces.ICregistrodeclases;
 
 public class Cregistrodeclases implements ICregistrodeclases {
@@ -68,13 +71,12 @@ public class Cregistrodeclases implements ICregistrodeclases {
 		return soc;	
 	}
 	
-	public void Registro (String clase, String socio) {
+	public void Registro (String clase, String socio) throws SocioYaRegistradoException{
 		Manejador m = Manejador.getInstancia();
-		Clase clas = new Clase(m.buscarClase(clase).getNombre(), m.buscarClase(clase).getUrl(), m.buscarClase(clase).getFecha(), m.buscarClase(clase).getFechaReg(), m.buscarClase(clase).getHoraInicio());
-		Socio socii = new Socio(m.buscarSocio(socio).getNickname(), m.buscarSocio(socio).getNombre(), m.buscarSocio(socio).getApellido(), m.buscarSocio(socio).getEmail(), m.buscarSocio(socio).getFechaNac());
-		m.addRegistro(clas, socii);
+		if(m.classTieneSocio(clase, socio)) {
+			throw new SocioYaRegistradoException("Ya hay un registro de "+ socio + " a la clase: "+ clase +".");
+		}else
+			m.addRegistro(clase, socio);
 	}
-	
-	
 	
 }

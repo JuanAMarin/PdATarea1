@@ -340,12 +340,29 @@ public class Manejador {
 		return ret;
 	}
 	
-	public void addRegistro(Clase clase, Socio socio) {
+	public boolean classTieneSocio(String clase, String socio) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		clase.addRegistro(socio);
+		Clase clas = em.find(Clase.class, clase);
+		for(Registro r:clas.getRegistros()) {
+			if(r.getSocio().getNickname().compareTo(socio)==0) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void addRegistro(String clase, String socio) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Clase clas = em.find(Clase.class, clase);
+		Socio soc = em.find(Socio.class, socio);
+		Registro r= new Registro(soc,clas);
+		soc.addRegistro(r);
+		clas.addRegistro(r);
 		em.getTransaction().begin();
-		em.persist(clase);
+		em.persist(soc);
+		em.persist(clas);
 		em.getTransaction().commit();
 	}
 	

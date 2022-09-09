@@ -15,8 +15,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
 import datatypes.DtClase;
+import exceptions.NicknameRepetidoException;
+import exceptions.SocioYaRegistradoException;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 
@@ -41,6 +45,16 @@ public class Registroaddclases extends JInternalFrame {
 	 * Create the frame.
 	 */
 
+	protected void llamadoMensajito(ActionEvent arg0, String socio, String clase) {
+		JOptionPane.showMessageDialog(this, "Ya hay un registro de "+ socio + " a la clase: "+ clase +".", "Registro a Dictado de Clase",
+                JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	protected void llamadoMensajito2(ActionEvent arg0, String socio, String clase) {
+		JOptionPane.showMessageDialog(this, "Se ha registrado a "+ socio + " a la clase: "+ clase +".", "Registro a Dictado de Clase",
+                JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	public void formClose() {
 		DefaultComboBoxModel<String> modelol = new DefaultComboBoxModel<String>();
 		cboActividad.setModel(modelol);
@@ -93,7 +107,12 @@ public class Registroaddclases extends JInternalFrame {
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				ICrc.Registro(cboClases.getSelectedItem().toString(), cboSocios.getSelectedItem().toString());
+				llamadoMensajito2(e, cboSocios.getSelectedItem().toString(), cboClases.getSelectedItem().toString());
+				}catch (SocioYaRegistradoException e1) {
+					llamadoMensajito(e, cboSocios.getSelectedItem().toString(), cboClases.getSelectedItem().toString());
+				}
 			}
 		});
 		btnAceptar.setEnabled(false);
@@ -182,4 +201,5 @@ public class Registroaddclases extends JInternalFrame {
 		
 		ICrc = ICrcs;
 	}
+	
 }

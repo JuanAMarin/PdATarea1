@@ -13,7 +13,7 @@ import datatypes.DtSocio;
 @Entity
 public class Socio extends Usuario{
 	@OneToMany(mappedBy="socio",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Registro> registros = new ArrayList<Registro>();
+	private List<Registro> registros = new ArrayList<>();
 	
 	public Socio() {
 		super();
@@ -35,4 +35,7 @@ public class Socio extends Usuario{
 		return new DtSocio(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac());
 	}
 	
+	public void addRegistro(Registro r) {
+		registros.add(r);
+	}
 }
