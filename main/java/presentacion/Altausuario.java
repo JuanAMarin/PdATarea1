@@ -292,6 +292,16 @@ public class Altausuario extends JInternalFrame {
 				textDescripcion.setEnabled(true);
 				textBiografia.setEnabled(true);
 				textSitioWeb.setEnabled(true);
+				if(ICau.listarInstituciones().length < 1) {
+					rdbtnSocio.setSelected(true);
+					rdbtnProfesor.setSelected(false);
+					textDescripcion.setEnabled(false);
+					textBiografia.setEnabled(false);
+					textSitioWeb.setEnabled(false);
+					cboInsti.setEnabled(false);
+					llamadoMensajito2();
+					habilitarAceptar();
+				}
 			}
 		});
 		rdbtnProfesor.setBounds(33, 186, 109, 23);
@@ -446,8 +456,14 @@ public class Altausuario extends JInternalFrame {
                 JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	protected void llamadoMensajito2() {
+		JOptionPane.showMessageDialog(this, "No hay instituciones registradas en el sistema", "Alta de Usuario",
+                JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	public void inicializarComboBox() {
 		DefaultComboBoxModel<String> modelInsti = new DefaultComboBoxModel<String>(ICau.listarInstituciones());
 		cboInsti.setModel(modelInsti);
 	}
 }
+

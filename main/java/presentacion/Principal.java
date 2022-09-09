@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.UIManager;
+import java.awt.Toolkit;
 
 
 public class Principal {
@@ -179,6 +180,7 @@ public class Principal {
 	 */
 	private void initialize() {
 		frmServidorCentral = new JFrame();
+		frmServidorCentral.setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Users\\EzeX_\\PDA\\pdaproject\\src\\main\\icono\\png-transparent-computer-icons-computer-servers-cloud-computing-virtual-private-server-blue-technology-blue-text-logo-thumbnail.png"));
 		frmServidorCentral.setTitle("Servidor Central");
 		frmServidorCentral.setBounds(100, 100, 538, 496);
 		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

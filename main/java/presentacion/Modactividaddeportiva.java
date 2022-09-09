@@ -39,6 +39,8 @@ public class Modactividaddeportiva extends JInternalFrame {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JButton btnVer;
+	private JTextField textFieldFechaReg;
+	private JLabel lblFechaDeRegistro;
 	
 	public void habilitarAceptar() {
 		if (!textFieldDesc.getText().isEmpty() && !textFieldDuracion.getText().isEmpty() && !textFieldCosto.getText().isEmpty())
@@ -176,6 +178,16 @@ public class Modactividaddeportiva extends JInternalFrame {
 		btnVer.setBounds(310, 59, 90, 23);
 		getContentPane().add(btnVer);
 		
+		lblFechaDeRegistro = new JLabel("FECHA DE REGISTRO");
+		lblFechaDeRegistro.setBounds(56, 316, 139, 14);
+		getContentPane().add(lblFechaDeRegistro);
+		
+		textFieldFechaReg = new JTextField();
+		textFieldFechaReg.setEnabled(false);
+		textFieldFechaReg.setColumns(10);
+		textFieldFechaReg.setBounds(230, 310, 170, 20);
+		getContentPane().add(textFieldFechaReg);
+		
 	}
 	
 	public void inicializarComboBoxes() {
@@ -189,16 +201,17 @@ public class Modactividaddeportiva extends JInternalFrame {
 		act1 = ICMad.obtenerInfo(act);
 		textFieldNombre.setText(act1.getNombre());
 		textFieldNombre.setEnabled(false);
+		String fechaR = act1.getFechaReg().toString();
+		textFieldFechaReg.setText(fechaR);
+		textFieldFechaReg.setEnabled(false);
 		textFieldDesc.setText(act1.getDescripcion());
 		textFieldDuracion.setText(act1.getDuracion().toString());
 		float c = act1.getCosto();
 		String str = String.valueOf(c);
 		textFieldCosto.setText(str);
-		
 		textFieldDesc.setEnabled(true);
 		textFieldDuracion.setEnabled(true);
 		textFieldCosto.setEnabled(true);
-		
 	}
 
 	protected void AceptarActionPerformed(ActionEvent arg0) {
@@ -225,8 +238,6 @@ public class Modactividaddeportiva extends JInternalFrame {
         String duracion = String.valueOf(this.textFieldDuracion.getText());
         String costo = String.valueOf(this.textFieldCosto.getText());
         if (descripcion.isEmpty() || duracion.isEmpty() || costo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Modificar Actividad Deportiva",
-                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -237,5 +248,6 @@ public class Modactividaddeportiva extends JInternalFrame {
 		textFieldDesc.setText(null);
         textFieldDuracion.setText(null);
         textFieldCosto.setText(null);
+        textFieldFechaReg.setText(null);
 	 }
 }
