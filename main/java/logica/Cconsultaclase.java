@@ -3,10 +3,8 @@ package logica;
 import java.util.ArrayList;
 import java.util.List;
 
-import datatypes.DtActividadDep;
 import datatypes.DtClase;
 import datatypes.DtRegistro;
-import interfaces.ICconsultaactividad;
 import interfaces.ICconsultaclase;
 
 public class Cconsultaclase implements ICconsultaclase{	

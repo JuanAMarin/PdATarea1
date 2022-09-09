@@ -1,16 +1,11 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
 import datatypes.DtClase;
 import interfaces.ICregistrodeclases;
-import persistencia.Conexion;
 
 public class Cregistrodeclases implements ICregistrodeclases {
 	public String[] listarInstituciones() {

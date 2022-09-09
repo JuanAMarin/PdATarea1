@@ -10,7 +10,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import datatypes.DtRegistro;
-import datatypes.DtSocio;
 import persistencia.RegistroID;
 
 @Entity

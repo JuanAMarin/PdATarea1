@@ -60,7 +60,7 @@ public class Consultaactividad extends JInternalFrame {
 	private JButton btnBuscarClase;
 	private JButton btnBuscarActividad;
 	private DefaultListModel<String> modelo = new DefaultListModel<String>();
-	private String col[] = {"Nom","URL","Fecha", "FechaR", "HoraI"};
+	private String col[] = {"Nom","URL","Fecha", "FechaR", "HoraIni"};
 	private DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 	
 	// The 0 argument is number rows.	
