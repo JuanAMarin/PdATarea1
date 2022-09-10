@@ -1,7 +1,8 @@
 package logica;
 
-import java.util.List;
+import java.util.ArrayList;
 
+import datatypes.DtClase;
 import interfaces.ICrankingdeclases;
 
 public class Crankingdeclases implements ICrankingdeclases{
@@ -10,9 +11,16 @@ public class Crankingdeclases implements ICrankingdeclases{
 		super();
 	}
 	
-	public List<String> obtRankClasesC(){
+	public ArrayList<Object[]> obtRankClases() {
 		Manejador m = Manejador.getInstancia();
-		return m.obtRankClases();
+		ArrayList<DtClase> dtc = m.obtRankClases();
+		ArrayList<Object[]> r = new ArrayList<>();
+		int i = 1;
+		for(DtClase dt: dtc) {
+			Object[] o = {i,dt.getNombre(),dt.getUrl(),dt.getFecha()};
+			r.add(o);
+		}
+		return r;
 	}
 
 }

@@ -3,6 +3,7 @@ package presentacion;
 import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import javax.swing.table.DefaultTableModel;
 
 import interfaces.ICrankingdeclases;
 
@@ -14,6 +15,8 @@ import javax.swing.JList;
 import javax.swing.border.TitledBorder;
 
 import java.awt.Color;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 
 public class Rankingdeclases extends JInternalFrame {
@@ -21,7 +24,10 @@ public class Rankingdeclases extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private ICrankingdeclases ICrc;
+	private JTable tb;
 	
+	private String col[] = {"Puesto","Nombre","URL","Fecha"};
+	private DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 	/**
 	 * Create the frame.
 	 */
@@ -50,16 +56,20 @@ public class Rankingdeclases extends JInternalFrame {
 		});
 		btnSalir.setBounds(404, 378, 98, 23);
 		getContentPane().add(btnSalir);
-		DefaultListModel<String> modelo = new DefaultListModel<String>();
-		JList<String> list = new JList<String>();
-		list.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		list.setBackground(Color.WHITE);
-		list.setBounds(81, 23, 346, 333);
-		list.setModel(modelo);
-		for(String s: ICrc.obtRankClasesC()) {
-			modelo.addElement(s);
-		}
-		getContentPane().add(list);
+		
+		tb = new JTable(tableModel);
+		tb.setBounds(85, 80, 322, 206);
+		tb.getColumnModel().getColumn(0).setPreferredWidth(5);
+		
+		JScrollPane scrollPane = new JScrollPane(tb);
+		scrollPane.setBounds(10, 11, 488, 356);
+		getContentPane().add(scrollPane);
 	}
 	
+	public void ranking() {	
+		tableModel.setRowCount(0);
+		for(Object[] o: ICrc.obtRankClases()) {
+			tableModel.addRow(o);
+		}
+	}
 }

@@ -1,4 +1,4 @@
-package logica;
+ package logica;
 import java.util.*;
 
 import javax.persistence.EntityManager;
@@ -211,32 +211,14 @@ public class Manejador {
 		em.getTransaction().commit();
 	}
 	
-	public List<String> obtRankClases(){
+	public ArrayList<DtClase> obtRankClases(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select c from Clase c");
-		List<Clase> listClases = (List<Clase>) query.getResultList();
-		ArrayList<Integer> orden = new ArrayList<>();
-		for(Clase c: listClases) {
-			orden.add(c.getRegistros().size());
-		}
-		orden.sort(Comparator.naturalOrder());
-		Iterator<Integer> it = orden.iterator();
-		List<String> ranking = new ArrayList<>();
-		Clase c;
-	    while(it.hasNext()) {
-			for(int i=0;i<orden.size();i++) {
-				c=listClases.get(0);
-				if((Integer)c.getRegistros().size()==it.next()) {
-					ranking.add(c.getNombre());
-					ranking.add(c.getFecha().getDay()+"/"+c.getFecha().getMonth()+"/"+c.getFecha().getYear());
-					ranking.add(c.getUrl());
-					ranking.add("");
-					listClases.remove(c);
-				}
-			}
-	    }
-		return ranking;
+		Query query = em.createQuery("select c from Clase c order by size(c.registros)");
+		ArrayList<DtClase> ret = new ArrayList<>();
+		for(Clase c:(List<Clase>) query.getResultList())
+			ret.add(c.getDT());
+		return ret;
 	}
 	
 	//Actividades

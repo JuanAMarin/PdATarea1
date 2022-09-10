@@ -162,10 +162,7 @@ public class Principal {
 		frmServidorCentral.getContentPane().add(consultaActividad);
 		
 		consultaUsuario=new Consultausuario(ICcu);
-		consultaUsuario.setBorder(UIManager.getBorder("OptionPane.border"));
-		consultaUsuario.setBackground(Color.GRAY);
-		consultaUsuario.setSize(524, 440);
-		consultaUsuario.setLocation(0, 20);
+		consultaUsuario.setLocation(0,20);
 		consultaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(consultaUsuario);
 		
@@ -180,7 +177,7 @@ public class Principal {
 	 */
 	private void initialize() {
 		frmServidorCentral = new JFrame();
-		frmServidorCentral.setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Users\\EzeX_\\PDA\\pdaproject\\src\\main\\icono\\png-transparent-computer-icons-computer-servers-cloud-computing-virtual-private-server-blue-technology-blue-text-logo-thumbnail.png"));
+		frmServidorCentral.setIconImage(Toolkit.getDefaultToolkit().getImage(".\\src\\main\\icono\\png-transparent-computer-icons-computer-servers-cloud-computing-virtual-private-server-blue-technology-blue-text-logo-thumbnail.png"));
 		frmServidorCentral.setTitle("Servidor Central");
 		frmServidorCentral.setBounds(100, 100, 538, 496);
 		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -291,6 +288,7 @@ public class Principal {
 		menuClasesR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarVentanas();
+				RankingClases.ranking();
 				RankingClases.setVisible(true);
 			}
 		});

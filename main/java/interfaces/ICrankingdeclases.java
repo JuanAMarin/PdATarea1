@@ -1,7 +1,7 @@
 package interfaces;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface ICrankingdeclases {
-	public abstract List<String> obtRankClasesC();
+	public abstract ArrayList<Object[]> obtRankClases();
 }
