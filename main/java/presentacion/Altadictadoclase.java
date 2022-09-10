@@ -81,7 +81,7 @@ public class Altadictadoclase extends JInternalFrame{
 		this.ICac = icac;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Alta de Dictado de Clase");
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 513);
 		getContentPane().setLayout(null);
 		
 		lblErrorFecha = new JLabel("*Fecha Incorrecta");
@@ -129,7 +129,7 @@ public class Altadictadoclase extends JInternalFrame{
 				}
 			}
 		});
-		btnAceptar.setBounds(296, 375, 98, 23);
+		btnAceptar.setBounds(296, 451, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		lblMensaje = new JLabel("Complete los datos de la clase:");
@@ -220,7 +220,7 @@ public class Altadictadoclase extends JInternalFrame{
 					cancelarActionPerformed(e);
 			}
 		});
-		btnCancelar.setBounds(400, 376, 98, 23);
+		btnCancelar.setBounds(404, 451, 98, 23);
 		getContentPane().add(btnCancelar);
 		
 		comboBoxProfe = new JComboBox<String>();

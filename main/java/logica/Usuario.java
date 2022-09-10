@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import datatypes.DtUsuario;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
@@ -73,11 +75,9 @@ public class Usuario {
 	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
 	}
-	
-//-----------------------------------------------------------------------------------
-// Funciones ...
-	
-	
-	
+
+	public DtUsuario getDT() {
+		return new DtUsuario(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac());
+	}
 	
 }

@@ -2,7 +2,6 @@ package interfaces;
 
 import java.util.ArrayList;
 
-import datatypes.DtActividadDep;
 import datatypes.DtClase;
 
 public interface ICconsultaclase {

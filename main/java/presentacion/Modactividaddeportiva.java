@@ -60,7 +60,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Modificar Actividad Deportiva");
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 513);
 		getContentPane().setLayout(null);
 		
 		lblNewLabelAD = new JLabel("ACTIVIDADES DEPORTIVAS");
@@ -153,7 +153,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 			}
 			
 		});
-		btnAceptar.setBounds(310, 376, 90, 23);
+		btnAceptar.setBounds(310, 451, 90, 23);
 		getContentPane().add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -162,7 +162,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 				CancelarActionPerformed(e);
 			}
 		});
-		btnCancelar.setBounds(408, 376, 90, 23);
+		btnCancelar.setBounds(412, 451, 90, 23);
 		getContentPane().add(btnCancelar);
 		
 		btnVer = new JButton("Ver");

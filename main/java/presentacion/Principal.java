@@ -10,12 +10,9 @@ import interfaces.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import javax.swing.UIManager;
 import java.awt.Toolkit;
 
-
 public class Principal {
-
 	private JFrame frmServidorCentral;
 	
 	private ICaltausuario ICau;
@@ -111,74 +108,75 @@ public class Principal {
 		frmServidorCentral.setResizable(false);
 		
 		AltaUsuario=new Altausuario(ICau);
+		AltaUsuario.setSize(524, 513);
 		AltaUsuario.setLocation(0,20);
 		AltaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaUsuario);
 		
-		consultaUsuario=new Consultausuario(ICcu);
-		consultaUsuario.setLocation(0,20);
-		consultaUsuario.setVisible(false);
-		frmServidorCentral.getContentPane().add(consultaUsuario);
-		
-		AltaInstitucion=new Altainstitucion(ICai);
-		AltaInstitucion.setLocation(0,20);
-		AltaInstitucion.setVisible(false);
-		frmServidorCentral.getContentPane().add(AltaInstitucion);
-		
 		ModInstitucion=new Modinstitucion(ICmi);
+		ModInstitucion.setSize(524, 513);
 		ModInstitucion.setLocation(0,20);
 		ModInstitucion.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModInstitucion);
 		
 		RankingClases=new Rankingdeclases(ICrc);
+		RankingClases.setSize(524, 513);
 		RankingClases.setLocation(0,20);
 		RankingClases.setVisible(false);
 		frmServidorCentral.getContentPane().add(RankingClases);
 		
 		ModUsuario=new Modusuario(ICmu);
+		ModUsuario.setSize(524, 513);
 		ModUsuario.setLocation(0,20);
 		ModUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModUsuario);
 		
 		AltaActividadDeportiva=new Altaactividaddeportiva(ICaad);
+		AltaActividadDeportiva.setSize(524, 513);
 		AltaActividadDeportiva.setLocation(0,20);
 		AltaActividadDeportiva.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaActividadDeportiva);
 		
 		AltaDictadoClaseInternalFrame=new Altadictadoclase(ICac);
+		AltaDictadoClaseInternalFrame.setSize(524, 513);
 		AltaDictadoClaseInternalFrame.setLocation(0,20);
 		AltaDictadoClaseInternalFrame.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaDictadoClaseInternalFrame);
 		
 		ModactividadDep = new Modactividaddeportiva(ICmad);
+		ModactividadDep.setSize(524, 513);
 		ModactividadDep.setLocation(0,20);
 		ModactividadDep.setVisible(false);
 		frmServidorCentral.getContentPane().add(ModactividadDep);
 		
 		Registro=new Registroaddclases(ICrcs);
+		Registro.setSize(524, 513);
 		Registro.setLocation(0,20);
 		Registro.setVisible(false);
 		frmServidorCentral.getContentPane().add(Registro);
 		
 		consultaActividad=new Consultaactividad(ICcas);
+		consultaActividad.setSize(524, 513);
 		consultaActividad.setLocation(0,20);
 		consultaActividad.setVisible(false);
 		frmServidorCentral.getContentPane().add(consultaActividad);
 		
 		consultaUsuario=new Consultausuario(ICcu);
+		consultaUsuario.setSize(524, 513);
 		consultaUsuario.setLocation(0,20);
 		consultaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(consultaUsuario);
 		
 		consultaClase=new Consultaclase(ICccs);
+		consultaClase.setSize(524, 513);
 		consultaClase.setLocation(0,20);
 		consultaClase.setVisible(false);
 		frmServidorCentral.getContentPane().add(consultaClase);
 		
 		RankingActividades=new Rankingdeactividades(ICra);
-		RankingActividades.setLocation(0,20);
-		RankingActividades.setVisible(false);
+		RankingActividades.setBounds(0, 20, 524, 513);
 		frmServidorCentral.getContentPane().add(RankingActividades);
+		RankingActividades.setVisible(false);
 	}
 
 	/**
@@ -188,9 +186,21 @@ public class Principal {
 		frmServidorCentral = new JFrame();
 		frmServidorCentral.setIconImage(Toolkit.getDefaultToolkit().getImage(".\\src\\main\\icono\\png-transparent-computer-icons-computer-servers-cloud-computing-virtual-private-server-blue-technology-blue-text-logo-thumbnail.png"));
 		frmServidorCentral.setTitle("Servidor Central");
-		frmServidorCentral.setBounds(100, 100, 538, 496);
+		frmServidorCentral.setBounds(100, 100, 538, 570);
 		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmServidorCentral.getContentPane().setLayout(null);
+		
+		consultaUsuario=new Consultausuario(ICcu);
+		consultaUsuario.setSize(524, 513);
+		consultaUsuario.setLocation(0,20);
+		consultaUsuario.setVisible(false);
+		
+		AltaInstitucion=new Altainstitucion(ICai);
+		AltaInstitucion.setSize(524, 513);
+		AltaInstitucion.setLocation(0,20);
+		AltaInstitucion.setVisible(false);
+		frmServidorCentral.getContentPane().add(AltaInstitucion);
+		frmServidorCentral.getContentPane().add(consultaUsuario);
 		
 		JMenuBar menuPrincipal = new JMenuBar();
 		menuPrincipal.setForeground(Color.BLACK);
@@ -347,4 +357,5 @@ public class Principal {
 		menuConsultar.add(menuClaseC);
 		
 	}
+	
 }

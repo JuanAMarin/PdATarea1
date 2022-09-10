@@ -15,7 +15,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
 import datatypes.DtClase;
-import exceptions.NicknameRepetidoException;
 import exceptions.SocioYaRegistradoException;
 
 import javax.swing.JList;
@@ -160,6 +159,7 @@ public class Registroaddclases extends JInternalFrame {
 		
 		cboClases = new JComboBox<String>();
 		cboClases.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {	
 					modelo.clear();
 					DtClase clase = ICrcs.buscarClase(cboClases.getSelectedItem().toString());

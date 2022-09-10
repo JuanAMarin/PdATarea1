@@ -53,6 +53,7 @@ public class Cconsultaactividad implements ICconsultaactividad{
 		ArrayList<DtClase> dtc = m.buscarClases(m.listarClasesDeAct(actividad));
 		ArrayList<Object[]> r = new ArrayList<>();
 		for(DtClase dt: dtc) {
+			@SuppressWarnings("deprecation")
 			Object[] o = {dt.getNombre(), dt.getUrl(), 
 					(dt.getFecha().getYear()+1900)+"-"+(dt.getFecha().getMonth()+1)+"-"+dt.getFecha().getDate(), 
 					dt.getFechaReg(), 

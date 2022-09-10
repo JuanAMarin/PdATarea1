@@ -62,7 +62,7 @@ public class Cconsultaclase implements ICconsultaclase{
 
 	public ArrayList<Object[]> listarRegistros(String clase) {
 		Manejador m = Manejador.getInstancia();
-		ArrayList<DtRegistro> dtr = m.buscarRegistros(clase);
+		ArrayList<DtRegistro> dtr = m.buscarRegistrosC(clase);
 		ArrayList<Object[]> r = new ArrayList<>();
 		for(DtRegistro dt: dtr) {
 			Object[] o = {dt.getNickname(),dt.getFecha()};

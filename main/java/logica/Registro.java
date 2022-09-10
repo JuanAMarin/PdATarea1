@@ -74,14 +74,3 @@ public class Registro {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-

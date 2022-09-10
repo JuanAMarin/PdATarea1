@@ -51,6 +51,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 				btnAceptar.setEnabled(false);
 	}
 	
+	@SuppressWarnings("removal")
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
@@ -59,7 +60,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 			}
 		});
 		setClosable(true);
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 513);
 		getContentPane().setLayout(null);
 		
 		ICaad = ICaltaad;
@@ -162,7 +163,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 				AceptarActionPerformed(e);
 			}
 		});
-		btnAceptar.setBounds(298, 376, 98, 23);
+		btnAceptar.setBounds(296, 451, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -171,7 +172,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 				CancelarActionPerformed(e);
 			}
 		});
-		btnCancelar.setBounds(404, 376, 98, 23);
+		btnCancelar.setBounds(404, 451, 98, 23);
 		getContentPane().add(btnCancelar);
 		
 	}

@@ -1,21 +1,20 @@
 package interfaces;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 import datatypes.DtProfesor;
 import datatypes.DtSocio;
+import datatypes.DtUsuario;
 
 public interface ICconsultausuario {
 	public abstract String[] listarUsuarios();
-	public abstract String getNickname(); 
-	public abstract String getEmail(); 
-	public abstract String getNombre(); 
-	public abstract String getApellido(); 
-	public abstract String getDescripcion(); 
-	public abstract String getBiografia(); 
-	public abstract String getSitioweb(); 
-	public abstract String getInstitucion(); 
-	public abstract Date getFechaNac(); 
+	public abstract ArrayList<Object[]> listarClasesP(String nickname);
+	public abstract ArrayList<Object[]> listarClasesS(String nickname);
+	public abstract ArrayList<Object[]> listarRegistros(String nombre);
+	public abstract ArrayList<Object[]> listarClasesA(String nombre);
+	public abstract DtUsuario getUsuario();
+	public abstract ArrayList<Object[]> listarActividades(String nickname);
 	public abstract DtProfesor buscarProfesor(String nickname);
 	public abstract DtSocio buscarSocio(String nickname);
+	public abstract void buscarUsuario(String nickname);
 }

@@ -66,14 +66,10 @@ public class Altainstitucion extends JInternalFrame {
 		setClosable(true);
 		
 		setTitle("Alta de Institucion");
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(null);
-		
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 466);
 		getContentPane().setLayout(null);
 		
 		ICai = ICaltai;
-		
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setEnabled(false);
@@ -82,7 +78,7 @@ public class Altainstitucion extends JInternalFrame {
 				agregarInstitucionAceptarActionPerformed(e);
 			}
 		});
-		btnAceptar.setBounds(297, 376, 98, 23);
+		btnAceptar.setBounds(305, 404, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -92,7 +88,7 @@ public class Altainstitucion extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(409, 376, 89, 23);
+		btnCancelar.setBounds(413, 404, 89, 23);
 		getContentPane().add(btnCancelar);
 		
 		lblErrorNombre = new JLabel("*Esa institucion ya existe");

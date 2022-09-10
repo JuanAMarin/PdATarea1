@@ -80,9 +80,7 @@ public class Consultaactividad extends JInternalFrame {
 		setTitle("Consulta de actividad");
 		this.ICca = ICcas;
 		
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(null);
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 513);
 		getContentPane().setLayout(null);
 		
 		JButton btnSalir = new JButton("Salir");
@@ -92,7 +90,7 @@ public class Consultaactividad extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnSalir.setBounds(400, 376, 98, 23);
+		btnSalir.setBounds(404, 451, 98, 23);
 		getContentPane().add(btnSalir);
 		
 		JLabel lblInstitucion = new JLabel("INSTITUCION");

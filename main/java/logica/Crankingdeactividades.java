@@ -3,7 +3,6 @@ package logica;
 import java.util.ArrayList;
 
 import datatypes.DtActividadDep;
-import datatypes.DtClase;
 import interfaces.ICrankingdeactividades;
 
 public class Crankingdeactividades implements ICrankingdeactividades {
@@ -26,6 +25,5 @@ public class Crankingdeactividades implements ICrankingdeactividades {
 		}
 		return r;
 	}
-
 	
 }

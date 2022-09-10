@@ -135,7 +135,7 @@ public class Altausuario extends JInternalFrame {
 		setTitle("Alta de Usuario");
 		ICau = ICaltau;
 		
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 513);
 		getContentPane().setLayout(null);
 		
 		lblErrorFecha = new JLabel("*Fecha Incorrecta");
@@ -394,7 +394,7 @@ public class Altausuario extends JInternalFrame {
 			}
 		});
 		
-		btnCancelar.setBounds(405, 376, 98, 23);
+		btnCancelar.setBounds(405, 451, 98, 23);
 		getContentPane().add(btnCancelar);
 		
 		lblEmailEnUso = new JLabel("*Email en uso");
@@ -446,7 +446,7 @@ public class Altausuario extends JInternalFrame {
 			}
 		});
 		
-		btnAceptar.setBounds(297, 376, 98, 23);
+		btnAceptar.setBounds(297, 451, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 	}

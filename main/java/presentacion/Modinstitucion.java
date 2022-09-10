@@ -56,10 +56,7 @@ public class Modinstitucion extends JInternalFrame {
 		setClosable(true);
 		
 		setTitle("Modificar Institucion");
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(null);
-		
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 513);
 		getContentPane().setLayout(null);
 		
 		ICmi = ICmodi;
@@ -118,7 +115,7 @@ public class Modinstitucion extends JInternalFrame {
 		textFieldUrl.setColumns(10);
 		
 		
-		btnAceptar.setBounds(307, 376, 89, 23);
+		btnAceptar.setBounds(314, 451, 89, 23);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -128,7 +125,7 @@ public class Modinstitucion extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(409, 376, 89, 23);
+		btnCancelar.setBounds(413, 451, 89, 23);
 		getContentPane().add(btnCancelar);
 	}
 	

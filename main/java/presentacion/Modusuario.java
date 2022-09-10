@@ -163,10 +163,7 @@ public class Modusuario extends JInternalFrame {
 		ICmu = ICmodusu;
 		
 		setTitle("Modificar Usuario");
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(null);
-		
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 513);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNickname = new JLabel("NICKNAME");
@@ -303,7 +300,7 @@ public class Modusuario extends JInternalFrame {
 			}
 		});
 		btnAceptar.setEnabled(false);
-		btnAceptar.setBounds(295, 378, 98, 23);
+		btnAceptar.setBounds(296, 451, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -313,7 +310,7 @@ public class Modusuario extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(403, 378, 98, 23);
+		btnCancelar.setBounds(404, 451, 98, 23);
 		getContentPane().add(btnCancelar);
 		
 		txtEmail = new JTextField();

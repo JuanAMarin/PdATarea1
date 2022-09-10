@@ -5,9 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import datatypes.DtClase;
-import exceptions.ClaseRepetidaException;
 import exceptions.SocioYaRegistradoException;
-import exceptions.UsuarioRepetidoException;
 import interfaces.ICregistrodeclases;
 
 public class Cregistrodeclases implements ICregistrodeclases {

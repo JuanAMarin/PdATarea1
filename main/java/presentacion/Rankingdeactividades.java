@@ -6,22 +6,15 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 
 import interfaces.ICrankingdeactividades;
-import interfaces.ICrankingdeclases;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.border.TitledBorder;
 
-import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
 public class Rankingdeactividades extends JInternalFrame {
-	public Rankingdeactividades() {
-	}
 
 	private static final long serialVersionUID = 1L;
 	
@@ -44,9 +37,7 @@ public class Rankingdeactividades extends JInternalFrame {
 		
 		setTitle("Ranking de Actividades Deportivas");
 		ICra=ICranki;
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(null);
-		setBounds(100, 100, 524, 440);
+		setBounds(100, 100, 524, 513);
 		getContentPane().setLayout(null);
 		
 		btnSalir = new JButton("Salir");
@@ -55,7 +46,7 @@ public class Rankingdeactividades extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnSalir.setBounds(404, 378, 98, 23);
+		btnSalir.setBounds(404, 451, 98, 23);
 		getContentPane().add(btnSalir);
 		
 		tb = new JTable(tableModel);
@@ -63,7 +54,7 @@ public class Rankingdeactividades extends JInternalFrame {
 		tb.getColumnModel().getColumn(0).setPreferredWidth(5);
 		
 		scrollPane = new JScrollPane(tb);
-		scrollPane.setBounds(10, 11, 488, 356);
+		scrollPane.setBounds(10, 11, 488, 430);
 		getContentPane().add(scrollPane);
 	}
 	

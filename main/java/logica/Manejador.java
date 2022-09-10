@@ -1,4 +1,4 @@
- package logica;
+package logica;
 import java.util.*;
 
 import javax.persistence.EntityManager;
@@ -10,8 +10,10 @@ import datatypes.DtInstitucionDep;
 import datatypes.DtProfesor;
 import datatypes.DtRegistro;
 import datatypes.DtSocio;
+import datatypes.DtUsuario;
 import persistencia.Conexion;
 
+@SuppressWarnings("unchecked")
 public class Manejador {
 	
 	private static Manejador instancia = null;
@@ -64,6 +66,14 @@ public class Manejador {
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Socio.class, nickname) != null)
 			return em.find(Socio.class, nickname).getDT();
+		return null;	
+	}
+	
+	public DtUsuario buscarUsuario(String nickname) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		if(em.find(Usuario.class, nickname) != null)
+			return em.find(Usuario.class, nickname).getDT();
 		return null;	
 	}
 	
@@ -171,6 +181,27 @@ public class Manejador {
 		return (ArrayList<String>) query.getResultList();
 	}
 	
+	public ArrayList<String> listarClasesDeProf(String profesor) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select c.nombre from Profesor p inner join p.clases c where p.nickname ='"+profesor+"'");
+		return (ArrayList<String>) query.getResultList();
+	}
+	
+	public ArrayList<String> listarActividadesDeProf(String profesor) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select a.nombre from Profesor p inner join p.institucion i inner join i.actividades a where p.nickname ='"+profesor+"'");
+		return (ArrayList<String>) query.getResultList();
+	}
+	
+	public ArrayList<String> listarClasesDeSoci(String socio) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select c.nombre from Socio s inner join s.registros r inner join r.clase c where s.nickname = '"+socio+"'");
+		return (ArrayList<String>) query.getResultList();
+	}
+	
 	public ArrayList<String> obtenerClases(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
@@ -239,6 +270,14 @@ public class Manejador {
 		em.getTransaction().begin();
 		em.persist(inst);
 		em.getTransaction().commit();
+	}
+	
+	public ArrayList<DtActividadDep> buscarActividades(ArrayList<String> actividades) {
+		ArrayList<DtActividadDep> ret = new ArrayList<>();
+		for(String c: actividades) {
+			ret.add(buscarActividad(c));
+		}
+		return ret;
 	}
 	
 	public DtActividadDep buscarActividad(String nombre) {
@@ -319,13 +358,13 @@ public class Manejador {
 	
 	//REGISTRO
 	
-	public ArrayList<DtRegistro> buscarRegistros(String clase) {
+	public ArrayList<DtRegistro> buscarRegistrosC(String clase) {
 		ArrayList<DtRegistro> ret = new ArrayList<>();
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select r from Clase c inner join c.registros r where c.nombre ='"+clase+"'");
-		for(Registro reg: (ArrayList<Registro>) query.getResultList()) {
-			ret.add(reg.getDT());
+		Clase clas = em.find(Clase.class, clase);
+		for(Registro r:clas.getRegistros()) {
+			ret.add(r.getDT());
 		}
 		return ret;
 	}
