@@ -221,7 +221,15 @@ public class Manejador {
 		return ret;
 	}
 	
-	//Actividades
+	public ArrayList<DtActividadDep> obtRankActividades(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select a from ActividadDep a order by size(a.clases) desc");
+		ArrayList<DtActividadDep> ret = new ArrayList<>();
+		for(ActividadDep a:(List<ActividadDep>) query.getResultList())
+			ret.add(a.getDT());
+		return ret;
+	}
 	
 	public void agregarActividad(ActividadDep actividadDep, String insti) {
 		Conexion conexion = Conexion.getInstancia();

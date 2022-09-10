@@ -224,7 +224,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con exito", "Modificar Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();
-            setVisible(false);  
+            setVisible(false);
 		}
 	}
 	

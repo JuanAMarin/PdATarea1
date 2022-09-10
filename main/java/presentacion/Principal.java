@@ -42,6 +42,8 @@ public class Principal {
 	private Consultaactividad consultaActividad;
 	private ICconsultaclase ICccs;
 	private Consultaclase consultaClase;
+	private ICrankingdeactividades ICra;
+	private Rankingdeactividades RankingActividades;
 	/**
 	 * Launch the application.
 	 */
@@ -86,6 +88,7 @@ public class Principal {
 		consultaActividad.setVisible(false);
 		consultaClase.formClose();
 		consultaClase.setVisible(false);
+		RankingActividades.setVisible(false);
 	}
 	public Principal() {
 		initialize();
@@ -103,6 +106,7 @@ public class Principal {
 		ICrcs=fabrica.getICregistrodeclases();
 		ICcas=fabrica.getICconsultaactividad();
 		ICccs=fabrica.getICconsultaclase();
+		ICra=fabrica.getICrankingdeactividades();
 		
 		frmServidorCentral.setResizable(false);
 		
@@ -170,6 +174,11 @@ public class Principal {
 		consultaClase.setLocation(0,20);
 		consultaClase.setVisible(false);
 		frmServidorCentral.getContentPane().add(consultaClase);
+		
+		RankingActividades=new Rankingdeactividades(ICra);
+		RankingActividades.setLocation(0,20);
+		RankingActividades.setVisible(false);
+		frmServidorCentral.getContentPane().add(RankingActividades);
 	}
 
 	/**
@@ -295,6 +304,13 @@ public class Principal {
 		menuRanking.add(menuClasesR);
 		
 		JMenuItem menuActividadesR = new JMenuItem("Actividades");
+		menuActividadesR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarVentanas();
+				RankingActividades.ranking();
+				RankingActividades.setVisible(true);
+			}
+		});
 		menuRanking.add(menuActividadesR);
 		
 		JMenu menuConsultar = new JMenu("Consultar");

@@ -10,6 +10,7 @@ import logica.Cconsultausuario;
 import logica.Cmodactividaddep;
 import logica.Cmodinstitucion;
 import logica.Cmodusuario;
+import logica.Crankingdeactividades;
 import logica.Crankingdeclases;
 import logica.Cregistrodeclases;
 
@@ -69,5 +70,9 @@ public class Fabrica {
 	
 	public ICconsultaclase getICconsultaclase() {
 		return new Cconsultaclase();
+	}
+	
+	public ICrankingdeactividades getICrankingdeactividades() {
+		return new Crankingdeactividades();
 	}
 }
