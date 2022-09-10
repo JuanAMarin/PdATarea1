@@ -214,7 +214,7 @@ public class Manejador {
 	public ArrayList<DtClase> obtRankClases(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query query = em.createQuery("select c from Clase c order by size(c.registros)");
+		Query query = em.createQuery("select c from Clase c order by size(c.registros) desc");
 		ArrayList<DtClase> ret = new ArrayList<>();
 		for(Clase c:(List<Clase>) query.getResultList())
 			ret.add(c.getDT());

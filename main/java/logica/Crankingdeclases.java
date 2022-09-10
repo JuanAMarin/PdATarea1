@@ -19,6 +19,7 @@ public class Crankingdeclases implements ICrankingdeclases{
 		for(DtClase dt: dtc) {
 			Object[] o = {i,dt.getNombre(),dt.getUrl(),dt.getFecha()};
 			r.add(o);
+			i++;
 		}
 		return r;
 	}
