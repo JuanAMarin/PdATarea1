@@ -98,6 +98,13 @@ public class Consultaclase extends JInternalFrame {
 		getContentPane().add(lblActividad);
 		
 		cboClase = new JComboBox<String>();
+		cboClase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modelo.clear();
+				tableModel.setRowCount(0);
+				btnBuscarClase.setEnabled(true);
+			}
+		});
 		cboClase.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (cboClase.getSelectedItem() == null || cboClase.getSelectedItem().toString() == "")
@@ -135,6 +142,9 @@ public class Consultaclase extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultComboBoxModel<String> modelClases = new DefaultComboBoxModel<String>(ICcc.listarClases(cboActividad.getSelectedItem().toString()));
 				cboClase.setModel(modelClases);
+				modelo.clear();
+				tableModel.setRowCount(0);
+				btnBuscarClase.setEnabled(false);
 			}
 		});
 		cboActividad.setBounds(107, 52, 312, 22);
@@ -145,6 +155,10 @@ public class Consultaclase extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultComboBoxModel<String> modelActividades = new DefaultComboBoxModel<String>(ICcc.listarActividades(cboInstitucion.getSelectedItem().toString()));
 				cboActividad.setModel(modelActividades);
+				modelo.clear();
+				tableModel.setRowCount(0);
+				btnBuscarClase.setEnabled(false);
+				cboClase.removeAllItems();
 			}
 		});
 		cboInstitucion.setBounds(107, 24, 312, 22);

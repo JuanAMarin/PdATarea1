@@ -98,6 +98,15 @@ public class Consultausuario extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		cboNickname = new JComboBox<String>();
+		cboNickname.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modelo.clear();
+				tableModel.setRowCount(0);
+				tableModelAC.setRowCount(0);
+				tableModelCA.setRowCount(0);
+				tableModelMC.setRowCount(0);
+			}
+		});
 		cboNickname.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (cboNickname.getSelectedItem() == null || cboNickname.getSelectedItem().toString() == "")

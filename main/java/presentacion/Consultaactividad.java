@@ -127,6 +127,14 @@ public class Consultaactividad extends JInternalFrame {
 		getContentPane().add(btnBuscarActividad);
 		
 		cboActividad = new JComboBox<String>();
+		cboActividad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modelo.clear();
+				tableModel.setRowCount(0);
+				tableModelR.setRowCount(0);
+				btnBuscarActividad.setEnabled(true);
+			}
+		});
 		cboActividad.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (cboActividad.getSelectedItem() == null || cboActividad.getSelectedItem().toString() == "")
@@ -143,6 +151,10 @@ public class Consultaactividad extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultComboBoxModel<String> modelActividades = new DefaultComboBoxModel<String>(ICca.listarActividades(cboInstitucion.getSelectedItem().toString()));
 				cboActividad.setModel(modelActividades);
+				modelo.clear();
+				tableModel.setRowCount(0);
+				tableModelR.setRowCount(0);
+				btnBuscarActividad.setEnabled(false);
 			}
 		});
 		cboInstitucion.setBounds(107, 24, 312, 22);
