@@ -113,6 +113,12 @@ public class Principal {
 		AltaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaUsuario);
 		
+		AltaInstitucion=new Altainstitucion(ICai);
+		AltaInstitucion.setSize(524, 513);
+		AltaInstitucion.setLocation(0,20);
+		AltaInstitucion.setVisible(false);
+		frmServidorCentral.getContentPane().add(AltaInstitucion);
+		
 		ModInstitucion=new Modinstitucion(ICmi);
 		ModInstitucion.setSize(524, 513);
 		ModInstitucion.setLocation(0,20);
@@ -177,6 +183,8 @@ public class Principal {
 		RankingActividades.setBounds(0, 20, 524, 513);
 		frmServidorCentral.getContentPane().add(RankingActividades);
 		RankingActividades.setVisible(false);
+		
+		
 	}
 
 	/**
