@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameAdapter;
@@ -17,33 +18,24 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JTextPane;
 
 public class Modinstitucion extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private ICmodinstitucion ICmi;
-	
-	private JTextField textFieldDescripcion;
 	private JTextField textFieldUrl;
 	private JComboBox<String> comboBoxIns;
 	private JButton btnAceptar;
-
-	/**
-	 * Create the frame.
-	 */
-	
-	public void habilitarAceptar() {
-		if (!textFieldDescripcion.getText().isEmpty() && !textFieldUrl.getText().isEmpty())
-				btnAceptar.setEnabled(true);
-		else
-				btnAceptar.setEnabled(false);
-	}
+	private JTextPane textPaneDescripcion;
 	
 	public void formClose() {
 		btnAceptar.setEnabled(false);
-		textFieldDescripcion.setText("");
+		textPaneDescripcion.setText("");
 		textFieldUrl.setText("");
+		textPaneDescripcion.setEnabled(false);
+		textFieldUrl.setEnabled(false);
 	}
 	
 	public Modinstitucion(ICmodinstitucion ICmodi) {
@@ -60,7 +52,7 @@ public class Modinstitucion extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		ICmi = ICmodi;
-		JLabel lblInstitucion = new JLabel("INSTITUCION");
+		JLabel lblInstitucion = new JLabel("INSTITUCIÓN");
 		lblInstitucion.setBounds(10, 39, 141, 14);
 		getContentPane().add(lblInstitucion);
 		
@@ -76,7 +68,7 @@ public class Modinstitucion extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				modInstitucionVerInfoActionPerformed(e);
 				btnAceptar.setEnabled(true);
-				textFieldDescripcion.setEnabled(true);
+				textPaneDescripcion.setEnabled(true);
 				textFieldUrl.setEnabled(true);
 			}
 		});
@@ -85,32 +77,31 @@ public class Modinstitucion extends JInternalFrame {
 		
 		
 		comboBoxIns = new JComboBox<String>();
+		comboBoxIns = new JComboBox<String>();
+		comboBoxIns.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textPaneDescripcion.setEnabled(false);
+				textFieldUrl.setEnabled(false);
+				btnAceptar.setEnabled(false);
+				textPaneDescripcion.setText("");
+				textFieldUrl.setText("");
+			}
+		});
+
 		comboBoxIns.setBounds(129, 35, 190, 22);
 		getContentPane().add(comboBoxIns);
 		
-		textFieldDescripcion = new JTextField();
-		textFieldDescripcion.setEnabled(false);
-		textFieldDescripcion.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
-		textFieldDescripcion.setBounds(129, 90, 190, 20);
-		getContentPane().add(textFieldDescripcion);
-		textFieldDescripcion.setColumns(10);
-		
-		JLabel lblDescripcion = new JLabel("DESCRIPCION");
+		JLabel lblDescripcion = new JLabel("DESCRIPCIÓN");
 		lblDescripcion.setBounds(10, 92, 141, 14);
 		getContentPane().add(lblDescripcion);
 		
 		JLabel lblUrl = new JLabel("URL");
-		lblUrl.setBounds(10, 137, 79, 14);
+		lblUrl.setBounds(10, 228, 79, 14);
 		getContentPane().add(lblUrl);
 		
 		textFieldUrl = new JTextField();
 		textFieldUrl.setEnabled(false);
-		textFieldUrl.setBounds(129, 135, 190, 20);
+		textFieldUrl.setBounds(129, 226, 190, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 		
@@ -127,6 +118,13 @@ public class Modinstitucion extends JInternalFrame {
 		});
 		btnCancelar.setBounds(413, 451, 89, 23);
 		getContentPane().add(btnCancelar);
+		
+		textPaneDescripcion = new JTextPane();
+		textPaneDescripcion.setBounds(129, 90, 373, 126);
+		getContentPane().add(textPaneDescripcion);
+		JScrollPane scr = new JScrollPane(textPaneDescripcion);
+		scr.setBounds(129, 90, 373, 126);
+		getContentPane().add(scr);
 	}
 	
 	public void inicializarComboBox() {
@@ -139,14 +137,14 @@ public class Modinstitucion extends JInternalFrame {
 			String strId = this.comboBoxIns.getSelectedItem().toString();
 			DtInstitucionDep ins;
 			ins = ICmi.obtenerInfo(strId);
-			textFieldDescripcion.setText(ins.getDescripcion());
+			textPaneDescripcion.setText(ins.getDescripcion());
 			textFieldUrl.setText(ins.getUrl());
 		}
 	}
 	
 	protected void modInstitucionAceptarActionPerformed(ActionEvent arg0){
 		String nombre=this.comboBoxIns.getSelectedItem().toString();
-		String descripcion=this.textFieldDescripcion.getText();
+		String descripcion=this.textPaneDescripcion.getText();
 		String url=this.textFieldUrl.getText();
 		if (checkFormulario()) {
             ICmi.modInstitucion(nombre.toLowerCase(), descripcion, url);
@@ -158,7 +156,7 @@ public class Modinstitucion extends JInternalFrame {
 	}
 	
 	private boolean checkFormulario() {
-        String descripcion = this.textFieldDescripcion.getText();
+        String descripcion = this.textPaneDescripcion.getText();
         String url=this.textFieldUrl.getText();
         if (descripcion.isEmpty() || url.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",

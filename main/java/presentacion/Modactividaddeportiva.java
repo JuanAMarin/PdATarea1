@@ -6,6 +6,7 @@ import javax.swing.JInternalFrame;
 import interfaces.ICmodactividaddep;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameAdapter;
@@ -19,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JTextPane;
 
 public class Modactividaddeportiva extends JInternalFrame {
 
@@ -27,7 +29,6 @@ public class Modactividaddeportiva extends JInternalFrame {
 	private ICmodactividaddep ICMad;
 	
 	private JTextField textFieldNombre;
-	private JTextField textFieldDesc;
 	private JTextField textFieldDuracion;
 	private JTextField textFieldCosto;
 	private JLabel lblDescripcion;
@@ -41,9 +42,10 @@ public class Modactividaddeportiva extends JInternalFrame {
 	private JButton btnVer;
 	private JTextField textFieldFechaReg;
 	private JLabel lblFechaDeRegistro;
+	private JTextPane textPaneDescripcion;
 	
 	public void habilitarAceptar() {
-		if (!textFieldDesc.getText().isEmpty() && !textFieldDuracion.getText().isEmpty() && !textFieldCosto.getText().isEmpty())
+		if (!textPaneDescripcion.getText().isEmpty() && !textFieldDuracion.getText().isEmpty() && !textFieldCosto.getText().isEmpty())
 				btnAceptar.setEnabled(true);
 		else
 				btnAceptar.setEnabled(false);
@@ -64,10 +66,22 @@ public class Modactividaddeportiva extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		lblNewLabelAD = new JLabel("ACTIVIDADES DEPORTIVAS");
-		lblNewLabelAD.setBounds(56, 32, 139, 14);
+		lblNewLabelAD.setBounds(56, 32, 277, 14);
 		getContentPane().add(lblNewLabelAD);
 		
 		comboBoxAD = new JComboBox<String>();
+		comboBoxAD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textPaneDescripcion.setEnabled(false);
+				textFieldDuracion.setEnabled(false);
+				textFieldCosto.setEnabled(false);
+				btnAceptar.setEnabled(false);
+				textPaneDescripcion.setText("");
+				textFieldDuracion.setText("");
+				textFieldCosto.setText("");
+
+			}
+		});
 		comboBoxAD.setBounds(230, 28, 170, 20);
 		getContentPane().add(comboBoxAD);
 		
@@ -75,7 +89,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 		lblNewLabelNombre.setBounds(56, 138, 139, 14);
 		getContentPane().add(lblNewLabelNombre);
 		
-		lblDescripcion = new JLabel("DESCRIPCION");
+		lblDescripcion = new JLabel("DESCRIPCIÓN");
 		lblDescripcion.setBounds(56, 182, 139, 14);
 		getContentPane().add(lblDescripcion);
 		
@@ -84,18 +98,6 @@ public class Modactividaddeportiva extends JInternalFrame {
 		textFieldNombre.setColumns(10);
 		textFieldNombre.setBounds(230, 135, 170, 20);
 		getContentPane().add(textFieldNombre);
-		
-		textFieldDesc = new JTextField();
-		textFieldDesc.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
-		textFieldDesc.setEnabled(false);
-		textFieldDesc.setColumns(10);
-		textFieldDesc.setBounds(230, 179, 170, 20);
-		getContentPane().add(textFieldDesc);
 		
 		textFieldDuracion = new JTextField();
 		textFieldDuracion.addKeyListener(new KeyAdapter() {
@@ -114,15 +116,15 @@ public class Modactividaddeportiva extends JInternalFrame {
 		});
 		textFieldDuracion.setEnabled(false);
 		textFieldDuracion.setColumns(10);
-		textFieldDuracion.setBounds(230, 223, 170, 20);
+		textFieldDuracion.setBounds(230, 300, 170, 20);
 		getContentPane().add(textFieldDuracion);
 		
-		lblDuracion = new JLabel("DURACION");
-		lblDuracion.setBounds(56, 226, 139, 14);
+		lblDuracion = new JLabel("DURACIÓN");
+		lblDuracion.setBounds(56, 303, 139, 14);
 		getContentPane().add(lblDuracion);
 		
 		lblNewLabelCosto = new JLabel("COSTO");
-		lblNewLabelCosto.setBounds(56, 269, 139, 14);
+		lblNewLabelCosto.setBounds(56, 346, 139, 14);
 		getContentPane().add(lblNewLabelCosto);
 		
 		textFieldCosto = new JTextField();
@@ -142,7 +144,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 		});
 		textFieldCosto.setEnabled(false);
 		textFieldCosto.setColumns(10);
-		textFieldCosto.setBounds(230, 266, 170, 20);
+		textFieldCosto.setBounds(230, 343, 170, 20);
 		getContentPane().add(textFieldCosto);
 		
 		btnAceptar = new JButton("Aceptar");
@@ -170,7 +172,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				VerInfoActividadActionPerformed(e);
 				btnAceptar.setEnabled(true);
-				textFieldDesc.setEnabled(true);
+				textPaneDescripcion.setEnabled(true);
 				textFieldDuracion.setEnabled(true);
 				textFieldCosto.setEnabled(true);
 			}
@@ -179,14 +181,21 @@ public class Modactividaddeportiva extends JInternalFrame {
 		getContentPane().add(btnVer);
 		
 		lblFechaDeRegistro = new JLabel("FECHA DE REGISTRO");
-		lblFechaDeRegistro.setBounds(56, 316, 139, 14);
+		lblFechaDeRegistro.setBounds(56, 393, 139, 14);
 		getContentPane().add(lblFechaDeRegistro);
 		
 		textFieldFechaReg = new JTextField();
 		textFieldFechaReg.setEnabled(false);
 		textFieldFechaReg.setColumns(10);
-		textFieldFechaReg.setBounds(230, 310, 170, 20);
+		textFieldFechaReg.setBounds(230, 387, 170, 20);
 		getContentPane().add(textFieldFechaReg);
+		
+		textPaneDescripcion = new JTextPane();
+		textPaneDescripcion.setBounds(230, 179, 272, 111);
+		getContentPane().add(textPaneDescripcion);
+		JScrollPane scr = new JScrollPane(textPaneDescripcion);
+		scr.setBounds(230, 179, 272, 111);
+		getContentPane().add(scr);
 		
 	}
 	
@@ -204,19 +213,19 @@ public class Modactividaddeportiva extends JInternalFrame {
 		String fechaR = act1.getFechaReg().toString();
 		textFieldFechaReg.setText(fechaR);
 		textFieldFechaReg.setEnabled(false);
-		textFieldDesc.setText(act1.getDescripcion());
+		textPaneDescripcion.setText(act1.getDescripcion());
 		textFieldDuracion.setText(act1.getDuracion().toString());
 		float c = act1.getCosto();
 		String str = String.valueOf(c);
 		textFieldCosto.setText(str);
-		textFieldDesc.setEnabled(true);
+		textPaneDescripcion.setEnabled(true);
 		textFieldDuracion.setEnabled(true);
 		textFieldCosto.setEnabled(true);
 	}
 
 	protected void AceptarActionPerformed(ActionEvent arg0) {
 		String nombre = this.textFieldNombre.getText();
-		String descripcion = this.textFieldDesc.getText();
+		String descripcion = this.textPaneDescripcion.getText();
 		Integer duracion = Integer.valueOf(this.textFieldDuracion.getText());
 		Float costo = Float.parseFloat(this.textFieldCosto.getText());
 		if(checkFormulario()) {
@@ -234,7 +243,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 	}
 	
 	private boolean checkFormulario() {
-        String descripcion = this.textFieldDesc.getText().toString();
+        String descripcion = this.textPaneDescripcion.getText().toString();
         String duracion = String.valueOf(this.textFieldDuracion.getText());
         String costo = String.valueOf(this.textFieldCosto.getText());
         if (descripcion.isEmpty() || duracion.isEmpty() || costo.isEmpty()) {
@@ -245,9 +254,13 @@ public class Modactividaddeportiva extends JInternalFrame {
 	
 	public void formClose() {
         textFieldNombre.setText(null);
-		textFieldDesc.setText(null);
+		textPaneDescripcion.setText(null);
         textFieldDuracion.setText(null);
         textFieldCosto.setText(null);
         textFieldFechaReg.setText(null);
+        textPaneDescripcion.setEnabled(false);
+        textFieldDuracion.setEnabled(false);
+        textFieldCosto.setEnabled(false);
+        btnAceptar.setEnabled(false);
 	 }
 }

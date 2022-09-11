@@ -17,7 +17,10 @@ import exceptions.InstitucionRepetidaException;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+
 import interfaces.ICaltainstitucion;
+import javax.swing.JTextPane;
 
 public class Altainstitucion extends JInternalFrame {
 	
@@ -28,10 +31,10 @@ public class Altainstitucion extends JInternalFrame {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JTextField textFieldNombre;
-	private JTextField textFieldDesc;
 	private JTextField textFieldUrl;
 	private JLabel lblErrorNombre;
 	private JLabel lblIns;
+	private JTextPane textPaneDescripcion;
 
 	/**
 	 * Create the frame.
@@ -39,7 +42,7 @@ public class Altainstitucion extends JInternalFrame {
 	
 	public void formClose() {
 		textFieldNombre.setText("");
-		textFieldDesc.setText("");
+		textPaneDescripcion.setText("");
 		textFieldUrl.setText("");
 		lblErrorNombre.setVisible(false);
 		changeTextFormat(lblIns, Color.BLACK);
@@ -50,13 +53,16 @@ public class Altainstitucion extends JInternalFrame {
 	}
 	
 	public void habilitarAceptar() {
-		if (!textFieldNombre.getText().isEmpty() && !textFieldDesc.getText().isEmpty() && !textFieldUrl.getText().isEmpty())
+		if (!textFieldNombre.getText().isEmpty() && !textPaneDescripcion.getText().isEmpty() && !textFieldUrl.getText().isEmpty())
 				btnAceptar.setEnabled(true);
 		else
 				btnAceptar.setEnabled(false);
 	}
 	
 	public Altainstitucion(ICaltainstitucion ICaltai) {
+		
+		ICai = ICaltai;
+		
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
@@ -66,10 +72,8 @@ public class Altainstitucion extends JInternalFrame {
 		setClosable(true);
 		
 		setTitle("Alta de Institucion");
-		setBounds(100, 100, 524, 513);
+		setBounds(100, 100, 524, 466);
 		getContentPane().setLayout(null);
-		
-		ICai = ICaltai;
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setEnabled(false);
@@ -78,7 +82,7 @@ public class Altainstitucion extends JInternalFrame {
 				agregarInstitucionAceptarActionPerformed(e);
 			}
 		});
-		btnAceptar.setBounds(305, 449, 98, 23);
+		btnAceptar.setBounds(305, 404, 98, 23);
 		getContentPane().add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -88,32 +92,32 @@ public class Altainstitucion extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(409, 449, 89, 23);
+		btnCancelar.setBounds(413, 404, 89, 23);
 		getContentPane().add(btnCancelar);
 		
 		lblErrorNombre = new JLabel("*Esa institucion ya existe");
 		lblErrorNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		lblErrorNombre.setForeground(Color.RED);
-		lblErrorNombre.setBounds(369, 55, 170, 13);
+		lblErrorNombre.setBounds(376, 83, 170, 13);
 		getContentPane().add(lblErrorNombre);
 		
 		JLabel lblMensaje = new JLabel("Complete los campos a continuación:");
 		lblMensaje.setToolTipText("");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblMensaje.setBounds(10, 11, 170, 29);
+		lblMensaje.setBounds(21, 28, 170, 29);
 		getContentPane().add(lblMensaje);
 		
 		lblIns = new JLabel("NOMBRE INSTITUCIÓN");
-		lblIns.setBounds(21, 54, 236, 14);
+		lblIns.setBounds(21, 82, 236, 14);
 		getContentPane().add(lblIns);
 		lblErrorNombre.setVisible(false);
 		
 		JLabel lblDesc = new JLabel("DESCRIPCIÓN");
-		lblDesc.setBounds(21, 94, 111, 14);
+		lblDesc.setBounds(21, 121, 111, 14);
 		getContentPane().add(lblDesc);
 		
 		JLabel lblUrl = new JLabel("URL");
-		lblUrl.setBounds(21, 132, 124, 14);
+		lblUrl.setBounds(21, 227, 124, 14);
 		getContentPane().add(lblUrl);
 		
 		textFieldNombre = new JTextField();
@@ -125,20 +129,9 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldNombre.setBounds(196, 51, 170, 20);
+		textFieldNombre.setBounds(196, 79, 170, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
-		
-		textFieldDesc = new JTextField();
-		textFieldDesc.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
-		textFieldDesc.setBounds(196, 91, 170, 20);
-		getContentPane().add(textFieldDesc);
-		textFieldDesc.setColumns(10);
 		
 		textFieldUrl = new JTextField();
 		textFieldUrl.addKeyListener(new KeyAdapter() {
@@ -147,14 +140,21 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldUrl.setBounds(196, 129, 170, 20);
+		textFieldUrl.setBounds(196, 224, 170, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
+		
+		textPaneDescripcion = new JTextPane();
+		textPaneDescripcion.setBounds(196, 121, 285, 90);
+		getContentPane().add(textPaneDescripcion);
+		JScrollPane scr = new JScrollPane(textPaneDescripcion);
+		scr.setBounds(196, 121, 285, 90);
+		getContentPane().add(scr);
 	}
 		
 	protected void agregarInstitucionAceptarActionPerformed(ActionEvent arg0) {
 			String nombre=this.textFieldNombre.getText();
-			String descripcion=this.textFieldDesc.getText();
+			String descripcion=this.textPaneDescripcion.getText();
 			String url=this.textFieldUrl.getText();
 			if (checkFormulario()) {
 	            try {
@@ -173,7 +173,7 @@ public class Altainstitucion extends JInternalFrame {
 	
 	private boolean checkFormulario() {
         String nombre = this.textFieldNombre.getText();
-        String descripcion = this.textFieldDesc.getText();
+        String descripcion = this.textPaneDescripcion.getText();
         String url=this.textFieldUrl.getText();
         if (nombre.isEmpty() || descripcion.isEmpty() || url.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Alta de Institucion",
@@ -185,7 +185,7 @@ public class Altainstitucion extends JInternalFrame {
 	
 	 private void limpiarFormulario() {
         textFieldNombre.setText("");
-        textFieldDesc.setText("");
+        textPaneDescripcion.setText("");
         textFieldUrl.setText("");
 	 }
 	 

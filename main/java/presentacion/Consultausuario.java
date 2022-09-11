@@ -61,9 +61,9 @@ public class Consultausuario extends JInternalFrame {
 	private JRadioButton rdbtnProfe;
 	private JButton btnBuscarUsuario;
 	private DefaultListModel<String> modelo = new DefaultListModel<String>();
-	private String col[] = {"Nombre","URL","Fecha", "FechaReg", "HoraInicio"};
+	private String col[] = {"Nombre","URL","Fecha", "FechaReg", "HoraIni"};
 	private DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-	private String colAc[] = {"Nombre","Descripcion","Duracion", "Costo", "FechaReg"};
+	private String colAc[] = {"Nombre","Descripción","Duración", "Costo", "FechaReg"};
 	private DefaultTableModel tableModelAC = new DefaultTableModel(colAc, 0);
 	private JTable tbClases;
 	private JTable tbActivities;
@@ -91,7 +91,7 @@ public class Consultausuario extends JInternalFrame {
 		});
 		setClosable(true);
 		
-		setTitle("Consulta de usuario");
+		setTitle("Consulta de Usuario");
 		this.ICcu = ICcus;
 		
 		setBounds(100, 100, 524, 513);
@@ -160,7 +160,7 @@ public class Consultausuario extends JInternalFrame {
 		btnBuscarUsuario.setBounds(429, 7, 69, 32);
 		getContentPane().add(btnBuscarUsuario);
 		
-		JLabel lblInformacion = new JLabel("INFORMACION");
+		JLabel lblInformacion = new JLabel("INFORMACIÓN");
 		lblInformacion.setBounds(10, 39, 103, 14);
 		getContentPane().add(lblInformacion);
 		
@@ -191,6 +191,8 @@ public class Consultausuario extends JInternalFrame {
 		tbClases.setRowSelectionAllowed(true);
 		
 		tbClases.setBounds(23, 249, 463, 102);
+		tbClases.getColumnModel().getColumn(4).setPreferredWidth(30);
+		tbClases.getColumnModel().getColumn(3).setPreferredWidth(110);
 		
 		JScrollPane scp = new JScrollPane(tbClases);
 		scp.setBounds(20, 167, 463, 66);
@@ -212,6 +214,9 @@ public class Consultausuario extends JInternalFrame {
 		tbActivities.setRowSelectionAllowed(true);
 			
 		tbActivities.setBounds(23, 249, 463, 102);
+		tbActivities.getColumnModel().getColumn(2).setPreferredWidth(30);
+		tbActivities.getColumnModel().getColumn(3).setPreferredWidth(30);
+		tbActivities.getColumnModel().getColumn(4).setPreferredWidth(110);
 		
 		JScrollPane scp_A = new JScrollPane(tbActivities);
 		scp_A.setBounds(19, 267, 463, 72);
@@ -230,11 +235,11 @@ public class Consultausuario extends JInternalFrame {
 				lblRegistros.setVisible(true);
 				int r = tbActivities.getSelectedRow();
 				String value = tbActivities.getModel().getValueAt(r, 0).toString();
+				tableModelCA.setRowCount(0);
 				for(Object[] o: ICcu.listarClasesA(value)) {
 					tableModelCA.addRow(o);
 				}
 				lblRegistros.setText("CLASES DE "+value.toUpperCase());
-				
 			}
 		});
 		btnMasActividad.setBounds(384, 243, 98, 23);
@@ -249,6 +254,7 @@ public class Consultausuario extends JInternalFrame {
 				lblRegistros.setVisible(true);
 				int r = tbClases.getSelectedRow();
 				String value = tbClases.getModel().getValueAt(r, 0).toString();
+				tableModelMC.setRowCount(0);
 				for(Object[] o: ICcu.listarRegistros(value)) {
 					tableModelMC.addRow(o);
 				}

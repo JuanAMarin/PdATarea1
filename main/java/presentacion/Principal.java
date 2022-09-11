@@ -89,7 +89,7 @@ public class Principal {
 	}
 	public Principal() {
 		initialize();
-		
+				
 		Fabrica fabrica = Fabrica.getInstancia();
 		ICau=fabrica.getICaltausuario();
 		ICcu=fabrica.getICconsultausuario();
@@ -112,12 +112,6 @@ public class Principal {
 		AltaUsuario.setLocation(0,20);
 		AltaUsuario.setVisible(false);
 		frmServidorCentral.getContentPane().add(AltaUsuario);
-		
-		AltaInstitucion=new Altainstitucion(ICai);
-		AltaInstitucion.setSize(524, 513);
-		AltaInstitucion.setLocation(0,20);
-		AltaInstitucion.setVisible(false);
-		frmServidorCentral.getContentPane().add(AltaInstitucion);
 		
 		ModInstitucion=new Modinstitucion(ICmi);
 		ModInstitucion.setSize(524, 513);
@@ -184,7 +178,17 @@ public class Principal {
 		frmServidorCentral.getContentPane().add(RankingActividades);
 		RankingActividades.setVisible(false);
 		
+		AltaInstitucion=new Altainstitucion(ICai);
+		AltaInstitucion.setSize(524, 513);
+		AltaInstitucion.setLocation(0,20);
+		frmServidorCentral.getContentPane().add(AltaInstitucion);
+		AltaInstitucion.setVisible(false);
 		
+		consultaUsuario=new Consultausuario(ICcu);
+		consultaUsuario.setSize(524, 513);
+		consultaUsuario.setLocation(0,20);
+		frmServidorCentral.getContentPane().add(consultaUsuario);
+		consultaUsuario.setVisible(false);
 	}
 
 	/**
@@ -197,18 +201,6 @@ public class Principal {
 		frmServidorCentral.setBounds(100, 100, 538, 570);
 		frmServidorCentral.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmServidorCentral.getContentPane().setLayout(null);
-		
-		consultaUsuario=new Consultausuario(ICcu);
-		consultaUsuario.setSize(524, 513);
-		consultaUsuario.setLocation(0,20);
-		consultaUsuario.setVisible(false);
-		
-		AltaInstitucion=new Altainstitucion(ICai);
-		AltaInstitucion.setSize(524, 513);
-		AltaInstitucion.setLocation(0,20);
-		AltaInstitucion.setVisible(false);
-		frmServidorCentral.getContentPane().add(AltaInstitucion);
-		frmServidorCentral.getContentPane().add(consultaUsuario);
 		
 		JMenuBar menuPrincipal = new JMenuBar();
 		menuPrincipal.setForeground(Color.BLACK);
@@ -250,7 +242,7 @@ public class Principal {
 		});
 		menuAlta.add(menuClaseA);
 		
-		JMenuItem menuInstitucionA = new JMenuItem("Institucion");
+		JMenuItem menuInstitucionA = new JMenuItem("Institución");
 		menuInstitucionA.setSelected(true);
 		menuInstitucionA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -263,7 +255,7 @@ public class Principal {
 		JMenu menuRegistrar = new JMenu("Registrar");
 		menuPrincipal.add(menuRegistrar);
 		
-		JMenuItem menuInscripcion = new JMenuItem("Inscripcion a clase");
+		JMenuItem menuInscripcion = new JMenuItem("Inscripción a clase");
 		menuInscripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarVentanas();
@@ -297,7 +289,7 @@ public class Principal {
 			}
 		});
 		
-		JMenuItem menuInstitucionM = new JMenuItem("Institucion");
+		JMenuItem menuInstitucionM = new JMenuItem("Institución");
 		menuInstitucionM.setSelected(true);
 		menuInstitucionM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -363,7 +355,6 @@ public class Principal {
 			}
 		});
 		menuConsultar.add(menuClaseC);
-		
 	}
 	
 }

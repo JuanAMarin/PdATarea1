@@ -5,6 +5,7 @@ import java.util.List;
 
 import datatypes.DtActividadDep;
 import datatypes.DtClase;
+import datatypes.DtRegistro;
 import interfaces.ICconsultaactividad;
 
 public class Cconsultaactividad implements ICconsultaactividad{	
@@ -58,6 +59,17 @@ public class Cconsultaactividad implements ICconsultaactividad{
 					(dt.getFecha().getYear()+1900)+"-"+(dt.getFecha().getMonth()+1)+"-"+dt.getFecha().getDate(), 
 					dt.getFechaReg(), 
 					dt.getHoraInicio().getHours()+":"+dt.getHoraInicio().getMinutes()};
+			r.add(o);
+		}
+		return r;
+	}
+	
+	public ArrayList<Object[]> listarRegistros(String clase) {
+		Manejador m = Manejador.getInstancia();
+		ArrayList<DtRegistro> dtr = m.buscarRegistrosC(clase);
+		ArrayList<Object[]> r = new ArrayList<>();
+		for(DtRegistro dt: dtr) {
+			Object[] o = {dt.getNickname(),dt.getFecha()};
 			r.add(o);
 		}
 		return r;

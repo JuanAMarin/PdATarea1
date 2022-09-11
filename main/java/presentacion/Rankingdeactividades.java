@@ -23,7 +23,7 @@ public class Rankingdeactividades extends JInternalFrame {
 	private JButton btnSalir;
 	private JScrollPane scrollPane;
 	
-	private String col[] = {"Puesto","Nombre","Costo","Descripcion"};
+	private String col[] = {"Puesto","Nombre","Costo","Descripción"};
 	private DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 	
 	public Rankingdeactividades(ICrankingdeactividades ICranki) {

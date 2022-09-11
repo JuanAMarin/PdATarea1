@@ -46,6 +46,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollBar;
+import java.awt.Component;
 
 @SuppressWarnings("unused")
 public class Consultaactividad extends JInternalFrame {
@@ -62,6 +64,9 @@ public class Consultaactividad extends JInternalFrame {
 	private DefaultListModel<String> modelo = new DefaultListModel<String>();
 	private String col[] = {"Nom","URL","Fecha", "FechaR", "HoraIni"};
 	private DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+	private String colReg[] = {"Nickname","FechaR"};
+	private DefaultTableModel tableModelR = new DefaultTableModel(colReg, 0);
+	private JTable tableRegistros;
 	
 	// The 0 argument is number rows.	
 
@@ -77,7 +82,7 @@ public class Consultaactividad extends JInternalFrame {
 		});
 		setClosable(true);
 		
-		setTitle("Consulta de actividad");
+		setTitle("Consulta de Actividad Deportiva");
 		this.ICca = ICcas;
 		
 		setBounds(100, 100, 524, 513);
@@ -93,7 +98,7 @@ public class Consultaactividad extends JInternalFrame {
 		btnSalir.setBounds(404, 451, 98, 23);
 		getContentPane().add(btnSalir);
 		
-		JLabel lblInstitucion = new JLabel("INSTITUCION");
+		JLabel lblInstitucion = new JLabel("INSTITUCIÓN");
 		lblInstitucion.setBounds(23, 28, 97, 14);
 		getContentPane().add(lblInstitucion);
 		
@@ -112,7 +117,6 @@ public class Consultaactividad extends JInternalFrame {
 				modelo.addElement("Duracion: " + ICca.getDtad().getDuracion());
 				modelo.addElement("Costo: " + ICca.getDtad().getCosto());
 				modelo.addElement("Fecha de registro: " + ICca.getDtad().getFechaReg());
-				
 				tableModel.setRowCount(0);
 				for(Object[] o: ICca.listarClases(cboActividad.getSelectedItem().toString())) {
 					tableModel.addRow(o);
@@ -145,18 +149,18 @@ public class Consultaactividad extends JInternalFrame {
 		getContentPane().add(cboInstitucion);
 		
 		JLabel lblInformacion = new JLabel("INFORMACION");
-		lblInformacion.setBounds(23, 97, 103, 14);
+		lblInformacion.setBounds(23, 104, 103, 14);
 		getContentPane().add(lblInformacion);
 		
 		JList<String> lstInformacion = new JList<String>();
 		lstInformacion.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lstInformacion.setBackground(Color.WHITE);
-		lstInformacion.setBounds(23, 122, 463, 91);
+		lstInformacion.setBounds(23, 121, 463, 91);
 		lstInformacion.setModel(modelo);
 		getContentPane().add(lstInformacion);
 		
 		JLabel lblClases = new JLabel("CLASES");
-		lblClases.setBounds(23, 224, 74, 14);
+		lblClases.setBounds(23, 233, 74, 14);
 		getContentPane().add(lblClases);
 		
 		tbClases = new JTable(tableModel){
@@ -174,22 +178,37 @@ public class Consultaactividad extends JInternalFrame {
 			}
 		});
 		
-		
 		tbClases.setBounds(23, 249, 463, 102);
+		tbClases.getColumnModel().getColumn(4).setPreferredWidth(30);
+		tbClases.getColumnModel().getColumn(3).setPreferredWidth(110);
 		
 		btnBuscarClase = new JButton("🔍︎");
 		btnBuscarClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				int r = tbClases.getSelectedRow();
+				String value = tbClases.getModel().getValueAt(r, 0).toString();
+				tableModelR.setRowCount(0);
+				for(Object[] o: ICca.listarRegistros(value)) {
+					tableModelR.addRow(o);
+				}
 			}
 		});
-		btnBuscarClase.setBounds(23, 362, 69, 32);
+		btnBuscarClase.setBounds(417, 215, 69, 32);
 		getContentPane().add(btnBuscarClase);
 		
 		JScrollPane scp = new JScrollPane(tbClases);
 		scp.setBounds(23, 249, 463, 91);
 		getContentPane().add(scp);
-
+		
+		JLabel lblRegistros = new JLabel("REGISTROS");
+		lblRegistros.setBounds(23, 354, 74, 14);
+		getContentPane().add(lblRegistros);
+		
+		tableRegistros = new JTable(tableModelR);
+		
+		JScrollPane scpRegistros = new JScrollPane(tableRegistros);
+		scpRegistros.setBounds(23, 372, 463, 69);
+		getContentPane().add(scpRegistros);
 	}
 	
 	public void cargarCombo() {
@@ -200,9 +219,9 @@ public class Consultaactividad extends JInternalFrame {
 	public void formClose(){
 		cboActividad.removeAllItems();
 		tableModel.setRowCount(0);
+		tableModelR.setRowCount(0);
 		modelo.clear();
 		btnBuscarActividad.setEnabled(false);
 		btnBuscarClase.setEnabled(false);
-
 	}
 }

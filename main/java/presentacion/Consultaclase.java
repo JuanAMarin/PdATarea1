@@ -73,7 +73,7 @@ public class Consultaclase extends JInternalFrame {
 		});
 		setClosable(true);
 		
-		setTitle("Consulta de clase");
+		setTitle("Consulta de Dictado de Clase");
 		this.ICcc = ICccs;
 		
 		setBounds(100, 100, 524, 513);
@@ -89,7 +89,7 @@ public class Consultaclase extends JInternalFrame {
 		btnSalir.setBounds(400, 451, 98, 23);
 		getContentPane().add(btnSalir);
 		
-		JLabel lblInstitucion = new JLabel("INSTITUCION");
+		JLabel lblInstitucion = new JLabel("INSTITUCIÓN");
 		lblInstitucion.setBounds(23, 28, 97, 14);
 		getContentPane().add(lblInstitucion);
 		

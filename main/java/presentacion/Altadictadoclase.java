@@ -144,6 +144,7 @@ public class Altadictadoclase extends JInternalFrame{
 		lblErrorNombre.setVisible(false);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.setEnabled(false);
 		textFieldNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -163,6 +164,7 @@ public class Altadictadoclase extends JInternalFrame{
 		dateFecha = new JDateChooser();
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateFecha.getDateEditor();
 		editor.setEditable(false);
+		dateFecha.setEnabled(false);
 		dateFecha.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
 	        @Override
 	        public void propertyChange(PropertyChangeEvent e) {
@@ -184,11 +186,13 @@ public class Altadictadoclase extends JInternalFrame{
 		getContentPane().add(lblNewLabelHora);
 		
 		spinnerHora = new JSpinner();
+		spinnerHora.setEnabled(false);
 		spinnerHora.setModel(new SpinnerNumberModel(0, 0, 23, 1));
 		spinnerHora.setBounds(233, 235, 41, 20);
 		getContentPane().add(spinnerHora);
 		
 		spinnerMin = new JSpinner();
+		spinnerMin.setEnabled(false);
 		spinnerMin.setModel(new SpinnerNumberModel(0, 0, 59, 1));
 		spinnerMin.setBounds(284, 235, 41, 20);
 		getContentPane().add(spinnerMin);
@@ -202,6 +206,7 @@ public class Altadictadoclase extends JInternalFrame{
 		getContentPane().add(lblNewLabelURL);
 		
 		textFieldURL = new JTextField();
+		textFieldURL.setEnabled(false);
 		textFieldURL.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -237,7 +242,21 @@ public class Altadictadoclase extends JInternalFrame{
 		btnConfirmar.setEnabled(false);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				confirmarActionPerformed(e);
+				if(ICac.listarProfesores(comboBoxID.getSelectedItem().toString()) .length < 1) {
+					elmensajito();
+					textFieldNombre.setEnabled(false);
+					dateFecha.setEnabled(false);
+					spinnerHora.setEnabled(false);
+					spinnerMin.setEnabled(false);
+					textFieldURL.setEnabled(false);
+				}else {
+					confirmarActionPerformed(e);
+					textFieldNombre.setEnabled(true);
+					dateFecha.setEnabled(true);
+					spinnerHora.setEnabled(true);
+					spinnerMin.setEnabled(true);
+					textFieldURL.setEnabled(true);
+				}
 			}
 		});
 		btnConfirmar.setBounds(317, 104, 98, 23);
@@ -315,7 +334,7 @@ public class Altadictadoclase extends JInternalFrame{
 		String prof = comboBoxProfe.getSelectedItem().toString();
 		String url = textFieldURL.getText();
 		if(strID.isEmpty() || strAD.isEmpty() || nombre.isEmpty() || fecha.isEmpty() || prof.isEmpty() || url.isEmpty() || url.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "No puede haber campos vacÃ­os", "Alta Dictado Clase",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Alta Dictado Clase",
                     JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -337,6 +356,10 @@ public class Altadictadoclase extends JInternalFrame{
 	
 	private void changeTextFormat(JLabel l, Color c){
 		l.setForeground(c);
+	}
+	private void elmensajito() {
+		JOptionPane.showMessageDialog(this, comboBoxID.getSelectedItem().toString()+" no cuenta con profesores", "Alta Dictado Clase",
+                JOptionPane.ERROR_MESSAGE);
 	}
 }
 

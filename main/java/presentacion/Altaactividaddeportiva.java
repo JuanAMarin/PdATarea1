@@ -3,6 +3,7 @@ package presentacion;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -23,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JTextPane;
 
 public class Altaactividaddeportiva extends JInternalFrame {
 	
@@ -33,11 +35,11 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	private JTextField txtNombre;
 	private JTextField txtCosto;
 	private JComboBox<String> cboInsti;
-	private JTextArea txtDesc;
 	private JSpinner spnDuracion;
 	private JButton btnAceptar;
 	private JLabel lblErrorNombre;
 	private JLabel lblNombre;
+	private JTextPane textPaneDescripcion;
 	
 	private void changeTextFormat(JLabel l, Color c){
 		l.setForeground(c);
@@ -45,7 +47,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	
 	public void habilitarAceptar() {
 		if (!txtNombre.getText().isEmpty() && !txtCosto.getText().isEmpty()
-			&& !txtDesc.getText().isEmpty())
+			&& !textPaneDescripcion.getText().isEmpty())
 				btnAceptar.setEnabled(true);
 		else
 				btnAceptar.setEnabled(false);
@@ -110,31 +112,17 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		lblDescripcion.setBounds(30, 117, 139, 14);
 		getContentPane().add(lblDescripcion);
 		
-		txtDesc = new JTextArea();
-		txtDesc.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
-		txtDesc.setForeground(Color.BLACK);
-		txtDesc.setWrapStyleWord(true);
-		txtDesc.setLineWrap(true);
-		txtDesc.setRows(2);
-		txtDesc.setBounds(179, 116, 170, 52);
-		getContentPane().add(txtDesc);
-		
 		spnDuracion = new JSpinner();
 		spnDuracion.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-		spnDuracion.setBounds(179, 179, 170, 20);
+		spnDuracion.setBounds(179, 224, 170, 20);
 		getContentPane().add(spnDuracion);
 		
 		JLabel lblDuracion = new JLabel("DURACIÓN");
-		lblDuracion.setBounds(30, 182, 139, 14);
+		lblDuracion.setBounds(30, 226, 139, 14);
 		getContentPane().add(lblDuracion);
 		
 		JLabel lblCosto = new JLabel("COSTO");
-		lblCosto.setBounds(30, 213, 139, 14);
+		lblCosto.setBounds(30, 257, 139, 14);
 		getContentPane().add(lblCosto);
 		
 		txtCosto = new JTextField();
@@ -153,7 +141,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 			}
 		});
 		txtCosto.setColumns(10);
-		txtCosto.setBounds(179, 210, 170, 20);
+		txtCosto.setBounds(179, 255, 170, 20);
 		getContentPane().add(txtCosto);
 		
 		btnAceptar = new JButton("Aceptar");
@@ -175,6 +163,13 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		btnCancelar.setBounds(404, 451, 98, 23);
 		getContentPane().add(btnCancelar);
 		
+		textPaneDescripcion = new JTextPane();
+		textPaneDescripcion.setBounds(179, 116, 215, 98);
+		getContentPane().add(textPaneDescripcion);
+		JScrollPane scr = new JScrollPane(textPaneDescripcion);
+		scr.setBounds(179, 116, 215, 98);
+		getContentPane().add(scr);
+		
 	}
 	
 	public void inicializarComboBox() {
@@ -184,7 +179,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	
 	protected void AceptarActionPerformed(ActionEvent arg0) {
 		String insti = cboInsti.getSelectedItem().toString();
-		String nombre = txtNombre.getText(), descripcion = txtDesc.getText();
+		String nombre = txtNombre.getText(), descripcion = textPaneDescripcion.getText();
 		Integer duracion = (Integer) spnDuracion.getValue();
 		float costo = Float.parseFloat(txtCosto.getText());
 		if(checkFormulario()) {
@@ -208,7 +203,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	
 	private boolean checkFormulario() {
         String nombre = this.txtNombre.getText().toString();
-        String descripcion = this.txtDesc.getText().toString();
+        String descripcion = this.textPaneDescripcion.getText().toString();
         String costo = String.valueOf(this.txtCosto.getText());
         if (nombre.isEmpty() || descripcion.isEmpty() || costo.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Alta Actividad Deportiva",
@@ -220,7 +215,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	
 	public void formClose() {
 		txtNombre.setText("");
-		txtDesc.setText("");
+		textPaneDescripcion.setText("");
 		spnDuracion.setValue(1);
 		txtCosto.setText("");
 		lblErrorNombre.setVisible(false);

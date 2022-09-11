@@ -31,6 +31,8 @@ import exceptions.ErrorFechaException;
 import exceptions.NicknameRepetidoException;
 import exceptions.UsuarioRepetidoException;
 import interfaces.ICaltausuario;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class Altausuario extends JInternalFrame {
 	
@@ -42,7 +44,6 @@ public class Altausuario extends JInternalFrame {
 	private JTextField textNombre;
 	private JTextField textApellido;
 	private JTextField textEmail;
-	private JTextField textDescripcion;
 	private JTextField textBiografia;
 	private JTextField textSitioWeb;
 	private JComboBox<String> cboInsti;
@@ -58,6 +59,7 @@ public class Altausuario extends JInternalFrame {
 	private JLabel lblFechaNaci;
 	private JLabel lblNickname;
 	private JLabel lblEmail;
+	private JTextArea textAreaDescripcion;
 	
 	/**
 	 * Create the frame.
@@ -67,18 +69,18 @@ public class Altausuario extends JInternalFrame {
 		textNombre.setText("");
 		textApellido.setText("");
 		textEmail.setText("");
-		textDescripcion.setText("");
+		textAreaDescripcion.setText("");
 		textBiografia.setText("");
 		textSitioWeb.setText("");
 		rdbtnProfesor.setSelected(false);
 		rdbtnSocio.setSelected(false);
 		dateFechaNac.setCalendar(null);
 		cboInsti.setAction(null);
-		textDescripcion.setText("");
+		textAreaDescripcion.setText("");
 		textBiografia.setText("");
 		textSitioWeb.setText("");
 		cboInsti.setEnabled(false);
-		textDescripcion.setEnabled(false);
+		textAreaDescripcion.setEnabled(false);
 		textBiografia.setEnabled(false);
 		textSitioWeb.setEnabled(false);
 		lblEmailEnUso.setVisible(false);
@@ -116,7 +118,7 @@ public class Altausuario extends JInternalFrame {
 	public void habilitarAceptar() {
 		if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
 			&& !textEmail.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty() 
-			&& (rdbtnSocio.isSelected() || (rdbtnProfesor.isSelected() && !textDescripcion.getText().isEmpty() 
+			&& (rdbtnSocio.isSelected() || (rdbtnProfesor.isSelected() && !textAreaDescripcion.getText().isEmpty() 
 			&& !textBiografia.getText().isEmpty() && !textSitioWeb.getText().isEmpty() && cboInsti.getSelectedItem()!=null)))
 				btnAceptar.setEnabled(true);
 		else
@@ -289,13 +291,13 @@ public class Altausuario extends JInternalFrame {
 				rdbtnSocio.setSelected(false);
 				btnAceptar.setEnabled(false);
 				cboInsti.setEnabled(true);
-				textDescripcion.setEnabled(true);
+				textAreaDescripcion.setEnabled(true);
 				textBiografia.setEnabled(true);
 				textSitioWeb.setEnabled(true);
 				if(ICau.listarInstituciones().length < 1) {
 					rdbtnSocio.setSelected(true);
 					rdbtnProfesor.setSelected(false);
-					textDescripcion.setEnabled(false);
+					textAreaDescripcion.setEnabled(false);
 					textBiografia.setEnabled(false);
 					textSitioWeb.setEnabled(false);
 					cboInsti.setEnabled(false);
@@ -315,8 +317,8 @@ public class Altausuario extends JInternalFrame {
 				rdbtnProfesor.setSelected(false);
 				btnAceptar.setEnabled(false);
 				cboInsti.setEnabled(false);
-				textDescripcion.setText("");
-				textDescripcion.setEnabled(false);
+				textAreaDescripcion.setText("");
+				textAreaDescripcion.setEnabled(false);
 				textBiografia.setText("");
 				textBiografia.setEnabled(false);
 				textSitioWeb.setText("");
@@ -334,23 +336,12 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(lblDescripcion);
 		
 		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
-		lblBiografia.setBounds(43, 247, 139, 14);
+		lblBiografia.setBounds(43, 321, 139, 14);
 		getContentPane().add(lblBiografia);
 		
 		JLabel lblSitioWeb = new JLabel("SITIO WEB");
-		lblSitioWeb.setBounds(43, 271, 139, 14);
+		lblSitioWeb.setBounds(43, 345, 139, 14);
 		getContentPane().add(lblSitioWeb);
-		
-		textDescripcion = new JTextField();
-		textDescripcion.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
-		textDescripcion.setBounds(225, 220, 170, 20);
-		getContentPane().add(textDescripcion);
-		textDescripcion.setColumns(10);
 		
 		textBiografia = new JTextField();
 		textBiografia.addKeyListener(new KeyAdapter() {
@@ -359,7 +350,7 @@ public class Altausuario extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textBiografia.setBounds(225, 245, 170, 20);
+		textBiografia.setBounds(225, 319, 170, 20);
 		getContentPane().add(textBiografia);
 		textBiografia.setColumns(10);
 		
@@ -370,20 +361,19 @@ public class Altausuario extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textSitioWeb.setBounds(225, 269, 170, 20);
+		textSitioWeb.setBounds(225, 343, 170, 20);
 		getContentPane().add(textSitioWeb);
 		textSitioWeb.setColumns(10);
 		
 		cboInsti = new JComboBox<String>();
-		cboInsti.setBounds(225, 291, 170, 22);
+		cboInsti.setBounds(225, 365, 170, 22);
 		getContentPane().add(cboInsti);
 		
 		JLabel lblInstitucion = new JLabel("INSTITUCIÓN");
-		lblInstitucion.setBounds(43, 295, 139, 14);
+		lblInstitucion.setBounds(43, 369, 139, 14);
 		getContentPane().add(lblInstitucion);
 		
 		cboInsti.setEnabled(false);
-		textDescripcion.setEnabled(false);
 		textBiografia.setEnabled(false);
 		textSitioWeb.setEnabled(false);		
 		btnCancelar = new JButton("Cancelar");
@@ -418,7 +408,7 @@ public class Altausuario extends JInternalFrame {
 				try {
 					ICau.datosUsuario(nickname.toLowerCase(), nombre, apellido, email.toLowerCase(), fecha);
 					if(rdbtnProfesor.isSelected()){
-						String descripcion=textDescripcion.getText();
+						String descripcion=textAreaDescripcion.getText();
 						String biografia=textBiografia.getText();
 						String sitioweb=textSitioWeb.getText();
 						insti=(String)cboInsti.getSelectedItem();
@@ -449,6 +439,17 @@ public class Altausuario extends JInternalFrame {
 		btnAceptar.setBounds(297, 451, 98, 23);
 		getContentPane().add(btnAceptar);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(312, 279, -190, -104);
+		getContentPane().add(scrollPane);
+		
+		textAreaDescripcion = new JTextArea();
+		textAreaDescripcion.setLineWrap(true);
+		textAreaDescripcion.setBounds(225, 220, 262, 89);
+		getContentPane().add(textAreaDescripcion);
+		JScrollPane scr = new JScrollPane(textAreaDescripcion);
+		scr.setBounds(225, 220, 262, 89);
+		getContentPane().add(scr);
 	}
 	
 	protected void llamadoMensajito(ActionEvent arg0, String nickname) {

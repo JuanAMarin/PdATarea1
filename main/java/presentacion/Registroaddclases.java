@@ -46,7 +46,7 @@ public class Registroaddclases extends JInternalFrame {
 
 	protected void llamadoMensajito(ActionEvent arg0, String socio, String clase) {
 		JOptionPane.showMessageDialog(this, "Ya hay un registro de "+ socio + " a la clase: "+ clase +".", "Registro a Dictado de Clase",
-                JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
 	}
 	
 	protected void llamadoMensajito2(ActionEvent arg0, String socio, String clase) {
@@ -118,7 +118,7 @@ public class Registroaddclases extends JInternalFrame {
 		btnAceptar.setBounds(295, 376, 98, 23);
 		getContentPane().add(btnAceptar);
 		
-		JLabel lblInstitucion = new JLabel("INSTITUCION");
+		JLabel lblInstitucion = new JLabel("INSTITUCIÓN");
 		lblInstitucion.setBounds(22, 49, 141, 14);
 		getContentPane().add(lblInstitucion);
 		

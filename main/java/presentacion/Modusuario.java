@@ -4,6 +4,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -24,14 +25,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.JTextPane;
 
 public class Modusuario extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private ICmodusuario ICmu;
-	
-	private JTextField txtDescripcion;
 	private JTextField txtSitioWeb;
 	private JTextField txtApellido;
 	private JTextField txtNombre;
@@ -44,6 +44,7 @@ public class Modusuario extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnVerInfo;
 	private JTextField txtEmail;
+	private JTextPane textPaneDescripcion;
 
 	/**
 	 * Create the frame.
@@ -53,7 +54,7 @@ public class Modusuario extends JInternalFrame {
 		txtApellido.setText("");
 		dateFechaNac.setCalendar(null);
 		txtEmail.setText("");
-		txtDescripcion.setText("");
+		textPaneDescripcion.setText("");
 		txtSitioWeb.setText("");
 		txtBiografia.setText("");
 		rdbtnSocio.setSelected(false);
@@ -61,10 +62,13 @@ public class Modusuario extends JInternalFrame {
 		txtBiografia.setEnabled(false);
 		txtNombre.setEnabled(false);
 		txtApellido.setEnabled(false);
+		textPaneDescripcion.setEnabled(false);
+		txtSitioWeb.setEnabled(false);
+		dateFechaNac.setEnabled(false);
 	}
 	
 	public void habilitarAceptar() {
-		if (!txtDescripcion.getText().isEmpty() && !txtSitioWeb.getText().isEmpty() 
+		if (!textPaneDescripcion.getText().isEmpty() && !txtSitioWeb.getText().isEmpty() 
 			&& !txtApellido.getText().isEmpty() && !txtNombre.getText().isEmpty() 
 			&& !txtBiografia.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty())
 				btnAceptar.setEnabled(true);
@@ -82,26 +86,31 @@ public class Modusuario extends JInternalFrame {
 			String nickname = this.cboNicknames.getSelectedItem().toString();
 			DtProfesor profe = ICmu.obtenerProfesor(nickname);
 			if(profe==null) {
+				dateFechaNac.setEnabled(true);
 				rdbtnSocio.setSelected(true);
 				rdbtnProfesor.setSelected(false);
 				txtBiografia.setEnabled(false);
 				txtSitioWeb.setEnabled(false);
-				txtDescripcion.setEnabled(false);
+				textPaneDescripcion.setEnabled(false);
 				DtSocio socio = ICmu.obtenerSocio(nickname);
 				txtApellido.setText(socio.getApellido());
 				txtNombre.setText(socio.getNombre());
 				dateFechaNac.setDate(socio.getFechaNac());
 				txtEmail.setText(socio.getEmail());
+				txtBiografia.setText("");
+				textPaneDescripcion.setText("");
+				txtSitioWeb.setText("");
 			}else {
+				dateFechaNac.setEnabled(true);
 				rdbtnSocio.setSelected(false);
 				rdbtnProfesor.setSelected(true);
 				txtBiografia.setEnabled(true);
 				txtSitioWeb.setEnabled(true);
-				txtDescripcion.setEnabled(true);
+				textPaneDescripcion.setEnabled(true);
 				txtApellido.setText(profe.getApellido());
 				txtNombre.setText(profe.getNombre());
 				dateFechaNac.setDate(profe.getFechaNac());
-				txtDescripcion.setText(profe.getDescripcion());
+				textPaneDescripcion.setText(profe.getDescripcion());
 				txtBiografia.setText(profe.getBiografia());
 				txtSitioWeb.setText(profe.getSitioweb());
 				txtEmail.setText(profe.getEmail());
@@ -119,7 +128,7 @@ public class Modusuario extends JInternalFrame {
 		
 		if (checkFormulario()) {
 			if(rdbtnProfesor.isSelected()) {
-				String descripcion=this.txtDescripcion.getText();
+				String descripcion=this.textPaneDescripcion.getText();
 				String biografia=this.txtBiografia.getText();
 				String sitioweb=this.txtSitioWeb.getText();
 				ICmu.modProfesor(nickname.toLowerCase(), nombre, apellido, fecha, descripcion, biografia, sitioweb);
@@ -134,7 +143,7 @@ public class Modusuario extends JInternalFrame {
 	
 	private boolean checkFormulario() {
 		if(rdbtnProfesor.isSelected()) {
-	        if (txtDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtBiografia.getText().isEmpty() || txtSitioWeb.getText().isEmpty() || dateFechaNac.getDate()==null) {
+	        if (textPaneDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtBiografia.getText().isEmpty() || txtSitioWeb.getText().isEmpty() || dateFechaNac.getDate()==null) {
 	            JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
 	                    JOptionPane.ERROR_MESSAGE);
 	            return false;
@@ -196,29 +205,17 @@ public class Modusuario extends JInternalFrame {
 		rdbtnSocio.setBounds(132, 161, 109, 23);
 		getContentPane().add(rdbtnSocio);
 		
-		JLabel lblDescripcion = new JLabel("DESCRIPCION");
+		JLabel lblDescripcion = new JLabel("DESCRIPCIÓN");
 		lblDescripcion.setBounds(31, 197, 125, 14);
 		getContentPane().add(lblDescripcion);
 		
-		JLabel lblBiografia = new JLabel("BIOGRAFIA");
-		lblBiografia.setBounds(31, 222, 139, 14);
+		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
+		lblBiografia.setBounds(31, 324, 139, 14);
 		getContentPane().add(lblBiografia);
 		
 		JLabel lblSitioWeb = new JLabel("SITIO WEB");
-		lblSitioWeb.setBounds(31, 246, 139, 14);
+		lblSitioWeb.setBounds(31, 348, 139, 14);
 		getContentPane().add(lblSitioWeb);
-		
-		txtDescripcion = new JTextField();
-		txtDescripcion.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
-		txtDescripcion.setEnabled(false);
-		txtDescripcion.setColumns(10);
-		txtDescripcion.setBounds(213, 195, 170, 20);
-		getContentPane().add(txtDescripcion);
 		
 		txtSitioWeb = new JTextField();
 		txtSitioWeb.addKeyListener(new KeyAdapter() {
@@ -229,7 +226,7 @@ public class Modusuario extends JInternalFrame {
 		});
 		txtSitioWeb.setEnabled(false);
 		txtSitioWeb.setColumns(10);
-		txtSitioWeb.setBounds(213, 244, 170, 20);
+		txtSitioWeb.setBounds(213, 346, 170, 20);
 		getContentPane().add(txtSitioWeb);
 		
 		dateFechaNac = new JDateChooser();
@@ -268,6 +265,25 @@ public class Modusuario extends JInternalFrame {
 		getContentPane().add(txtNombre);
 		
 		cboNicknames = new JComboBox<String>();
+		cboNicknames.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnAceptar.setEnabled(false);
+				textPaneDescripcion.setEnabled(false);
+				txtSitioWeb.setEnabled(false);
+				txtApellido.setEnabled(false);
+				txtNombre.setEnabled(false);
+				txtBiografia.setEnabled(false);
+				dateFechaNac.setEnabled(false);
+				txtEmail.setEnabled(false);
+				textPaneDescripcion.setText("");
+				txtSitioWeb.setText("");
+				txtApellido.setText("");
+				txtNombre.setText("");
+				txtBiografia.setText("");
+				dateFechaNac.setCalendar(null);
+				txtEmail.setText("");
+			}
+		});
 		cboNicknames.setBounds(213, 20, 170, 22);
 		getContentPane().add(cboNicknames);
 		
@@ -290,7 +306,7 @@ public class Modusuario extends JInternalFrame {
 		});
 		txtBiografia.setEnabled(false);
 		txtBiografia.setColumns(10);
-		txtBiografia.setBounds(213, 219, 170, 20);
+		txtBiografia.setBounds(213, 321, 170, 20);
 		getContentPane().add(txtBiografia);
 		
 		btnAceptar = new JButton("Aceptar");
@@ -318,5 +334,12 @@ public class Modusuario extends JInternalFrame {
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(213, 120, 170, 20);
 		getContentPane().add(txtEmail);
+		
+		textPaneDescripcion = new JTextPane();
+		textPaneDescripcion.setBounds(213, 195, 289, 116);
+		getContentPane().add(textPaneDescripcion);
+		JScrollPane scr = new JScrollPane(textPaneDescripcion);
+		scr.setBounds(213, 195, 289, 116);
+		getContentPane().add(scr);
 	}
 }

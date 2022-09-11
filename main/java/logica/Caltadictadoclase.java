@@ -54,8 +54,6 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 		DtClase nuevaClase = m.buscarClase(nombre);
 		if (nuevaClase != null)
 			throw new ClaseRepetidaException("La clase de nombre "+ nombre + " ya existe en el Sistema");
-        
-		//if(fecha.after(new Date()) || fecha.before(new Date()))
 		if(fecha.before(new Date()))
     		throw new ErrorFechaException("La fecha es incorrecta");
 		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio);
