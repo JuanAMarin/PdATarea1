@@ -48,6 +48,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollBar;
 import java.awt.Component;
+import javax.swing.JPanel;
 
 @SuppressWarnings("unused")
 public class Consultaactividad extends JInternalFrame {
@@ -67,6 +68,7 @@ public class Consultaactividad extends JInternalFrame {
 	private String colReg[] = {"Nickname","FechaR"};
 	private DefaultTableModel tableModelR = new DefaultTableModel(colReg, 0);
 	private JTable tableRegistros;
+	private JTextField textFieldProfesor;
 	
 	// The 0 argument is number rows.	
 
@@ -133,6 +135,7 @@ public class Consultaactividad extends JInternalFrame {
 				tableModel.setRowCount(0);
 				tableModelR.setRowCount(0);
 				btnBuscarActividad.setEnabled(true);
+				textFieldProfesor.setText("");
 			}
 		});
 		cboActividad.addPropertyChangeListener(new PropertyChangeListener() {
@@ -155,24 +158,25 @@ public class Consultaactividad extends JInternalFrame {
 				tableModel.setRowCount(0);
 				tableModelR.setRowCount(0);
 				btnBuscarActividad.setEnabled(false);
+				textFieldProfesor.setText("");
 			}
 		});
 		cboInstitucion.setBounds(107, 24, 312, 22);
 		getContentPane().add(cboInstitucion);
 		
 		JLabel lblInformacion = new JLabel("INFORMACION");
-		lblInformacion.setBounds(23, 104, 103, 14);
+		lblInformacion.setBounds(23, 89, 103, 14);
 		getContentPane().add(lblInformacion);
 		
 		JList<String> lstInformacion = new JList<String>();
 		lstInformacion.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lstInformacion.setBackground(Color.WHITE);
-		lstInformacion.setBounds(23, 121, 463, 91);
+		lstInformacion.setBounds(23, 106, 463, 91);
 		lstInformacion.setModel(modelo);
 		getContentPane().add(lstInformacion);
 		
 		JLabel lblClases = new JLabel("CLASES");
-		lblClases.setBounds(23, 233, 74, 14);
+		lblClases.setBounds(23, 218, 74, 14);
 		getContentPane().add(lblClases);
 		
 		tbClases = new JTable(tableModel){
@@ -200,27 +204,38 @@ public class Consultaactividad extends JInternalFrame {
 				int r = tbClases.getSelectedRow();
 				String value = tbClases.getModel().getValueAt(r, 0).toString();
 				tableModelR.setRowCount(0);
+				textFieldProfesor.setText(ICca.buscarProfesorCC(value));
 				for(Object[] o: ICca.listarRegistros(value)) {
 					tableModelR.addRow(o);
 				}
 			}
 		});
-		btnBuscarClase.setBounds(417, 215, 69, 32);
+		btnBuscarClase.setBounds(417, 200, 69, 32);
 		getContentPane().add(btnBuscarClase);
 		
 		JScrollPane scp = new JScrollPane(tbClases);
-		scp.setBounds(23, 249, 463, 91);
+		scp.setBounds(23, 234, 463, 91);
 		getContentPane().add(scp);
 		
 		JLabel lblRegistros = new JLabel("REGISTROS");
-		lblRegistros.setBounds(23, 354, 74, 14);
+		lblRegistros.setBounds(23, 339, 74, 14);
 		getContentPane().add(lblRegistros);
 		
 		tableRegistros = new JTable(tableModelR);
 		
 		JScrollPane scpRegistros = new JScrollPane(tableRegistros);
-		scpRegistros.setBounds(23, 372, 463, 69);
+		scpRegistros.setBounds(23, 357, 463, 69);
 		getContentPane().add(scpRegistros);
+		
+		JLabel lblProfesor = new JLabel("PROFESOR");
+		lblProfesor.setBounds(23, 436, 74, 14);
+		getContentPane().add(lblProfesor);
+		
+		textFieldProfesor = new JTextField();
+		textFieldProfesor.setEditable(false);
+		textFieldProfesor.setBounds(107, 436, 194, 19);
+		getContentPane().add(textFieldProfesor);
+		textFieldProfesor.setColumns(10);
 	}
 	
 	public void cargarCombo() {
@@ -235,5 +250,6 @@ public class Consultaactividad extends JInternalFrame {
 		modelo.clear();
 		btnBuscarActividad.setEnabled(false);
 		btnBuscarClase.setEnabled(false);
+		textFieldProfesor.setText("");
 	}
 }

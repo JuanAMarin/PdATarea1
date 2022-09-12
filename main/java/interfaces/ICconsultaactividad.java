@@ -11,4 +11,5 @@ public interface ICconsultaactividad {
 	public abstract DtActividadDep getDtad();
 	public abstract ArrayList<Object[]> listarClases(String actividad);
 	public abstract ArrayList<Object[]> listarRegistros(String clase);
+	public abstract String buscarProfesorCC(String clase);
 }

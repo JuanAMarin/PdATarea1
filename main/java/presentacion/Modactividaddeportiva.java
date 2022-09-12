@@ -44,13 +44,6 @@ public class Modactividaddeportiva extends JInternalFrame {
 	private JLabel lblFechaDeRegistro;
 	private JTextPane textPaneDescripcion;
 	
-	public void habilitarAceptar() {
-		if (!textPaneDescripcion.getText().isEmpty() && !textFieldDuracion.getText().isEmpty() && !textFieldCosto.getText().isEmpty())
-				btnAceptar.setEnabled(true);
-		else
-				btnAceptar.setEnabled(false);
-	}
-	
 	public Modactividaddeportiva(ICmodactividaddep ICmad) {
 		ICMad = ICmad; 
 		addInternalFrameListener(new InternalFrameAdapter() {
@@ -102,10 +95,6 @@ public class Modactividaddeportiva extends JInternalFrame {
 		textFieldDuracion = new JTextField();
 		textFieldDuracion.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-			@Override
 			public void keyTyped(KeyEvent evt) {
 				char c=evt.getKeyChar();
 				if(Character.isLetter(c)) {
@@ -129,10 +118,6 @@ public class Modactividaddeportiva extends JInternalFrame {
 		
 		textFieldCosto = new JTextField();
 		textFieldCosto.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
 			@Override
 			public void keyTyped(KeyEvent evt) {
 				char c=evt.getKeyChar();
@@ -224,17 +209,18 @@ public class Modactividaddeportiva extends JInternalFrame {
 	}
 
 	protected void AceptarActionPerformed(ActionEvent arg0) {
-		String nombre = this.textFieldNombre.getText();
-		String descripcion = this.textPaneDescripcion.getText();
-		Integer duracion = Integer.valueOf(this.textFieldDuracion.getText());
-		Float costo = Float.parseFloat(this.textFieldCosto.getText());
 		if(checkFormulario()) {
+			String nombre = this.textFieldNombre.getText();
+			String descripcion = this.textPaneDescripcion.getText();
+			Integer duracion = Integer.valueOf(this.textFieldDuracion.getText());
+			Float costo = Float.parseFloat(this.textFieldCosto.getText());
 			ICMad.ModActividadDeportiva(nombre.toLowerCase(), descripcion, duracion, costo);
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con exito", "Modificar Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();
-            setVisible(false);
-		}
+		}else
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "Modificar Institucion",
+                    JOptionPane.ERROR_MESSAGE);
 	}
 	
 	protected void CancelarActionPerformed(ActionEvent arg0) {

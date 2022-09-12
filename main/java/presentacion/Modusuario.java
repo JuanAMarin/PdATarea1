@@ -21,10 +21,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import javax.swing.JTextPane;
 
 public class Modusuario extends JInternalFrame {
@@ -65,15 +61,6 @@ public class Modusuario extends JInternalFrame {
 		textPaneDescripcion.setEnabled(false);
 		txtSitioWeb.setEnabled(false);
 		dateFechaNac.setEnabled(false);
-	}
-	
-	public void habilitarAceptar() {
-		if (!textPaneDescripcion.getText().isEmpty() && !txtSitioWeb.getText().isEmpty() 
-			&& !txtApellido.getText().isEmpty() && !txtNombre.getText().isEmpty() 
-			&& !txtBiografia.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty())
-				btnAceptar.setEnabled(true);
-		else
-				btnAceptar.setEnabled(false);
 	}
 	
 	public void inicializarComboBox() {
@@ -218,23 +205,12 @@ public class Modusuario extends JInternalFrame {
 		getContentPane().add(lblSitioWeb);
 		
 		txtSitioWeb = new JTextField();
-		txtSitioWeb.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
 		txtSitioWeb.setEnabled(false);
 		txtSitioWeb.setColumns(10);
 		txtSitioWeb.setBounds(213, 346, 170, 20);
 		getContentPane().add(txtSitioWeb);
 		
 		dateFechaNac = new JDateChooser();
-		dateFechaNac.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				habilitarAceptar();
-			}
-		});
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateFechaNac.getDateEditor();
 		editor.setEditable(false);
 		dateFechaNac.setBounds(213, 96, 170, 19);
@@ -242,24 +218,12 @@ public class Modusuario extends JInternalFrame {
 		
 		txtApellido = new JTextField();
 		txtApellido.setEnabled(false);
-		txtApellido.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
 		txtApellido.setColumns(10);
 		txtApellido.setBounds(213, 70, 170, 20);
 		getContentPane().add(txtApellido);
 		
 		txtNombre = new JTextField();
 		txtNombre.setEnabled(false);
-		txtNombre.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
 		txtNombre.setColumns(10);
 		txtNombre.setBounds(213, 46, 170, 20);
 		getContentPane().add(txtNombre);
@@ -282,6 +246,8 @@ public class Modusuario extends JInternalFrame {
 				txtBiografia.setText("");
 				dateFechaNac.setCalendar(null);
 				txtEmail.setText("");
+				rdbtnSocio.setSelected(false);
+				rdbtnProfesor.setSelected(false);
 			}
 		});
 		cboNicknames.setBounds(213, 20, 170, 22);
@@ -298,12 +264,6 @@ public class Modusuario extends JInternalFrame {
 		getContentPane().add(btnVerInfo);
 		
 		txtBiografia = new JTextField();
-		txtBiografia.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarAceptar();
-			}
-		});
 		txtBiografia.setEnabled(false);
 		txtBiografia.setColumns(10);
 		txtBiografia.setBounds(213, 321, 170, 20);

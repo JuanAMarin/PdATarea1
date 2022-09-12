@@ -75,4 +75,9 @@ public class Cconsultaactividad implements ICconsultaactividad{
 		return r;
 	}
 	
+	public String buscarProfesorCC(String clase) {
+		Manejador m = Manejador.getInstancia();
+		return m.buscarProfesorC(clase);
+	}
+	
 }

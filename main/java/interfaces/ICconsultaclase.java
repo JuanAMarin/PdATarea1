@@ -11,4 +11,5 @@ public interface ICconsultaclase {
 	public abstract void buscarClase(String clase);
 	public abstract DtClase getDtad();
 	public abstract ArrayList<Object[]> listarRegistros(String clase);
+	public abstract String buscarProfesorCC(String clase);
 }

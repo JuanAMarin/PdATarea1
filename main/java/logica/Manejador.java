@@ -61,6 +61,17 @@ public class Manejador {
 		
 	}
 	
+	public String buscarProfesorC(String clase) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select p from Profesor p");
+		for(Profesor p: (List<Profesor>) query.getResultList())
+			for(Clase c: (List<Clase>)p.getClases())
+				if(c.getNombre().equals(clase))
+					return p.getNickname();
+		return "";
+	}
+	
 	public DtSocio buscarSocio(String nickname) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();

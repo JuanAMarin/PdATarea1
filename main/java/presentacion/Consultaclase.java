@@ -58,6 +58,7 @@ public class Consultaclase extends JInternalFrame {
 	private DefaultListModel<String> modelo = new DefaultListModel<String>();
 	private String col[] = {"Nickname","FechaR"};
 	private DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+	private JTextField textFieldProfesor;
 	
 	// The 0 argument is number rows.	
 
@@ -103,6 +104,7 @@ public class Consultaclase extends JInternalFrame {
 				modelo.clear();
 				tableModel.setRowCount(0);
 				btnBuscarClase.setEnabled(true);
+				textFieldProfesor.setText("");
 			}
 		});
 		cboClase.addPropertyChangeListener(new PropertyChangeListener() {
@@ -127,7 +129,7 @@ public class Consultaclase extends JInternalFrame {
 				modelo.addElement("Fecha: " + ICcc.getDtad().getFecha());
 				modelo.addElement("Hora de inicio: " + ICcc.getDtad().getHoraInicio());
 				modelo.addElement("Fecha de registro: " + ICcc.getDtad().getFechaReg());
-				
+				textFieldProfesor.setText(ICcc.buscarProfesorCC(cboClase.getSelectedItem().toString()));
 				tableModel.setRowCount(0);
 				for(Object[] o: ICcc.listarRegistros(cboClase.getSelectedItem().toString())) {
 					tableModel.addRow(o);
@@ -145,6 +147,7 @@ public class Consultaclase extends JInternalFrame {
 				modelo.clear();
 				tableModel.setRowCount(0);
 				btnBuscarClase.setEnabled(false);
+				textFieldProfesor.setText("");
 			}
 		});
 		cboActividad.setBounds(107, 52, 312, 22);
@@ -159,6 +162,7 @@ public class Consultaclase extends JInternalFrame {
 				tableModel.setRowCount(0);
 				btnBuscarClase.setEnabled(false);
 				cboClase.removeAllItems();
+				textFieldProfesor.setText("");
 			}
 		});
 		cboInstitucion.setBounds(107, 24, 312, 22);
@@ -205,8 +209,15 @@ public class Consultaclase extends JInternalFrame {
 		lblClase.setBounds(23, 84, 74, 14);
 		getContentPane().add(lblClase);
 		
+		textFieldProfesor = new JTextField();
+		textFieldProfesor.setEditable(false);
+		textFieldProfesor.setBounds(107, 401, 200, 19);
+		getContentPane().add(textFieldProfesor);
+		textFieldProfesor.setColumns(10);
 		
-
+		JLabel lblProfesor = new JLabel("PROFESOR");
+		lblProfesor.setBounds(23, 404, 74, 14);
+		getContentPane().add(lblProfesor);
 	}
 	
 	public void cargarCombo() {
@@ -215,10 +226,8 @@ public class Consultaclase extends JInternalFrame {
 	}
 	
 	public void cargarClase(String inst, String act, String clas){
-		
 		cargarCombo();
 		cboInstitucion.setSelectedItem(inst);
-		
 	}
 	
 	public void formClose(){

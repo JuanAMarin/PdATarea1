@@ -16,8 +16,6 @@ import interfaces.ICmodinstitucion;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.JTextPane;
 
 public class Modinstitucion extends JInternalFrame {
