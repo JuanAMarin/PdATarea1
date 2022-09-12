@@ -10,7 +10,7 @@ import datatypes.DtRegistro;
 import datatypes.DtSocio;
 import datatypes.DtUsuario;
 import interfaces.ICconsultausuario;
-
+@SuppressWarnings("deprecation")
 public class Cconsultausuario implements ICconsultausuario{
 	
 	private DtUsuario user;

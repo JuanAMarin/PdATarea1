@@ -444,6 +444,12 @@ public class Altausuario extends JInternalFrame {
 		getContentPane().add(scrollPane);
 		
 		textAreaDescripcion = new JTextArea();
+		textAreaDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		textAreaDescripcion.setLineWrap(true);
 		textAreaDescripcion.setBounds(225, 220, 262, 89);
 		getContentPane().add(textAreaDescripcion);
@@ -459,7 +465,7 @@ public class Altausuario extends JInternalFrame {
 	
 	protected void llamadoMensajito2() {
 		JOptionPane.showMessageDialog(this, "No hay instituciones registradas en el sistema", "Alta de Usuario",
-                JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void inicializarComboBox() {

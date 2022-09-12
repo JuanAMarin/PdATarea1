@@ -136,6 +136,7 @@ public class Consultaactividad extends JInternalFrame {
 				tableModelR.setRowCount(0);
 				btnBuscarActividad.setEnabled(true);
 				textFieldProfesor.setText("");
+				btnBuscarClase.setEnabled(false);
 			}
 		});
 		cboActividad.addPropertyChangeListener(new PropertyChangeListener() {
@@ -159,6 +160,7 @@ public class Consultaactividad extends JInternalFrame {
 				tableModelR.setRowCount(0);
 				btnBuscarActividad.setEnabled(false);
 				textFieldProfesor.setText("");
+				btnBuscarClase.setEnabled(false);
 			}
 		});
 		cboInstitucion.setBounds(107, 24, 312, 22);

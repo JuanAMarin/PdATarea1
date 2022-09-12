@@ -105,6 +105,11 @@ public class Consultausuario extends JInternalFrame {
 				tableModelAC.setRowCount(0);
 				tableModelCA.setRowCount(0);
 				tableModelMC.setRowCount(0);
+				scpClasesAct.setVisible(false);
+				scpRegistros.setVisible(false);
+				lblRegistros.setVisible(false);
+				btnMasClase.setEnabled(false);
+				btnMasActividad.setEnabled(false);
 			}
 		});
 		cboNickname.addPropertyChangeListener(new PropertyChangeListener() {
@@ -136,13 +141,14 @@ public class Consultausuario extends JInternalFrame {
 		btnBuscarUsuario = new JButton("🔍︎");
 		btnBuscarUsuario.setEnabled(false);
 		btnBuscarUsuario.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				ICcu.buscarUsuario(cboNickname.getSelectedItem().toString());
 				modelo.clear();
 				modelo.addElement("Nombre: " + ICcu.getUsuario().getNombre());
 				modelo.addElement("Apellido: " + ICcu.getUsuario().getApellido());
 				modelo.addElement("Email: " + ICcu.getUsuario().getEmail());
-				modelo.addElement("Fecha: " + ICcu.getUsuario().getFechaNac());
+				modelo.addElement("Fecha: " + ICcu.getUsuario().getFechaNac().getDate()+"-"+(ICcu.getUsuario().getFechaNac().getMonth()+1)+"-"+(ICcu.getUsuario().getFechaNac().getYear()+1900));
 				
 				if(ICcu.buscarProfesor(cboNickname.getSelectedItem().toString()) != null) {
 					tableModel.setRowCount(0);

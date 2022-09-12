@@ -145,6 +145,12 @@ public class Altainstitucion extends JInternalFrame {
 		textFieldUrl.setColumns(10);
 		
 		textPaneDescripcion = new JTextPane();
+		textPaneDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		textPaneDescripcion.setBounds(196, 121, 285, 90);
 		getContentPane().add(textPaneDescripcion);
 		JScrollPane scr = new JScrollPane(textPaneDescripcion);

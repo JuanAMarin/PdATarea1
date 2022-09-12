@@ -14,7 +14,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -75,7 +74,6 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		getContentPane().add(lblInstitucion);
 		
 		cboInsti = new JComboBox<String>();
-		cboInsti.setEditable(true);
 		cboInsti.setBounds(179, 51, 170, 22);
 		getContentPane().add(cboInsti);
 		
@@ -113,6 +111,16 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		getContentPane().add(lblDescripcion);
 		
 		spnDuracion = new JSpinner();
+		spnDuracion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char c=e.getKeyChar();
+				if(Character.isLetter(c)) {
+					getToolkit().beep();
+					e.consume();
+				}
+			}
+		});
 		spnDuracion.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spnDuracion.setBounds(179, 224, 170, 20);
 		getContentPane().add(spnDuracion);
@@ -164,6 +172,12 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		getContentPane().add(btnCancelar);
 		
 		textPaneDescripcion = new JTextPane();
+		textPaneDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
 		textPaneDescripcion.setBounds(179, 116, 215, 98);
 		getContentPane().add(textPaneDescripcion);
 		JScrollPane scr = new JScrollPane(textPaneDescripcion);

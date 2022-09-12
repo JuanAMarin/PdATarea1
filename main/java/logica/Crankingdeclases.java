@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import datatypes.DtClase;
 import interfaces.ICrankingdeclases;
-
+@SuppressWarnings("deprecation")
 public class Crankingdeclases implements ICrankingdeclases{
 
 	public Crankingdeclases() {
@@ -17,7 +17,7 @@ public class Crankingdeclases implements ICrankingdeclases{
 		ArrayList<Object[]> r = new ArrayList<>();
 		int i = 1;
 		for(DtClase dt: dtc) {
-			Object[] o = {i,dt.getNombre(),dt.getUrl(),dt.getFecha()};
+			Object[] o = {i,dt.getNombre(),dt.getUrl(),dt.getFecha().getDate()+"-"+(dt.getFecha().getMonth()+1)+"-"+(dt.getFecha().getYear()+1900)};
 			r.add(o);
 			i++;
 		}
