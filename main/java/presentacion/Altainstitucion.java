@@ -98,7 +98,7 @@ public class Altainstitucion extends JInternalFrame {
 		lblErrorNombre = new JLabel("*Esa institucion ya existe");
 		lblErrorNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		lblErrorNombre.setForeground(Color.RED);
-		lblErrorNombre.setBounds(376, 83, 170, 13);
+		lblErrorNombre.setBounds(357, 83, 170, 13);
 		getContentPane().add(lblErrorNombre);
 		
 		JLabel lblMensaje = new JLabel("Complete los campos a continuación:");
@@ -129,7 +129,7 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldNombre.setBounds(196, 79, 170, 20);
+		textFieldNombre.setBounds(177, 80, 170, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
@@ -140,7 +140,7 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textFieldUrl.setBounds(196, 224, 170, 20);
+		textFieldUrl.setBounds(177, 224, 170, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 		
@@ -151,10 +151,10 @@ public class Altainstitucion extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textPaneDescripcion.setBounds(196, 121, 285, 90);
+		textPaneDescripcion.setBounds(177, 121, 285, 90);
 		getContentPane().add(textPaneDescripcion);
 		JScrollPane scr = new JScrollPane(textPaneDescripcion);
-		scr.setBounds(196, 121, 285, 90);
+		scr.setBounds(177, 121, 285, 90);
 		getContentPane().add(scr);
 	}
 		

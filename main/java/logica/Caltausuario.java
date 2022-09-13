@@ -40,6 +40,7 @@ public class Caltausuario implements ICaltausuario{
 		this.apellido = apellido;
 		this.email = email;
 		this.fechaNac = fechaNac;
+		this.profe = false;
 	}
 	
 	
