@@ -20,20 +20,23 @@ public class Usuario {
 	
 	@Column(unique=true)
 	protected String email;
-	
+	protected String contraseña;
 	protected Date fechaNac;
+	protected byte[] image;
 	
 	public Usuario() {
 		super();
 	}
 
-	public Usuario(String nickname, String nombre, String apellido, String email, Date fechaNac) {
+	public Usuario(String nickname, String nombre, String apellido, String email, Date fechaNac, String contraseña, byte[] image) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
+		this.contraseña = contraseña;
 		this.fechaNac = fechaNac;
+		this.image = image;
 	}
 
 	public String getNickname() {
@@ -50,6 +53,10 @@ public class Usuario {
 
 	public String getEmail() {
 		return email;
+	}
+	
+	public String getContraseña() {
+		return contraseña;
 	}
 
 	public Date getFechaNac() {
@@ -71,9 +78,21 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
+	}
 
 	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public DtUsuario getDT() {

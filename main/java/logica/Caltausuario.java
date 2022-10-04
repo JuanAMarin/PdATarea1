@@ -12,15 +12,15 @@ import datatypes.DtInstitucionDep;
 
 public class Caltausuario implements ICaltausuario{
 
-	protected String nickname, nombre, apellido, email;
+	protected String nickname, nombre, apellido, email, contraseña;
 	protected Date fechaNac;
 	private String descripcion, biografia, sitioweb;
 	private String institucion;
 	private boolean profe;
-	
+	private byte[] image;
 	
 	@SuppressWarnings("deprecation")
-	public void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac) throws UsuarioRepetidoException, NicknameRepetidoException, EmailRepetidoException, ErrorFechaException{
+	public void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac, String contra, byte[] image) throws UsuarioRepetidoException, NicknameRepetidoException, EmailRepetidoException, ErrorFechaException{
 		Manejador m = Manejador.getInstancia();
 		if(m.nicknameRepetido(nickname) && m.emailRepetido(email))
 			throw new UsuarioRepetidoException("El nickname " + nickname + " y el email " + email + " ya ha sido ingresado");
@@ -41,6 +41,8 @@ public class Caltausuario implements ICaltausuario{
 		this.email = email;
 		this.fechaNac = fechaNac;
 		this.profe = false;
+		this.contraseña=contra;
+		this.image = image;
 	}
 	
 	
@@ -57,10 +59,10 @@ public class Caltausuario implements ICaltausuario{
 		if(profe) {
 			DtInstitucionDep DtInsti = m.buscarInstitucion(institucion);
 			InstitucionDep insti = new InstitucionDep(DtInsti.getNombre(),DtInsti.getDescripcion(),DtInsti.getUrl());
-			Profesor profesor = new Profesor(nickname, nombre, apellido, email, fechaNac, descripcion, biografia, sitioweb, insti);
+			Profesor profesor = new Profesor(nickname, nombre, apellido, email, fechaNac, descripcion, biografia, sitioweb, insti, contraseña, image);
 			m.agregarProfesor(profesor);
 		}else {
-			Socio socio = new Socio(nickname, nombre, apellido, email, fechaNac);
+			Socio socio = new Socio(nickname, nombre, apellido, email, fechaNac, contraseña, image);
 			m.agregarSocio(socio);
 		}
 	}

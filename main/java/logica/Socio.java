@@ -19,8 +19,8 @@ public class Socio extends Usuario{
 		super();
 	}
 	
-	public Socio(String nickname, String nombre, String apellido, String email, Date fechaNac) {
-		super(nickname, nombre, apellido, email, fechaNac);
+	public Socio(String nickname, String nombre, String apellido, String email, Date fechaNac, String contra, byte[] image) {
+		super(nickname, nombre, apellido, email, fechaNac, contra, image);
 	}
 
 	public List<Registro> getRegistros() {

@@ -7,7 +7,6 @@ import interfaces.ICconsultaactividad;
 import interfaces.ICconsultaclase;
 import interfaces.ICconsultausuario;
 import logica.InstitucionDep;
-import net.bytebuddy.asm.Advice.This;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -21,8 +20,6 @@ import javax.swing.JTextArea;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
-
-import org.hibernate.annotations.Parent;
 
 import datatypes.DtClase;
 import datatypes.DtProfesor;

@@ -52,7 +52,6 @@ public class Altaactividaddeportiva extends JInternalFrame {
 				btnAceptar.setEnabled(false);
 	}
 	
-	@SuppressWarnings("removal")
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override

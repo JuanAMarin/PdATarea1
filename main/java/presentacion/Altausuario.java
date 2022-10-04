@@ -1,20 +1,26 @@
 package presentacion;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -26,6 +32,7 @@ import javax.swing.event.InternalFrameEvent;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
+import exceptions.ContraErrorException;
 import exceptions.EmailRepetidoException;
 import exceptions.ErrorFechaException;
 import exceptions.NicknameRepetidoException;
@@ -59,7 +66,14 @@ public class Altausuario extends JInternalFrame {
 	private JLabel lblFechaNaci;
 	private JLabel lblNickname;
 	private JLabel lblEmail;
+	private JLabel lblConfContra;
 	private JTextArea textAreaDescripcion;
+	private JTextField textContra;
+	private JTextField textConfContra;
+	private JLabel lblContraseñaDiferente;
+	private String filename = null;
+	private byte[] personImage = null;
+	private JLabel lblImage;
 	
 	/**
 	 * Create the frame.
@@ -87,8 +101,14 @@ public class Altausuario extends JInternalFrame {
 		lblErrorEmail.setVisible(false);
 		lblErrorFecha.setVisible(false);
 		lblErrorNickname.setVisible(false);
+		lblContraseñaDiferente.setVisible(false);
+		textConfContra.setText("");
+		textContra.setText("");
+		File f= new File(".\\src\\main\\icono\\predeterminado.jpg");
+		cargarImg(f);
 		changeTextFormat(lblEmail, Color.BLACK);
 		changeTextFormat(lblNickname, Color.BLACK);
+		changeTextFormat(lblConfContra, Color.BLACK);
 		changeTextFormat(lblFechaNaci, Color.BLACK);
 	}
 	
@@ -98,7 +118,7 @@ public class Altausuario extends JInternalFrame {
 	
 	public void habilitarPofSoc() {
 		if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
-			&& !textEmail.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty()) {
+			&& !textEmail.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty() && !textContra.getText().isEmpty() && !textConfContra.getText().isEmpty()) {
 			rdbtnProfesor.setEnabled(true);
 			rdbtnSocio.setEnabled(true);
 		}else {
@@ -119,10 +139,29 @@ public class Altausuario extends JInternalFrame {
 		if (!textNickname.getText().isEmpty() && !textNombre.getText().isEmpty() && !textApellido.getText().isEmpty()
 			&& !textEmail.getText().isEmpty() && !((JTextField)dateFechaNac.getDateEditor().getUiComponent()).getText().isEmpty() 
 			&& (rdbtnSocio.isSelected() || (rdbtnProfesor.isSelected() && !textAreaDescripcion.getText().isEmpty() 
-			&& !textBiografia.getText().isEmpty() && !textSitioWeb.getText().isEmpty() && cboInsti.getSelectedItem()!=null)))
+			&& !textBiografia.getText().isEmpty() && !textSitioWeb.getText().isEmpty() && cboInsti.getSelectedItem()!=null)) && !textContra.getText().isEmpty() && !textConfContra.getText().isEmpty())
 				btnAceptar.setEnabled(true);
 		else
 				btnAceptar.setEnabled(false);
+	}
+	
+	public void cargarImg(File f) {
+		filename = f.getAbsolutePath();
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(filename).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+		lblImage.setIcon(imageIcon);				
+		try {
+			File image = new File(filename);
+			FileInputStream fis = new FileInputStream(image);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			for (int readNum;(readNum = fis.read(buf))!=-1;){
+				bos.write(buf,0,readNum);
+			}
+			personImage = bos.toByteArray();
+			fis.close();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null,e2);
+		}
 	}
 	
 	public Altausuario(ICaltausuario ICaltau) {
@@ -306,7 +345,7 @@ public class Altausuario extends JInternalFrame {
 				}
 			}
 		});
-		rdbtnProfesor.setBounds(33, 186, 109, 23);
+		rdbtnProfesor.setBounds(33, 227, 109, 23);
 		getContentPane().add(rdbtnProfesor);
 		
 		rdbtnSocio = new JRadioButton("Socio");
@@ -328,19 +367,19 @@ public class Altausuario extends JInternalFrame {
 					btnAceptar.setEnabled(true);
 			}
 		});
-		rdbtnSocio.setBounds(144, 186, 109, 23);
+		rdbtnSocio.setBounds(144, 227, 109, 23);
 		getContentPane().add(rdbtnSocio);
 		
 		JLabel lblDescripcion = new JLabel("DESCRIPCIÓN");
-		lblDescripcion.setBounds(43, 222, 125, 14);
+		lblDescripcion.setBounds(225, 252, 125, 14);
 		getContentPane().add(lblDescripcion);
 		
 		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
-		lblBiografia.setBounds(43, 321, 139, 14);
+		lblBiografia.setBounds(43, 381, 139, 14);
 		getContentPane().add(lblBiografia);
 		
 		JLabel lblSitioWeb = new JLabel("SITIO WEB");
-		lblSitioWeb.setBounds(43, 345, 139, 14);
+		lblSitioWeb.setBounds(43, 405, 139, 14);
 		getContentPane().add(lblSitioWeb);
 		
 		textBiografia = new JTextField();
@@ -350,7 +389,7 @@ public class Altausuario extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textBiografia.setBounds(225, 319, 170, 20);
+		textBiografia.setBounds(225, 375, 170, 20);
 		getContentPane().add(textBiografia);
 		textBiografia.setColumns(10);
 		
@@ -361,16 +400,16 @@ public class Altausuario extends JInternalFrame {
 				habilitarAceptar();
 			}
 		});
-		textSitioWeb.setBounds(225, 343, 170, 20);
+		textSitioWeb.setBounds(225, 403, 170, 20);
 		getContentPane().add(textSitioWeb);
 		textSitioWeb.setColumns(10);
 		
 		cboInsti = new JComboBox<String>();
-		cboInsti.setBounds(225, 365, 170, 22);
+		cboInsti.setBounds(225, 425, 170, 22);
 		getContentPane().add(cboInsti);
 		
 		JLabel lblInstitucion = new JLabel("INSTITUCIÓN");
-		lblInstitucion.setBounds(43, 369, 139, 14);
+		lblInstitucion.setBounds(43, 429, 139, 14);
 		getContentPane().add(lblInstitucion);
 		
 		cboInsti.setEnabled(false);
@@ -404,9 +443,13 @@ public class Altausuario extends JInternalFrame {
 				String nombre=textNombre.getText();
 				String apellido=textApellido.getText();
 				String email=textEmail.getText();
+				String contra=textContra.getText();
+				String confContra=textConfContra.getText();
 				Date fecha = dateFechaNac.getDate();
 				try {
-					ICau.datosUsuario(nickname.toLowerCase(), nombre, apellido, email.toLowerCase(), fecha);
+					if(contra.compareTo(confContra)!=0)
+						throw new ContraErrorException("La contraseña no coninside");
+					ICau.datosUsuario(nickname.toLowerCase(), nombre, apellido, email.toLowerCase(), fecha, contra, personImage);
 					if(rdbtnProfesor.isSelected()){
 						String descripcion=textAreaDescripcion.getText();
 						String biografia=textBiografia.getText();
@@ -432,6 +475,9 @@ public class Altausuario extends JInternalFrame {
 				}catch (NicknameRepetidoException e4) {
 					changeTextFormat(lblNickname, Color.RED);
 					lblErrorNickname.setVisible(true);
+				}catch (ContraErrorException e4) {
+					changeTextFormat(lblConfContra, Color.RED);
+					lblContraseñaDiferente.setVisible(true);
 				}
 			}
 		});
@@ -454,8 +500,66 @@ public class Altausuario extends JInternalFrame {
 		textAreaDescripcion.setBounds(225, 220, 262, 89);
 		getContentPane().add(textAreaDescripcion);
 		JScrollPane scr = new JScrollPane(textAreaDescripcion);
-		scr.setBounds(225, 220, 262, 89);
+		scr.setBounds(225, 276, 262, 89);
 		getContentPane().add(scr);
+		
+		JLabel lblContra = new JLabel("CONTRASEÑA");
+		lblContra.setBounds(43, 169, 99, 14);
+		getContentPane().add(lblContra);
+		
+		lblConfContra = new JLabel("CONFIRMAR CONTRASEÑA");
+		lblConfContra.setBounds(43, 193, 183, 14);
+		getContentPane().add(lblConfContra);
+		
+		textContra = new JTextField();
+		textContra.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+			}
+		});
+		textContra.setColumns(10);
+		textContra.setBounds(225, 167, 170, 20);
+		getContentPane().add(textContra);
+		
+		textConfContra = new JTextField();
+		textConfContra.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				changeTextFormat(lblConfContra, Color.BLACK);
+				lblContraseñaDiferente.setVisible(false);
+			}
+		});
+		textConfContra.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarAceptar();
+				habilitarPofSoc();
+			}
+		});
+		textConfContra.setColumns(10);
+		textConfContra.setBounds(225, 191, 170, 20);
+		getContentPane().add(textConfContra);
+		
+		lblContraseñaDiferente = new JLabel("*Contra Diferente");
+		lblContraseñaDiferente.setForeground(new Color(255, 0, 0));
+		lblContraseñaDiferente.setBounds(405, 193, 183, 14);
+		getContentPane().add(lblContraseñaDiferente);
+		
+		JButton btnLoadImage = new JButton("Seleccionar");
+		btnLoadImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(null);
+				File f = chooser.getSelectedFile();
+				cargarImg(f);
+			}
+		});
+		btnLoadImage.setBounds(119, 311, 96, 21);
+		getContentPane().add(btnLoadImage);
+		
+		lblImage = new JLabel("");
+		lblImage.setBounds(20, 256, 89, 111);
+		getContentPane().add(lblImage);
 	}
 	
 	protected void llamadoMensajito(ActionEvent arg0, String nickname) {

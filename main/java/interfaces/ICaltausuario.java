@@ -6,7 +6,7 @@ import exceptions.NicknameRepetidoException;
 import exceptions.UsuarioRepetidoException;
 
 public interface ICaltausuario {
-	public abstract void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac) throws UsuarioRepetidoException, NicknameRepetidoException, EmailRepetidoException, ErrorFechaException;
+	public abstract void datosUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac, String contra, byte[] image) throws UsuarioRepetidoException, NicknameRepetidoException, EmailRepetidoException, ErrorFechaException;
 	public abstract void datosProfesor(String descripcion, String biografia, String sitioweb, String institucion, boolean profe);
 	public abstract void altausuario();
 	public abstract String[] listarInstituciones();
