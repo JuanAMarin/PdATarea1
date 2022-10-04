@@ -9,10 +9,12 @@ import logica.InstitucionDep;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.TextArea;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.event.InternalFrameAdapter;
@@ -27,6 +29,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -78,6 +83,7 @@ public class Consultausuario extends JInternalFrame {
 	private DefaultTableModel tableModelCA = new DefaultTableModel(col, 0);
 	private JLabel lblRegistros;
 	private JScrollPane scpClasesAct;
+	private JLabel lblImage;
 
 	/**
 	 * Create the frame. 
@@ -110,6 +116,7 @@ public class Consultausuario extends JInternalFrame {
 				lblRegistros.setVisible(false);
 				btnMasClase.setEnabled(false);
 				btnMasActividad.setEnabled(false);
+				lblImage.setIcon(null);
 			}
 		});
 		cboNickname.addPropertyChangeListener(new PropertyChangeListener() {
@@ -121,7 +128,7 @@ public class Consultausuario extends JInternalFrame {
 			}
 		});
 
-		cboNickname.setBounds(102, 7, 231, 22);
+		cboNickname.setBounds(88, 7, 231, 22);
 		getContentPane().add(cboNickname);
 		
 		JButton btnSalir = new JButton("Salir");
@@ -138,6 +145,10 @@ public class Consultausuario extends JInternalFrame {
 		lblNickname.setBounds(10, 11, 139, 14);
 		getContentPane().add(lblNickname);
 		
+		lblImage = new JLabel("");
+		lblImage.setBounds(413, 22, 89, 111);
+		getContentPane().add(lblImage);
+		
 		btnBuscarUsuario = new JButton("🔍︎");
 		btnBuscarUsuario.setEnabled(false);
 		btnBuscarUsuario.addActionListener(new ActionListener() {
@@ -149,7 +160,8 @@ public class Consultausuario extends JInternalFrame {
 				modelo.addElement("Apellido: " + ICcu.getUsuario().getApellido());
 				modelo.addElement("Email: " + ICcu.getUsuario().getEmail());
 				modelo.addElement("Fecha: " + ICcu.getUsuario().getFechaNac().getDate()+"-"+(ICcu.getUsuario().getFechaNac().getMonth()+1)+"-"+(ICcu.getUsuario().getFechaNac().getYear()+1900));
-				
+				ImageIcon image = new ImageIcon(new ImageIcon(ICcu.getUsuario().getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+				lblImage.setIcon(image);
 				if(ICcu.buscarProfesor(cboNickname.getSelectedItem().toString()) != null) {
 					tableModel.setRowCount(0);
 					for(Object[] o: ICcu.listarClasesP(cboNickname.getSelectedItem().toString())) {
@@ -172,7 +184,7 @@ public class Consultausuario extends JInternalFrame {
 			}
 		});
 		btnBuscarUsuario.setEnabled(false);
-		btnBuscarUsuario.setBounds(429, 7, 69, 32);
+		btnBuscarUsuario.setBounds(329, 7, 69, 32);
 		getContentPane().add(btnBuscarUsuario);
 		
 		JLabel lblInformacion = new JLabel("INFORMACIÓN");
@@ -182,7 +194,7 @@ public class Consultausuario extends JInternalFrame {
 		JList<String> lstInformacion = new JList<String>();
 		lstInformacion.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lstInformacion.setBackground(Color.WHITE);
-		lstInformacion.setBounds(20, 56, 462, 77);
+		lstInformacion.setBounds(20, 56, 380, 77);
 		lstInformacion.setModel(modelo);
 		getContentPane().add(lstInformacion);
 		
@@ -328,5 +340,6 @@ public class Consultausuario extends JInternalFrame {
 		scpClasesAct.setVisible(false);
 		scpRegistros.setVisible(false);
 		lblRegistros.setVisible(false);
+		lblImage.setIcon(null);
 	}
 }

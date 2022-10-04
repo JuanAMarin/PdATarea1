@@ -11,8 +11,13 @@ import exceptions.ActividadRepetidaException;
 import interfaces.ICaltaactividaddeportiva;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JSpinner;
@@ -23,6 +28,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+
 import javax.swing.JTextPane;
 
 public class Altaactividaddeportiva extends JInternalFrame {
@@ -39,6 +48,9 @@ public class Altaactividaddeportiva extends JInternalFrame {
 	private JLabel lblErrorNombre;
 	private JLabel lblNombre;
 	private JTextPane textPaneDescripcion;
+	private String filename = null;
+	private byte[] personImage = null;
+	private JLabel lblImage;
 	
 	private void changeTextFormat(JLabel l, Color c){
 		l.setForeground(c);
@@ -50,6 +62,25 @@ public class Altaactividaddeportiva extends JInternalFrame {
 				btnAceptar.setEnabled(true);
 		else
 				btnAceptar.setEnabled(false);
+	}
+	
+	public void cargarImg(File f) {
+		filename = f.getAbsolutePath();
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(filename).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+		lblImage.setIcon(imageIcon);				
+		try {
+			File image = new File(filename);
+			FileInputStream fis = new FileInputStream(image);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			for (int readNum;(readNum = fis.read(buf))!=-1;){
+				bos.write(buf,0,readNum);
+			}
+			personImage = bos.toByteArray();
+			fis.close();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null,e2);
+		}
 	}
 	
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
@@ -110,6 +141,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		getContentPane().add(lblDescripcion);
 		
 		spnDuracion = new JSpinner();
+		
 		spnDuracion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -183,6 +215,21 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		scr.setBounds(179, 116, 215, 98);
 		getContentPane().add(scr);
 		
+		lblImage = new JLabel("");
+		lblImage.setBounds(179, 285, 89, 111);
+		getContentPane().add(lblImage);
+		
+		JButton btnLoadImage = new JButton("Seleccionar");
+		btnLoadImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(null);
+				File f = chooser.getSelectedFile();
+				cargarImg(f);
+			}
+		});
+		btnLoadImage.setBounds(30, 285, 108, 21);
+		getContentPane().add(btnLoadImage);
 	}
 	
 	public void inicializarComboBox() {
@@ -197,7 +244,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		float costo = Float.parseFloat(txtCosto.getText());
 		if(checkFormulario()) {
 			try {
-			ICaad.datosActividad(nombre.toLowerCase(), descripcion, duracion, costo, insti.toLowerCase());
+			ICaad.datosActividad(nombre.toLowerCase(), descripcion, duracion, costo, insti.toLowerCase(), personImage);
 			ICaad.altaActividad();
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha creado con exito", "Alta Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -232,8 +279,9 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		spnDuracion.setValue(1);
 		txtCosto.setText("");
 		lblErrorNombre.setVisible(false);
+		File f= new File(".\\src\\main\\icono\\default.jpg");
+		cargarImg(f);
 		changeTextFormat(lblNombre,Color.BLACK);
 	}
-
 }
 

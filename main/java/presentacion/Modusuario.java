@@ -9,7 +9,10 @@ import javax.swing.JTextField;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
@@ -19,7 +22,11 @@ import interfaces.ICmodusuario;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Date;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 
@@ -41,6 +48,10 @@ public class Modusuario extends JInternalFrame {
 	private JButton btnVerInfo;
 	private JTextField txtEmail;
 	private JTextPane textPaneDescripcion;
+	private JLabel lblImage;
+	private JButton btnLoadImage;
+	private String filename = null;
+	private byte[] personImage = null;
 
 	/**
 	 * Create the frame.
@@ -61,6 +72,8 @@ public class Modusuario extends JInternalFrame {
 		textPaneDescripcion.setEnabled(false);
 		txtSitioWeb.setEnabled(false);
 		dateFechaNac.setEnabled(false);
+		btnLoadImage.setEnabled(false);
+        lblImage.setIcon(null);
 	}
 	
 	public void inicializarComboBox() {
@@ -87,6 +100,8 @@ public class Modusuario extends JInternalFrame {
 				txtBiografia.setText("");
 				textPaneDescripcion.setText("");
 				txtSitioWeb.setText("");
+				ImageIcon imageIcon = new ImageIcon(new ImageIcon(socio.getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+				lblImage.setIcon(imageIcon);
 			}else {
 				dateFechaNac.setEnabled(true);
 				rdbtnSocio.setSelected(false);
@@ -101,6 +116,8 @@ public class Modusuario extends JInternalFrame {
 				txtBiografia.setText(profe.getBiografia());
 				txtSitioWeb.setText(profe.getSitioweb());
 				txtEmail.setText(profe.getEmail());
+				ImageIcon imageIcon = new ImageIcon(new ImageIcon(profe.getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+				lblImage.setIcon(imageIcon);
 			}
 			txtNombre.setEnabled(true);
 			txtApellido.setEnabled(true);
@@ -118,9 +135,9 @@ public class Modusuario extends JInternalFrame {
 				String descripcion=this.textPaneDescripcion.getText();
 				String biografia=this.txtBiografia.getText();
 				String sitioweb=this.txtSitioWeb.getText();
-				ICmu.modProfesor(nickname.toLowerCase(), nombre, apellido, fecha, descripcion, biografia, sitioweb);
+				ICmu.modProfesor(nickname.toLowerCase(), nombre, apellido, fecha, descripcion, biografia, sitioweb, personImage);
 			} else if(rdbtnSocio.isSelected()) {
-				ICmu.modSocio(nickname.toLowerCase(), nombre, apellido, fecha);
+				ICmu.modSocio(nickname.toLowerCase(), nombre, apellido, fecha, personImage);
 			}
             JOptionPane.showMessageDialog(this, "El Usuario "+nickname+" se ha modificado con Éxito", "Modificar Usuario",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -184,30 +201,30 @@ public class Modusuario extends JInternalFrame {
 		
 		rdbtnProfesor = new JRadioButton("Profesor");
 		rdbtnProfesor.setEnabled(false);
-		rdbtnProfesor.setBounds(21, 161, 109, 23);
+		rdbtnProfesor.setBounds(31, 256, 109, 23);
 		getContentPane().add(rdbtnProfesor);
 		
 		rdbtnSocio = new JRadioButton("Socio");
 		rdbtnSocio.setEnabled(false);
-		rdbtnSocio.setBounds(132, 161, 109, 23);
+		rdbtnSocio.setBounds(142, 256, 61, 23);
 		getContentPane().add(rdbtnSocio);
 		
 		JLabel lblDescripcion = new JLabel("DESCRIPCIÓN");
-		lblDescripcion.setBounds(31, 197, 125, 14);
+		lblDescripcion.setBounds(31, 285, 125, 14);
 		getContentPane().add(lblDescripcion);
 		
 		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
-		lblBiografia.setBounds(31, 324, 139, 14);
+		lblBiografia.setBounds(31, 409, 139, 14);
 		getContentPane().add(lblBiografia);
 		
 		JLabel lblSitioWeb = new JLabel("SITIO WEB");
-		lblSitioWeb.setBounds(31, 348, 139, 14);
+		lblSitioWeb.setBounds(31, 433, 139, 14);
 		getContentPane().add(lblSitioWeb);
 		
 		txtSitioWeb = new JTextField();
 		txtSitioWeb.setEnabled(false);
 		txtSitioWeb.setColumns(10);
-		txtSitioWeb.setBounds(213, 346, 170, 20);
+		txtSitioWeb.setBounds(213, 431, 170, 20);
 		getContentPane().add(txtSitioWeb);
 		
 		dateFechaNac = new JDateChooser();
@@ -248,6 +265,8 @@ public class Modusuario extends JInternalFrame {
 				txtEmail.setText("");
 				rdbtnSocio.setSelected(false);
 				rdbtnProfesor.setSelected(false);
+				btnLoadImage.setEnabled(false);
+		        lblImage.setIcon(null);
 			}
 		});
 		cboNicknames.setBounds(213, 20, 170, 22);
@@ -258,6 +277,7 @@ public class Modusuario extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				verInfo(e);
 				btnAceptar.setEnabled(true);
+				btnLoadImage.setEnabled(true);
 			}
 		});
 		btnVerInfo.setBounds(385, 19, 117, 25);
@@ -266,7 +286,7 @@ public class Modusuario extends JInternalFrame {
 		txtBiografia = new JTextField();
 		txtBiografia.setEnabled(false);
 		txtBiografia.setColumns(10);
-		txtBiografia.setBounds(213, 321, 170, 20);
+		txtBiografia.setBounds(213, 406, 170, 20);
 		getContentPane().add(txtBiografia);
 		
 		btnAceptar = new JButton("Aceptar");
@@ -299,7 +319,43 @@ public class Modusuario extends JInternalFrame {
 		textPaneDescripcion.setBounds(213, 195, 289, 116);
 		getContentPane().add(textPaneDescripcion);
 		JScrollPane scr = new JScrollPane(textPaneDescripcion);
-		scr.setBounds(213, 195, 289, 116);
+		scr.setBounds(213, 285, 289, 116);
 		getContentPane().add(scr);
+		
+		lblImage = new JLabel("");
+		lblImage.setBounds(213, 150, 89, 111);
+		getContentPane().add(lblImage);
+		
+		btnLoadImage = new JButton("Seleccionar");
+		btnLoadImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(null);
+				File f = chooser.getSelectedFile();
+				cargarImg(f);
+			}
+		});
+		btnLoadImage.setEnabled(false);
+		btnLoadImage.setBounds(31, 150, 109, 21);
+		getContentPane().add(btnLoadImage);
+	}
+	
+	public void cargarImg(File f) {
+		filename = f.getAbsolutePath();
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(filename).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+		lblImage.setIcon(imageIcon);				
+		try {
+			File image = new File(filename);
+			FileInputStream fis = new FileInputStream(image);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			for (int readNum;(readNum = fis.read(buf))!=-1;){
+				bos.write(buf,0,readNum);
+			}
+			personImage = bos.toByteArray();
+			fis.close();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null,e2);
+		}
 	}
 }

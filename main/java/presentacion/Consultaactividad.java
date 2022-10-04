@@ -10,10 +10,12 @@ import logica.InstitucionDep;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.TextArea;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -66,6 +68,7 @@ public class Consultaactividad extends JInternalFrame {
 	private DefaultTableModel tableModelR = new DefaultTableModel(colReg, 0);
 	private JTable tableRegistros;
 	private JTextField textFieldProfesor;
+	private JLabel lblImage;
 	
 	// The 0 argument is number rows.	
 
@@ -105,12 +108,17 @@ public class Consultaactividad extends JInternalFrame {
 		lblActividad.setBounds(23, 61, 74, 14);
 		getContentPane().add(lblActividad);
 		
+		lblImage = new JLabel("");
+		lblImage.setBounds(413, 86, 89, 111);
+		getContentPane().add(lblImage);
+		
 		btnBuscarActividad = new JButton("🔍︎");
 		btnBuscarActividad.setEnabled(false);
 		btnBuscarActividad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ICca.buscarActividad(cboActividad.getSelectedItem().toString());
 				modelo.clear();
+				
 				modelo.addElement("Nombre: " + ICca.getDtad().getNombre());
 				modelo.addElement("Descripcion: " + ICca.getDtad().getDescripcion());
 				modelo.addElement("Duracion: " + ICca.getDtad().getDuracion());
@@ -120,6 +128,9 @@ public class Consultaactividad extends JInternalFrame {
 				for(Object[] o: ICca.listarClases(cboActividad.getSelectedItem().toString())) {
 					tableModel.addRow(o);
 				}
+				
+				ImageIcon image = new ImageIcon(new ImageIcon(ICca.getDtad().getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+				lblImage.setIcon(image);
 			}
 		});
 		btnBuscarActividad.setBounds(429, 32, 69, 32);
@@ -134,6 +145,7 @@ public class Consultaactividad extends JInternalFrame {
 				btnBuscarActividad.setEnabled(true);
 				textFieldProfesor.setText("");
 				btnBuscarClase.setEnabled(false);
+				lblImage.setIcon(null);
 			}
 		});
 		cboActividad.addPropertyChangeListener(new PropertyChangeListener() {
@@ -158,6 +170,7 @@ public class Consultaactividad extends JInternalFrame {
 				btnBuscarActividad.setEnabled(false);
 				textFieldProfesor.setText("");
 				btnBuscarClase.setEnabled(false);
+				lblImage.setIcon(null);
 			}
 		});
 		cboInstitucion.setBounds(107, 24, 312, 22);
@@ -170,12 +183,12 @@ public class Consultaactividad extends JInternalFrame {
 		JList<String> lstInformacion = new JList<String>();
 		lstInformacion.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lstInformacion.setBackground(Color.WHITE);
-		lstInformacion.setBounds(23, 106, 463, 91);
+		lstInformacion.setBounds(23, 106, 380, 91);
 		lstInformacion.setModel(modelo);
 		getContentPane().add(lstInformacion);
 		
 		JLabel lblClases = new JLabel("CLASES");
-		lblClases.setBounds(23, 218, 74, 14);
+		lblClases.setBounds(23, 224, 74, 14);
 		getContentPane().add(lblClases);
 		
 		tbClases = new JTable(tableModel){
@@ -209,11 +222,11 @@ public class Consultaactividad extends JInternalFrame {
 				}
 			}
 		});
-		btnBuscarClase.setBounds(417, 200, 69, 32);
+		btnBuscarClase.setBounds(417, 207, 69, 32);
 		getContentPane().add(btnBuscarClase);
 		
 		JScrollPane scp = new JScrollPane(tbClases);
-		scp.setBounds(23, 234, 463, 91);
+		scp.setBounds(23, 242, 463, 91);
 		getContentPane().add(scp);
 		
 		JLabel lblRegistros = new JLabel("REGISTROS");
@@ -250,5 +263,6 @@ public class Consultaactividad extends JInternalFrame {
 		btnBuscarActividad.setEnabled(false);
 		btnBuscarClase.setEnabled(false);
 		textFieldProfesor.setText("");
+		lblImage.setIcon(null);
 	}
 }

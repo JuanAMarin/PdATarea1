@@ -9,14 +9,14 @@ import interfaces.ICmodusuario;
 
 public class Cmodusuario implements ICmodusuario {
 
-	public void modProfesor(String nickname, String nombre, String apellido, Date fechaNac, String descripcion, String biografia, String sitioweb) {
+	public void modProfesor(String nickname, String nombre, String apellido, Date fechaNac, String descripcion, String biografia, String sitioweb, byte[] personImage) {
 		Manejador m = Manejador.getInstancia();
-		m.modificarProf(nickname, nombre, apellido, fechaNac, descripcion, biografia, sitioweb);
+		m.modificarProf(nickname, nombre, apellido, fechaNac, descripcion, biografia, sitioweb, personImage);
 	}
 	
-	public void modSocio(String nickname, String nombre, String apellido, Date fechaNac) {
+	public void modSocio(String nickname, String nombre, String apellido, Date fechaNac, byte[] personImage) {
 		Manejador m = Manejador.getInstancia();
-		m.modificarSoc(nickname, nombre, apellido, fechaNac);
+		m.modificarSoc(nickname, nombre, apellido, fechaNac, personImage);
 	}
 	
 	@Override

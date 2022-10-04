@@ -5,14 +5,16 @@ import java.util.Date;;
 public class DtClase {
 	private String nombre, url;
 	private Date fecha, fechaReg, horaInicio;
+	private byte[] image;
 	
-	public DtClase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio) {
+	public DtClase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, byte[] image) {
 		super();
 		this.nombre = nombre;
 		this.url = url;
 		this.fecha = fecha;
 		this.fechaReg = fechaReg;
 		this.horaInicio = horaInicio;
+		this.image = image;
 	}
 
 	public String getNombre() {
@@ -33,6 +35,11 @@ public class DtClase {
 
 	public Date getHoraInicio() {
 		return horaInicio;
+	}
+	
+	
+	public byte[] getImage() {
+		return image;
 	}
 
 }

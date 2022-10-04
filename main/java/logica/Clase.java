@@ -17,6 +17,7 @@ public class Clase {
 	
 	private String url;
 	private Date fecha, fechaReg, horaInicio;
+	private byte[] image;
 	
 	@OneToMany(mappedBy="clase",cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Registro> registros = new ArrayList<>();;
@@ -25,13 +26,14 @@ public class Clase {
 		super();
 	}
 
-	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio) {
+	public Clase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, byte[] image) {
 		super();
 		this.nombre = nombre;
 		this.url = url;
 		this.fecha = fecha;
 		this.fechaReg = fechaReg;
 		this.horaInicio = horaInicio;
+		this.image = image;
 	}
 	
 	public String getNombre() {
@@ -52,6 +54,9 @@ public class Clase {
 	public List<Registro> getRegistros() {
 		return registros;
 	}
+	public byte[] getImage() {
+		return image;
+	}
 	public void setRegistros(List<Registro> registros) {
 		this.registros = registros;
 	}
@@ -70,9 +75,12 @@ public class Clase {
 	public void setHoraInicio(Date horaInicio) {
 		this.horaInicio = horaInicio;
 	}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
 	public DtClase getDT() {
-		return new DtClase(this.getNombre(),this.getUrl(),this.getFecha(),this.getFechaReg(),this.getHoraInicio());
+		return new DtClase(this.getNombre(),this.getUrl(),this.getFecha(),this.getFechaReg(),this.getHoraInicio(), this.getImage());
 	}
 	
 	public void addRegistro(Registro r) {

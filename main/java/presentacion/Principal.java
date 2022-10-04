@@ -8,14 +8,12 @@ import javax.swing.JMenuItem;
 import interfaces.*;
 
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Toolkit;
 
 public class Principal {
 	private JFrame frmServidorCentral;
-	
 	private ICaltausuario ICau;
 	private Altausuario AltaUsuario;
 	private ICconsultausuario ICcu;

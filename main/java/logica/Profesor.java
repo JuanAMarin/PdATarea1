@@ -77,7 +77,7 @@ public class Profesor extends Usuario{
 	}
 
 	public DtProfesor getDT() {
-		return new DtProfesor(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac(),this.getDescripcion(),this.getBiografia(),this.getSitioweb(),this.getInstitucion());
+		return new DtProfesor(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac(),this.getDescripcion(),this.getBiografia(),this.getSitioweb(),this.getInstitucion(), this.image);
 	}
 	
 }

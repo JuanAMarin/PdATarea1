@@ -554,11 +554,11 @@ public class Altausuario extends JInternalFrame {
 				cargarImg(f);
 			}
 		});
-		btnLoadImage.setBounds(119, 311, 96, 21);
+		btnLoadImage.setBounds(108, 312, 109, 21);
 		getContentPane().add(btnLoadImage);
 		
 		lblImage = new JLabel("");
-		lblImage.setBounds(20, 256, 89, 111);
+		lblImage.setBounds(10, 256, 89, 111);
 		getContentPane().add(lblImage);
 	}
 	

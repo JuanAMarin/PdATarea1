@@ -11,8 +11,9 @@ public class Caltaactividaddeportiva implements ICaltaactividaddeportiva{
 	private String nombre, descripcion;
 	private Integer duracion;
 	private float costo;
+	private byte[] image;
 	
-	public void datosActividad(String nombre, String descripcion, Integer duracion, float costo, String insti)throws ActividadRepetidaException{
+	public void datosActividad(String nombre, String descripcion, Integer duracion, float costo, String insti, byte[]image)throws ActividadRepetidaException{
 		Manejador m = Manejador.getInstancia();
 		if(m.buscarActividad(nombre)!= null)
 			throw new ActividadRepetidaException("La actividad de nombre " + nombre + " ya ha sido ingresada");
@@ -21,10 +22,11 @@ public class Caltaactividaddeportiva implements ICaltaactividaddeportiva{
 		this.duracion=duracion;
 		this.nombre=nombre;
 		this.insti=insti;
+		this.image=image;
 	}
 	public void altaActividad(){
 		Manejador m = Manejador.getInstancia();
-		ActividadDep actividad = new ActividadDep(this.nombre, this.descripcion, this.duracion, this.costo);
+		ActividadDep actividad = new ActividadDep(this.nombre, this.descripcion, this.duracion, this.costo, this.image);
 		m.agregarActividad(actividad, this.insti);
 	}
 	

@@ -7,14 +7,16 @@ public class DtActividadDep {
 	private Integer duracion;
 	private float costo;
 	private Date fechaReg;
+	private byte[] image;
 	
-	public DtActividadDep(String nombre, String descripcion, Integer duracion, float costo, Date fechaReg) {
+	public DtActividadDep(String nombre, String descripcion, Integer duracion, float costo, Date fechaReg, byte[] image) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.costo = costo;
 		this.fechaReg = fechaReg;
+		this.image=image;
 	}
 
 	public String getNombre() {
@@ -35,6 +37,11 @@ public class DtActividadDep {
 
 	public Date getFechaReg() {
 		return fechaReg;
+	}
+	
+	public byte[] getImage() {
+		return image;
+
 	}
 	
 }

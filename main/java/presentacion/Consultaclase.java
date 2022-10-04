@@ -9,10 +9,12 @@ import logica.InstitucionDep;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.TextArea;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.event.InternalFrameAdapter;
@@ -59,6 +61,7 @@ public class Consultaclase extends JInternalFrame {
 	private String col[] = {"Nickname","FechaR"};
 	private DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 	private JTextField textFieldProfesor;
+	private JLabel lblImage;
 	
 	// The 0 argument is number rows.	
 
@@ -105,6 +108,7 @@ public class Consultaclase extends JInternalFrame {
 				tableModel.setRowCount(0);
 				btnBuscarClase.setEnabled(true);
 				textFieldProfesor.setText("");
+				lblImage.setIcon(null);
 			}
 		});
 		cboClase.addPropertyChangeListener(new PropertyChangeListener() {
@@ -118,12 +122,17 @@ public class Consultaclase extends JInternalFrame {
 		cboClase.setBounds(107, 80, 312, 22);
 		getContentPane().add(cboClase);
 		
+		lblImage = new JLabel("");
+		lblImage.setBounds(409, 135, 89, 111);
+		getContentPane().add(lblImage);
+		
 		btnBuscarClase = new JButton("🔍︎");
 		btnBuscarClase.setEnabled(false);
 		btnBuscarClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ICcc.buscarClase(cboClase.getSelectedItem().toString());
 				modelo.clear();
+				
 				modelo.addElement("Nombre: " + ICcc.getDtad().getNombre());
 				modelo.addElement("URL: " + ICcc.getDtad().getUrl());
 				modelo.addElement("Fecha: " + ICcc.getDtad().getFecha());
@@ -134,6 +143,9 @@ public class Consultaclase extends JInternalFrame {
 				for(Object[] o: ICcc.listarRegistros(cboClase.getSelectedItem().toString())) {
 					tableModel.addRow(o);
 				}
+				
+				ImageIcon image = new ImageIcon(new ImageIcon(ICcc.getDtad().getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+				lblImage.setIcon(image);
 			}
 		});
 		btnBuscarClase.setBounds(429, 47, 69, 32);
@@ -148,6 +160,7 @@ public class Consultaclase extends JInternalFrame {
 				tableModel.setRowCount(0);
 				btnBuscarClase.setEnabled(false);
 				textFieldProfesor.setText("");
+				lblImage.setIcon(null);
 			}
 		});
 		cboActividad.setBounds(107, 52, 312, 22);
@@ -163,6 +176,7 @@ public class Consultaclase extends JInternalFrame {
 				btnBuscarClase.setEnabled(false);
 				cboClase.removeAllItems();
 				textFieldProfesor.setText("");
+				lblImage.setIcon(null);
 			}
 		});
 		cboInstitucion.setBounds(107, 24, 312, 22);
@@ -175,7 +189,7 @@ public class Consultaclase extends JInternalFrame {
 		JList<String> lstInformacion = new JList<String>();
 		lstInformacion.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lstInformacion.setBackground(Color.WHITE);
-		lstInformacion.setBounds(23, 155, 463, 91);
+		lstInformacion.setBounds(23, 155, 379, 91);
 		lstInformacion.setModel(modelo);
 		getContentPane().add(lstInformacion);
 		
@@ -236,5 +250,6 @@ public class Consultaclase extends JInternalFrame {
 		cboClase.setModel(new DefaultComboBoxModel<>());
 		cboActividad.setModel(new DefaultComboBoxModel<>());
 		btnBuscarClase.setEnabled(false);
+		lblImage.setIcon(null);
 	}
 }

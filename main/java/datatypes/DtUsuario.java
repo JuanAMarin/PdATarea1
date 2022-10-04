@@ -5,14 +5,16 @@ import java.util.Date;
 public class DtUsuario {
 	protected String nickname, nombre, apellido, email;
 	protected Date fechaNac;
+	protected byte[] image;
 	
-	public DtUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac) {
+	public DtUsuario(String nickname, String nombre, String apellido, String email, Date fechaNac, byte[] image) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.fechaNac = fechaNac;
+		this.image= image;
 	}
 
 	public String getNickname() {
@@ -33,5 +35,9 @@ public class DtUsuario {
 
 	public Date getFechaNac() {
 		return fechaNac;
+	}
+	
+	public byte[] getImage() {
+		return image;
 	}
 }

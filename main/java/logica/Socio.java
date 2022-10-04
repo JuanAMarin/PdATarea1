@@ -32,7 +32,7 @@ public class Socio extends Usuario{
 	}
 
 	public DtSocio getDT() {
-		return new DtSocio(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac());
+		return new DtSocio(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac(), this.getImage());
 	}
 	
 	public void addRegistro(Registro r) {

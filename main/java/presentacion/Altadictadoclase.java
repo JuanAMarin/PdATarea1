@@ -9,18 +9,24 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -61,6 +67,10 @@ public class Altadictadoclase extends JInternalFrame{
 	private JButton btnConfirmar;
 	private JLabel lblErrorNombre;
 	private JLabel lblErrorFecha;
+	private String filename = null;
+	private byte[] personImage = null;
+	private JLabel lblImage;
+	private JButton btnLoadImage;
 	
 	public void habilitarAceptar() {
 		if (!textFieldNombre.getText().isEmpty() && !textFieldURL.getText().isEmpty()
@@ -68,6 +78,25 @@ public class Altadictadoclase extends JInternalFrame{
 				btnAceptar.setEnabled(true);
 		else
 				btnAceptar.setEnabled(false);
+	}
+	
+	public void cargarImg(File f) {
+		filename = f.getAbsolutePath();
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(filename).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+		lblImage.setIcon(imageIcon);				
+		try {
+			File image = new File(filename);
+			FileInputStream fis = new FileInputStream(image);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			for (int readNum;(readNum = fis.read(buf))!=-1;){
+				bos.write(buf,0,readNum);
+			}
+			personImage = bos.toByteArray();
+			fis.close();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null,e2);
+		}
 	}
 	
 	public Altadictadoclase(ICaltadictadoclase icac) {
@@ -107,12 +136,18 @@ public class Altadictadoclase extends JInternalFrame{
 		comboBoxID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				inicializarComboBoxAD();
+				btnAceptar.setEnabled(false);
 			}
 		});
 		comboBoxID.setBounds(233, 33, 170, 20);
 		getContentPane().add(comboBoxID);
 		
 		comboBoxAD = new JComboBox<String>();
+		comboBoxAD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnAceptar.setEnabled(false);
+			}
+		});
 		comboBoxAD.setBounds(233, 73, 170, 20);
 		getContentPane().add(comboBoxAD);
 		
@@ -256,11 +291,29 @@ public class Altadictadoclase extends JInternalFrame{
 					spinnerHora.setEnabled(true);
 					spinnerMin.setEnabled(true);
 					textFieldURL.setEnabled(true);
+					btnAceptar.setEnabled(true);
+					habilitarAceptar();
 				}
 			}
 		});
 		btnConfirmar.setBounds(317, 104, 98, 23);
 		getContentPane().add(btnConfirmar);
+		
+		btnLoadImage = new JButton("Seleccionar");
+		btnLoadImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(null);
+				File f = chooser.getSelectedFile();
+				cargarImg(f);
+			}
+		});
+		btnLoadImage.setBounds(60, 323, 109, 21);
+		getContentPane().add(btnLoadImage);
+		
+		lblImage = new JLabel("");
+		lblImage.setBounds(233, 327, 89, 111);
+		getContentPane().add(lblImage);
 		
 	}
 	
@@ -301,7 +354,7 @@ public class Altadictadoclase extends JInternalFrame{
 		}
 		if(checkFormulario()) {
 			try {
-				ICac.altaClase(nombre.toLowerCase(), url, fecha, fechaReg, h, prof.toLowerCase(), actividad.toLowerCase());
+				ICac.altaClase(nombre.toLowerCase(), url, fecha, fechaReg, h, prof.toLowerCase(), actividad.toLowerCase(), personImage);
 				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Ã‰xito", "Alta de Dictado de Clase",
 		                JOptionPane.INFORMATION_MESSAGE);
 				formClose();
@@ -350,6 +403,8 @@ public class Altadictadoclase extends JInternalFrame{
         comboBoxProfe.removeAllItems();
         lblErrorFecha.setVisible(false);
         lblErrorNombre.setVisible(false);
+        File f= new File(".\\src\\main\\icono\\default.jpg");
+		cargarImg(f);
         changeTextFormat(lblNewLabelFecha,Color.BLACK);
         changeTextFormat(lblNewLabelNombre,Color.BLACK);
 	}

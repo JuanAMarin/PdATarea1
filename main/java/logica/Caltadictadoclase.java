@@ -49,14 +49,14 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 		return act;
 	}
 	
-	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor, String actividad) throws ClaseRepetidaException, ErrorFechaException {
+	public void altaClase(String nombre, String url, Date fecha, Date fechaReg, Date HoraInicio, String profesor, String actividad, byte[] image) throws ClaseRepetidaException, ErrorFechaException {
 		Manejador m = Manejador.getInstancia();
 		DtClase nuevaClase = m.buscarClase(nombre);
 		if (nuevaClase != null)
 			throw new ClaseRepetidaException("La clase de nombre "+ nombre + " ya existe en el Sistema");
 		if(fecha.before(new Date()))
     		throw new ErrorFechaException("La fecha es incorrecta");
-		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio);
+		Clase c = new Clase(nombre, url, fecha, fechaReg, HoraInicio, image);
 		m.addClase(profesor, c);
 		m.addClaseA(actividad, c);
 	}

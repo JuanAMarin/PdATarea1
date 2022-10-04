@@ -62,6 +62,9 @@ public class Usuario {
 	public Date getFechaNac() {
 		return fechaNac;
 	}
+	public byte[] getImage() {
+		return image;
+	}
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
@@ -87,16 +90,12 @@ public class Usuario {
 		this.fechaNac = fechaNac;
 	}
 
-	public byte[] getImage() {
-		return image;
-	}
-
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
 	public DtUsuario getDT() {
-		return new DtUsuario(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac());
+		return new DtUsuario(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac(),this.getImage());
 	}
 	
 }

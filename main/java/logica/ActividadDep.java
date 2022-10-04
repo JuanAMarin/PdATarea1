@@ -19,6 +19,7 @@ public class ActividadDep {
 	private Integer duracion;
 	private float costo;
 	private Date fecha;
+	private byte[] image;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Clase> clases=new ArrayList<Clase>();;
@@ -27,13 +28,14 @@ public class ActividadDep {
 		super();
 	}
 
-	public ActividadDep(String nombre, String descripcion, Integer duracion, float costo) {
+	public ActividadDep(String nombre, String descripcion, Integer duracion, float costo, byte[] image) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.costo = costo;
 		this.fecha=new Date();
+		this.image=image;
 	}
 
 	public String getNombre() {
@@ -54,6 +56,10 @@ public class ActividadDep {
 
 	public List<Clase> getClases() {
 		return clases;
+	}
+	
+	public byte[] getImage() {
+		return image;
 	}
 
 	public void setClases(List<Clase> clases) {
@@ -84,12 +90,16 @@ public class ActividadDep {
 		this.fecha = fecha;
 	}
 	
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
 	public void addClase(Clase clase) {
 		clases.add(clase);
 	}
 
 	public DtActividadDep getDT() {
-		return new DtActividadDep(this.getNombre(), this.descripcion, this.getDuracion(), this.getCosto(), this.getFecha());
+		return new DtActividadDep(this.getNombre(), this.descripcion, this.getDuracion(), this.getCosto(), this.getFecha(), this.image);
 	}
 	
 }

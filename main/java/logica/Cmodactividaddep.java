@@ -21,9 +21,9 @@ public class Cmodactividaddep implements ICmodactividaddep {
 	}
 	
 	@Override
-	public void ModActividadDeportiva(String nombre, String descripcion, Integer duracion, float costo) {
+	public void ModActividadDeportiva(String nombre, String descripcion, Integer duracion, float costo, byte[] personImage) {
 		Manejador m = Manejador.getInstancia();
-		m.modificarAD(nombre, descripcion, duracion, costo);	
+		m.modificarAD(nombre, descripcion, duracion, costo, personImage);	
 	}
 	
 	public DtActividadDep obtenerInfo(String nombre) {

@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -15,11 +16,17 @@ import javax.swing.event.InternalFrameEvent;
 import datatypes.DtActividadDep;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+
 import javax.swing.JTextPane;
 
 public class Modactividaddeportiva extends JInternalFrame {
@@ -43,6 +50,10 @@ public class Modactividaddeportiva extends JInternalFrame {
 	private JTextField textFieldFechaReg;
 	private JLabel lblFechaDeRegistro;
 	private JTextPane textPaneDescripcion;
+	private JButton btnLoadImage;
+	private JLabel lblImage;
+	private String filename = null;
+	private byte[] personImage = null;
 	
 	public Modactividaddeportiva(ICmodactividaddep ICmad) {
 		ICMad = ICmad; 
@@ -72,7 +83,10 @@ public class Modactividaddeportiva extends JInternalFrame {
 				textPaneDescripcion.setText("");
 				textFieldDuracion.setText("");
 				textFieldCosto.setText("");
-
+				textFieldFechaReg.setText("");
+				textFieldNombre.setText("");
+				btnLoadImage.setEnabled(false);
+		        lblImage.setIcon(null);
 			}
 		});
 		comboBoxAD.setBounds(230, 28, 170, 20);
@@ -83,7 +97,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 		getContentPane().add(lblNewLabelNombre);
 		
 		lblDescripcion = new JLabel("DESCRIPCIÓN");
-		lblDescripcion.setBounds(56, 182, 139, 14);
+		lblDescripcion.setBounds(230, 169, 139, 14);
 		getContentPane().add(lblDescripcion);
 		
 		textFieldNombre = new JTextField();
@@ -105,11 +119,11 @@ public class Modactividaddeportiva extends JInternalFrame {
 		});
 		textFieldDuracion.setEnabled(false);
 		textFieldDuracion.setColumns(10);
-		textFieldDuracion.setBounds(230, 300, 170, 20);
+		textFieldDuracion.setBounds(230, 314, 170, 20);
 		getContentPane().add(textFieldDuracion);
 		
 		lblDuracion = new JLabel("DURACIÓN");
-		lblDuracion.setBounds(56, 303, 139, 14);
+		lblDuracion.setBounds(56, 317, 139, 14);
 		getContentPane().add(lblDuracion);
 		
 		lblNewLabelCosto = new JLabel("COSTO");
@@ -129,7 +143,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 		});
 		textFieldCosto.setEnabled(false);
 		textFieldCosto.setColumns(10);
-		textFieldCosto.setBounds(230, 343, 170, 20);
+		textFieldCosto.setBounds(230, 344, 170, 20);
 		getContentPane().add(textFieldCosto);
 		
 		btnAceptar = new JButton("Aceptar");
@@ -160,27 +174,45 @@ public class Modactividaddeportiva extends JInternalFrame {
 				textPaneDescripcion.setEnabled(true);
 				textFieldDuracion.setEnabled(true);
 				textFieldCosto.setEnabled(true);
+				btnLoadImage.setEnabled(true);
 			}
 		});
 		btnVer.setBounds(310, 59, 90, 23);
 		getContentPane().add(btnVer);
 		
 		lblFechaDeRegistro = new JLabel("FECHA DE REGISTRO");
-		lblFechaDeRegistro.setBounds(56, 393, 139, 14);
+		lblFechaDeRegistro.setBounds(56, 376, 139, 14);
 		getContentPane().add(lblFechaDeRegistro);
 		
 		textFieldFechaReg = new JTextField();
 		textFieldFechaReg.setEnabled(false);
 		textFieldFechaReg.setColumns(10);
-		textFieldFechaReg.setBounds(230, 387, 170, 20);
+		textFieldFechaReg.setBounds(230, 374, 170, 20);
 		getContentPane().add(textFieldFechaReg);
 		
 		textPaneDescripcion = new JTextPane();
 		textPaneDescripcion.setBounds(230, 179, 272, 111);
 		getContentPane().add(textPaneDescripcion);
 		JScrollPane scr = new JScrollPane(textPaneDescripcion);
-		scr.setBounds(230, 179, 272, 111);
+		scr.setBounds(230, 193, 272, 111);
 		getContentPane().add(scr);
+		
+		btnLoadImage = new JButton("Seleccionar");
+		btnLoadImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(null);
+				File f = chooser.getSelectedFile();
+				cargarImg(f);
+			}
+		});
+		btnLoadImage.setEnabled(false);
+		btnLoadImage.setBounds(56, 162, 109, 21);
+		getContentPane().add(btnLoadImage);
+		
+		lblImage = new JLabel("");
+		lblImage.setBounds(56, 193, 89, 111);
+		getContentPane().add(lblImage);
 		
 	}
 	
@@ -206,6 +238,8 @@ public class Modactividaddeportiva extends JInternalFrame {
 		textPaneDescripcion.setEnabled(true);
 		textFieldDuracion.setEnabled(true);
 		textFieldCosto.setEnabled(true);
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(act1.getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+		lblImage.setIcon(imageIcon);
 	}
 
 	protected void AceptarActionPerformed(ActionEvent arg0) {
@@ -214,7 +248,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 			String descripcion = this.textPaneDescripcion.getText();
 			Integer duracion = Integer.valueOf(this.textFieldDuracion.getText());
 			Float costo = Float.parseFloat(this.textFieldCosto.getText());
-			ICMad.ModActividadDeportiva(nombre.toLowerCase(), descripcion, duracion, costo);
+			ICMad.ModActividadDeportiva(nombre.toLowerCase(), descripcion, duracion, costo, personImage);
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con exito", "Modificar Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();
@@ -248,5 +282,26 @@ public class Modactividaddeportiva extends JInternalFrame {
         textFieldDuracion.setEnabled(false);
         textFieldCosto.setEnabled(false);
         btnAceptar.setEnabled(false);
+        btnLoadImage.setEnabled(false);
+        lblImage.setIcon(null);
 	 }
+	
+	public void cargarImg(File f) {
+		filename = f.getAbsolutePath();
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(filename).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+		lblImage.setIcon(imageIcon);				
+		try {
+			File image = new File(filename);
+			FileInputStream fis = new FileInputStream(image);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			for (int readNum;(readNum = fis.read(buf))!=-1;){
+				bos.write(buf,0,readNum);
+			}
+			personImage = bos.toByteArray();
+			fis.close();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null,e2);
+		}
+	}
 }

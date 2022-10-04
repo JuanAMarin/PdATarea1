@@ -138,19 +138,20 @@ public class Manejador {
 		return (ArrayList<String>) query.getResultList();
 	}
 	
-	public void modificarSoc(String nickname, String nombre, String apellido, Date fechaNac) {
+	public void modificarSoc(String nickname, String nombre, String apellido, Date fechaNac, byte[] personImage) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		Socio socio = em.find(Socio.class, nickname);
 		socio.setNombre(nombre);
 		socio.setApellido(apellido);
 		socio.setFechaNac(fechaNac);
+		socio.setImage(personImage);
 		em.getTransaction().begin();
 		em.merge(socio);
 		em.getTransaction().commit();
 	}
 	
-	public void modificarProf(String nickname, String nombre, String apellido, Date fechaNac, String descripcion, String biografia, String sitioweb) {
+	public void modificarProf(String nickname, String nombre, String apellido, Date fechaNac, String descripcion, String biografia, String sitioweb, byte[] personImage) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		Profesor profesor = em.find(Profesor.class, nickname);
@@ -160,6 +161,7 @@ public class Manejador {
 		profesor.setBiografia(biografia);
 		profesor.setDescripcion(descripcion);
 		profesor.setSitioweb(sitioweb);
+		profesor.setImage(personImage);
 		em.getTransaction().begin();
 		em.merge(profesor);
 		em.getTransaction().commit();
@@ -313,7 +315,7 @@ public class Manejador {
 		return (ArrayList<String>) query.getResultList();
 	}
 	
-	public void modificarAD(String nombre, String descripcion, Integer duracion, float costo) {
+	public void modificarAD(String nombre, String descripcion, Integer duracion, float costo, byte[] personImage) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		ActividadDep actividadDep = em.find(ActividadDep.class, nombre);
@@ -321,6 +323,7 @@ public class Manejador {
 		actividadDep.setDescripcion(descripcion);
 		actividadDep.setDuracion(duracion);
 		actividadDep.setCosto(costo);
+		actividadDep.setImage(personImage);
 		em.getTransaction().begin();
 		em.merge(actividadDep);
 		em.getTransaction().commit();
