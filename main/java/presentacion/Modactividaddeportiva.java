@@ -169,12 +169,12 @@ public class Modactividaddeportiva extends JInternalFrame {
 		btnVer = new JButton("Ver");
 		btnVer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VerInfoActividadActionPerformed(e);
 				btnAceptar.setEnabled(true);
 				textPaneDescripcion.setEnabled(true);
 				textFieldDuracion.setEnabled(true);
 				textFieldCosto.setEnabled(true);
 				btnLoadImage.setEnabled(true);
+				VerInfoActividadActionPerformed(e);
 			}
 		});
 		btnVer.setBounds(310, 59, 90, 23);

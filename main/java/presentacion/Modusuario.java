@@ -210,21 +210,21 @@ public class Modusuario extends JInternalFrame {
 		getContentPane().add(rdbtnSocio);
 		
 		JLabel lblDescripcion = new JLabel("DESCRIPCIÓN");
-		lblDescripcion.setBounds(31, 285, 125, 14);
+		lblDescripcion.setBounds(31, 283, 125, 14);
 		getContentPane().add(lblDescripcion);
 		
 		JLabel lblBiografia = new JLabel("BIOGRAFÍA");
-		lblBiografia.setBounds(31, 409, 139, 14);
+		lblBiografia.setBounds(31, 399, 139, 14);
 		getContentPane().add(lblBiografia);
 		
 		JLabel lblSitioWeb = new JLabel("SITIO WEB");
-		lblSitioWeb.setBounds(31, 433, 139, 14);
+		lblSitioWeb.setBounds(31, 423, 139, 14);
 		getContentPane().add(lblSitioWeb);
 		
 		txtSitioWeb = new JTextField();
 		txtSitioWeb.setEnabled(false);
 		txtSitioWeb.setColumns(10);
-		txtSitioWeb.setBounds(213, 431, 170, 20);
+		txtSitioWeb.setBounds(213, 421, 170, 20);
 		getContentPane().add(txtSitioWeb);
 		
 		dateFechaNac = new JDateChooser();
@@ -275,9 +275,9 @@ public class Modusuario extends JInternalFrame {
 		btnVerInfo = new JButton("Ver Info");
 		btnVerInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				verInfo(e);
-				btnAceptar.setEnabled(true);
 				btnLoadImage.setEnabled(true);
+				btnAceptar.setEnabled(true);
+				verInfo(e);
 			}
 		});
 		btnVerInfo.setBounds(385, 19, 117, 25);
@@ -286,7 +286,7 @@ public class Modusuario extends JInternalFrame {
 		txtBiografia = new JTextField();
 		txtBiografia.setEnabled(false);
 		txtBiografia.setColumns(10);
-		txtBiografia.setBounds(213, 406, 170, 20);
+		txtBiografia.setBounds(213, 396, 170, 20);
 		getContentPane().add(txtBiografia);
 		
 		btnAceptar = new JButton("Aceptar");
@@ -319,7 +319,7 @@ public class Modusuario extends JInternalFrame {
 		textPaneDescripcion.setBounds(213, 195, 289, 116);
 		getContentPane().add(textPaneDescripcion);
 		JScrollPane scr = new JScrollPane(textPaneDescripcion);
-		scr.setBounds(213, 285, 289, 116);
+		scr.setBounds(213, 276, 289, 116);
 		getContentPane().add(scr);
 		
 		lblImage = new JLabel("");
@@ -327,6 +327,7 @@ public class Modusuario extends JInternalFrame {
 		getContentPane().add(lblImage);
 		
 		btnLoadImage = new JButton("Seleccionar");
+		btnLoadImage.setEnabled(false);
 		btnLoadImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
@@ -335,7 +336,6 @@ public class Modusuario extends JInternalFrame {
 				cargarImg(f);
 			}
 		});
-		btnLoadImage.setEnabled(false);
 		btnLoadImage.setBounds(31, 150, 109, 21);
 		getContentPane().add(btnLoadImage);
 	}

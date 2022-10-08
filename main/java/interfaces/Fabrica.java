@@ -7,6 +7,7 @@ import logica.Caltausuario;
 import logica.Cconsultaactividad;
 import logica.Cconsultaclase;
 import logica.Cconsultausuario;
+import logica.Clogin;
 import logica.Cmodactividaddep;
 import logica.Cmodinstitucion;
 import logica.Cmodusuario;
@@ -75,4 +76,8 @@ public class Fabrica {
 	public ICrankingdeactividades getICrankingdeactividades() {
 		return new Crankingdeactividades();
 	}
+	
+	public IClogin getIClogin() {
+        return new Clogin();
+    }
 }

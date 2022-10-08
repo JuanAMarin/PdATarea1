@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+
 @SuppressWarnings("static-access")
 public class Conexion {
 	private static Conexion instancia = null;

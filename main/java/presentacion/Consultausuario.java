@@ -160,8 +160,6 @@ public class Consultausuario extends JInternalFrame {
 				modelo.addElement("Apellido: " + ICcu.getUsuario().getApellido());
 				modelo.addElement("Email: " + ICcu.getUsuario().getEmail());
 				modelo.addElement("Fecha: " + ICcu.getUsuario().getFechaNac().getDate()+"-"+(ICcu.getUsuario().getFechaNac().getMonth()+1)+"-"+(ICcu.getUsuario().getFechaNac().getYear()+1900));
-				ImageIcon image = new ImageIcon(new ImageIcon(ICcu.getUsuario().getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
-				lblImage.setIcon(image);
 				if(ICcu.buscarProfesor(cboNickname.getSelectedItem().toString()) != null) {
 					tableModel.setRowCount(0);
 					for(Object[] o: ICcu.listarClasesP(cboNickname.getSelectedItem().toString())) {
@@ -181,6 +179,8 @@ public class Consultausuario extends JInternalFrame {
 				for(Object[] o: ICcu.listarActividades(cboNickname.getSelectedItem().toString())) {
 					tableModelAC.addRow(o);
 				}
+				ImageIcon image = new ImageIcon(new ImageIcon(ICcu.getUsuario().getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+				lblImage.setIcon(image);
 			}
 		});
 		btnBuscarUsuario.setEnabled(false);

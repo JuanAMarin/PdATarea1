@@ -29,6 +29,28 @@ public class Manejador {
     
     //Usuarios
     
+    public Profesor existePM(String nickname, String pass) {
+        Conexion conexion = Conexion.getInstancia();
+        EntityManager em = conexion.getEntityManager();
+        Profesor p = em.find(Profesor.class, nickname);
+        if(p==null) 
+            return null;
+        if(!p.getContraseña().equals(pass))
+            return null;
+        return p;
+    }
+    
+    public Socio existeSM(String nickname, String pass) {
+        Conexion conexion = Conexion.getInstancia();
+        EntityManager em = conexion.getEntityManager();
+        Socio s = em.find(Socio.class, nickname);
+        if(s==null) 
+            return null;
+        if(!s.getContraseña().equals(pass))
+            return null;
+        return s;
+    }
+    
     public List<String> listarUsuarios() {
     	List<String> lista = new ArrayList<>();
     	lista = obtenerProfesoresN();

@@ -83,6 +83,7 @@ public class Altaactividaddeportiva extends JInternalFrame {
 		}
 	}
 	
+	@SuppressWarnings({ "removal" })
 	public Altaactividaddeportiva(ICaltaactividaddeportiva ICaltaad) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
