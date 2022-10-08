@@ -1,3 +1,4 @@
+<%@page import="interfaces.Acceso"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -14,8 +15,7 @@
 
 <body>
 
-	<div id="contenedor">
-            
+	<div id="contenedor"> 
             <div id="contenedorcentrado">
                 <div id="login">
                     <form id="loginform" action="Login" method="post">

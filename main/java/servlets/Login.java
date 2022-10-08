@@ -37,6 +37,8 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Acceso access = Acceso.getInstancia();
+		access.killInstancia();
 		String nickname=request.getParameter("nickname");
 		String pass=request.getParameter("password");
 		Fabrica fabrica = Fabrica.getInstancia();
@@ -45,12 +47,12 @@ public class Login extends HttpServlet {
 		Socio s = ICl.existeS(nickname, pass);
 		if(p != null)
 		{
-			Acceso access = Acceso.getInstancia();
+			access = Acceso.getInstancia();
 			access.setP(p);
 			getServletContext().getRequestDispatcher("/principal.jsp").forward(request, response);
 		}else if(s != null)
 		{
-			Acceso access = Acceso.getInstancia();
+			access = Acceso.getInstancia();
 			access.setS(s);
 			getServletContext().getRequestDispatcher("/principal.jsp").forward(request, response);
 		}else
