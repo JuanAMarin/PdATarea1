@@ -7,15 +7,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class ConsultaUsuario1
+ * Servlet implementation class ConsultaUsuario
  */
-public class ConsultaUsuario1 extends HttpServlet {
+public class ConsultaUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConsultaUsuario1() {
+    public ConsultaUsuario() {
         super();
         // TODO Auto-generated constructor stub
     }

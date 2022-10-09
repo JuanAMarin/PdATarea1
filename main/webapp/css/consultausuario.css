@@ -25,7 +25,7 @@ body {
     height: 100%;
 }
 
-/* contenedor del login a la izquierda */
+/* contenedor del consultausuario a la izquierda */
 #contenedorcentrado {
     display: flex;
     align-items: center;
@@ -39,9 +39,6 @@ body {
     
     background-color: #354f6a;
     
-    /*opacity: 0.50;
-    filter: alpha(opacity=50);*/
-    
     border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -54,9 +51,9 @@ body {
     box-sizing: border-box;
 }
 
-/* formulario de login */
-/* formulario de login */
-#login {
+/* formulario de consultausuario */
+/* formulario de consultausuario */
+#consultausuario {
     width: 100%;
     max-width: 1320px;
     min-width: 320px;
@@ -77,16 +74,16 @@ body {
     filter: alpha(opacity=1);
 }
 
-#login label {
+#consultausuario label {
     display: block;
     font-family: 'Overpass', sans-serif;
     font-size: 120%;
     color:#3c4245;
-    
+
     margin-top: 15px;
 }
 
-#login input {
+#consultausuario input {
     font-family: 'Overpass', sans-serif;
     font-size: 110%;
     color: #1b262c;
@@ -106,12 +103,12 @@ body {
     -webkit-border-radius: 3px 3px 3px 3px;
 }
 
-#login input::placeholder {
+#consultausuario input::placeholder {
     font-family: 'Overpass', sans-serif;
     color: #E4E4E4;
 }
 
-#login button {
+#consultausuario button {
     font-family: 'Overpass', sans-serif;
     font-size: 110%;
     color:#1b262c;
@@ -128,12 +125,10 @@ body {
     margin-top: 10px;
 }
 
-#login button:hover {
+#consultausuario button:hover {
     background-color: #3c4245;
     color:#dfcdc3;
 }
-/* formulario de login */
-/* formulario de login */
 
 /* seccion de la derecha */
 /* seccion de la derecha */
@@ -199,9 +194,6 @@ hr {
 
         background-color: #5f6769;
 
-        /*opacity: 0.50;
-        filter: alpha(opacity=50);*/
-
         border-radius: 10px 10px 10px 10px;
         -moz-border-radius: 10px 10px 10px 10px;
         -webkit-border-radius: 10px 10px 10px 10px;
@@ -214,7 +206,7 @@ hr {
         box-sizing: border-box;
     }
     
-    #login {
+    #consultausuario {
         margin: 0 auto;
     }
     
@@ -222,9 +214,7 @@ hr {
         padding:20px 20px 20px 20px;
     }
     
-    #login label {
+    #consultausuario label {
         text-align: left;
     }
 }
-/* ajustar a pantallas con ancho menor o igual a 775px; */
-/* ajustar a pantallas con ancho menor o igual a 775px; */
