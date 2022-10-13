@@ -2,14 +2,14 @@ package interfaces;
 
 import datatypes.DtActividadDep;
 import datatypes.DtInstitucionDep;
-import logica.Profesor;
-import logica.Socio;
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
 
 public class Acceso {
 	
 	private static Acceso instancia;
-	private Profesor p;
-	private Socio s;
+	private DtProfesor p;
+	private DtSocio s;
 	private DtActividadDep actividad;
 	private DtInstitucionDep institucion;
 	private boolean modal;
@@ -21,19 +21,19 @@ public class Acceso {
         return instancia;
     }
 	
-	public Profesor getP() {
+	public DtProfesor getP() {
 		return p;
 	}
 
-	public void setP(Profesor p) {
+	public void setP(DtProfesor p) {
 		this.p = p;
 	}
 
-	public Socio getS() {
+	public DtSocio getS() {
 		return s;
 	}
 
-	public void setS(Socio s) {
+	public void setS(DtSocio s) {
 		this.s = s;
 	}
 	

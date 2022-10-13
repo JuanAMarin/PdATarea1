@@ -13,17 +13,26 @@ public class Crankingdeactividades implements ICrankingdeactividades {
 	}
 	
 	@Override
-	public ArrayList<Object[]> obtRankActividades() {
+	public ArrayList<DtActividadDep> RankActividadesDT() {
 		Manejador m = Manejador.getInstancia();
-		ArrayList<DtActividadDep> dtad = m.obtRankActividades();
+		return m.obtRankActividades();
+	}
+	
+	@Override
+	public ArrayList<Object[]> obtRankActividadesO(ArrayList<DtActividadDep> a) {
 		ArrayList<Object[]> r = new ArrayList<>();
 		int i = 1;
-		for(DtActividadDep dt: dtad) {
+		for(DtActividadDep dt: a) {
 			Object[] o = {i,dt.getNombre(),dt.getCosto(),dt.getDescripcion()};
 			r.add(o);
 			i++;
 		}
 		return r;
+	}
+	
+	@Override
+	public ArrayList<Object[]> obtRankActividades() {
+		return obtRankActividadesO(RankActividadesDT());
 	}
 	
 }

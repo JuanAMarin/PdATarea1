@@ -1,14 +1,20 @@
 package logica;
 
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
 import interfaces.IClogin;
 
 public class Clogin implements IClogin{
-	public Profesor existeP(String nickname, String pass) {
+	public DtProfesor existeP(String nickname, String pass) {
 		Manejador m = Manejador.getInstancia();
-		return m.existePM(nickname, pass);
+		if(m.existePM(nickname, pass)!=null)
+			return m.existePM(nickname, pass).getDT();
+		return null;
 	}
-	public Socio existeS(String nickname, String pass) {
+	public DtSocio existeS(String nickname, String pass) {
 		Manejador m = Manejador.getInstancia();
-		return m.existeSM(nickname, pass);
+		if(m.existeSM(nickname, pass)!=null)
+			return m.existeSM(nickname, pass).getDT();
+		return null;
 	}
 }
