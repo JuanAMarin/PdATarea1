@@ -1,21 +1,29 @@
 package servlets;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
+import datatypes.DtActividadDep;
+import interfaces.Acceso;
+import interfaces.Fabrica;
+import interfaces.ICconsultaactividad;
+
 /**
- * Servlet implementation class ConsultaUsuario
+ * Servlet implementation class ConsultaActividad
  */
-public class ConsultaUsuario extends HttpServlet {
+@WebServlet("/ConsultaActividad")
+public class ConsultaActividad extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConsultaUsuario() {
+    public ConsultaActividad() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +40,14 @@ public class ConsultaUsuario extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
+		String acti=request.getParameter("actividades");
+		Acceso ac = Acceso.getInstancia();
+		Fabrica f= Fabrica.getInstancia();
+		ICconsultaactividad ICca = f.getICconsultaactividad();
+		ICca.buscarActividad(acti);
+		DtActividadDep a = ICca.getDtad();
+		ac.setActividad(a);
+		getServletContext().getRequestDispatcher("/consultaactividad.jsp").forward(request, response);
 	}
 
 }

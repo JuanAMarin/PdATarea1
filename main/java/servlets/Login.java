@@ -10,8 +10,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import logica.Profesor;
-import logica.Socio;
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {
@@ -43,26 +43,23 @@ public class Login extends HttpServlet {
 		String pass=request.getParameter("password");
 		Fabrica fabrica = Fabrica.getInstancia();
 		IClogin ICl = fabrica.getIClogin();
-		Profesor p = ICl.existeP(nickname, pass);
-		Socio s = ICl.existeS(nickname, pass);
+		DtProfesor p = ICl.existeP(nickname, pass);
+		DtSocio s = ICl.existeS(nickname, pass);
 		if(p != null)
 		{
 			access = Acceso.getInstancia();
 			access.setP(p);
-			getServletContext().getRequestDispatcher("/principal.jsp").forward(request, response);
 		}else if(s != null)
 		{
 			access = Acceso.getInstancia();
 			access.setS(s);
-			getServletContext().getRequestDispatcher("/principal.jsp").forward(request, response);
 		}else
 		{
-			request.setCharacterEncoding("UTF-8");
-			request.setAttribute("error","Usuario o contraseña invalido");
-			RequestDispatcher rd=request.getRequestDispatcher("/login.jsp/");            
-			rd.include(request, response);
-	        
+			access = Acceso.getInstancia();
+			access.setModal(true);
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
 		}
+		getServletContext().getRequestDispatcher("/principal.jsp").forward(request, response);
 	}
 
 }

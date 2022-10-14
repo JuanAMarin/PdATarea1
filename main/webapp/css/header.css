@@ -1,0 +1,117 @@
+nav {
+  margin: 27px auto 27px;
+  position: relative;
+  width: 600px;
+  height: 50px;
+  background-color: #34495e;
+  border-radius: 8px;
+  font-size: 0;
+}
+
+nav a {
+  line-height: 65px;
+  height: 100%;
+  font-size: 15px;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  width: 75px;
+}
+
+nav .animation {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  z-index: 0;
+  transition: all .5s ease 0s;
+  border-radius: 8px;
+}
+
+a{
+  width: 75px;
+}
+
+nav .start-home, a:nth-child(1):hover~.animation {
+  width: 75px;
+  left: 0;
+  background-color: #c24448;
+}
+
+nav .start-about, a:nth-child(2):hover~.animation {
+  width: 75px;
+  left: 75px;
+  background-color: #B84145;
+}
+
+nav .start-blog, a:nth-child(3):hover~.animation {
+  width: 75px;
+  left: 150px;
+  background-color: #B14044;
+}
+
+nav .start-portefolio, a:nth-child(4):hover~.animation {
+  width: 75px;
+  left: 225px;
+  background-color: #A93E42;
+}
+
+nav .start-contact, a:nth-child(5):hover~.animation {
+  width: 75px;
+  left: 300px;
+  background-color: #A03B3F;
+}
+
+nav .start-contact, a:nth-child(6):hover~.animation {
+  width: 75px;
+  left: 375px;
+  background-color: #97393C;
+}
+
+nav .start-contact, a:nth-child(7):hover~.animation {
+  width: 75px;
+  left: 450px;
+  background-color: #8D3638;
+}
+
+nav .start-contact, a:nth-child(8):hover~.animation {
+  width: 75px;
+  left: 525px;
+  background-color: #853335	;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Overpass', sans-serif;
+  font-weight: normal;
+  font-size: 100%;
+  color: #1b262c;
+  margin: 0;
+  background-image: url(../imagenes/fondo.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+span {
+    color: #2BD6B4;
+}
+
+svg-icon{
+    width: 25px;
+    height: 25px;
+    fill: #F26856;
+}

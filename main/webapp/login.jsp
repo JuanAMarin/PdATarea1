@@ -3,54 +3,79 @@
     pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-
 	<meta charset="utf-8">
 	<title>Login</title>
-	
 	<link rel="stylesheet" href="css/login.css">
-
 </head>
-
-<body>
-
-	<div id="contenedor"> 
-            <div id="contenedorcentrado">
-                <div id="login">
-                    <form id="loginform" action="Login" method="post">
-                        <label for="usuario">Usuario</label>
-                        <input id="usuario" type="text" name="nickname" placeholder="Usuario" required>
-                        
-                        <label for="password">Contraseña</label>
-                        <input id="password" type="password" placeholder="Contraseña" name="password" required>
-                        
-                        <button type="submit" title="Ingresar" name="Ingresar">Login</button>
-                        <div id = "error" style="text-align: center">
-                        	<%
-							String login_msg=(String)request.getAttribute("error");  
-							if(login_msg!=null)
-							out.println("<font color=red size=4px text-align=center>"+login_msg+"</font>");
-							%>
-                        </div>
-                    </form>
-                    
-                </div>
-                <div id="derecho">
-                    <div class="titulo">
-                        Bienvenido
-                    </div>
-                    <hr>
-                    <div class="pie-form">
-                        <a href="#">¿Perdiste tu contraseña?</a>
-                        <a href="#">¿No tienes Cuenta? Registrate</a>
-                        <hr>
-                        <a href="#">Volver</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-	
+	<script>
+		function loaded(){
+			<%Acceso ac = Acceso.getInstancia();%>
+			if(<%=ac.isModal()%>){
+				<%ac.setModal(false);%>
+				modal.style.display = "block";
+			}
+		}
+	</script>
+<body onload="loaded()">
+	<div id="contenedor">
+		<div id="contenedorcentrado"> 
+			<div class="titulo">Iniciar Sesión</div>
+			<div id="login">
+				<form id="loginform" action="Login" method="post">
+					<label for="usuario">Usuario</label>
+					<input id="usuario" type="text" name="nickname" placeholder="Usuario" required>
+					<label for="password">Contraseña</label>
+					<input id="password" type="password" placeholder="Contraseña" name="password" required>
+					<div class="btn-container">
+						<button type="submit" title="Ingresar" name="Ingresar">
+							<span class="text">Iniciar sesión</span>
+							<div class="icon-container">
+								<div class="icon icon--left">
+									<svg>
+										<use xlink:href="#arrow-right"></use>
+									</svg>
+								</div>
+								<div class="icon icon--right">
+									<svg>
+										<use xlink:href="#arrow-right"></use>
+									</svg>
+								</div>
+							</div>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+        <div id="myModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<p>Usuario o contraseña incorrecto</p>
+			</div>
+		</div>
+		<svg style="display: none;">
+			<symbol id="arrow-right" viewBox="0 0 20 10">
+				<path d="M14.84 0l-1.08 1.06 3.3 3.2H0v1.49h17.05l-3.3 3.2L14.84 10 20 5l-5.16-5z"></path>
+			</symbol>
+		</svg>
 </body>
+<script>
+var modal = document.getElementById("myModal");
 
+//Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+//When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+	modal.style.display = "none";
+}
+
+//When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == modal) {
+	 modal.style.display = "none";
+	}
+}
+</script>
 </html>

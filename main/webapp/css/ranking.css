@@ -1,24 +1,5 @@
 @charset "UTF-8";
 
-h2 {
-	color: #ffffff;
-	font-family: 'Raleway',sans-serif;
-	font-weight: 800;
-	line-height: 72px;
-	text-align: left;
-	text-transform: uppercase;
-	margin: 0 0 0 10px
-	}
-
-p { 
-  color: #f8f8f8; 
-  font-family: 'Raleway',sans-serif; 
-  font-size: 18px; 
-  font-weight: 500; 
-  line-height: 32px; 
-  margin: 0 0 0 10px 
- }
-
 *,
 *::before,
 *::after {
@@ -36,28 +17,67 @@ body {
     background-size: cover;
 }
 
+#contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  margin: 0;
+  padding: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+}
+
+#contenedorcentrado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction:row;
+  margin-inline: auto;
+  min-width: 380px;
+  max-width: 900px;
+  width: 90%;
+  background-color: #354f6a;
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.15);
+  box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.15);
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+small{
+  color: #FFFFFF;
+}
+
+.ol {
+  display: block;
+  list-style-type: decimal;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 0px;
+}
+
 .leaderboard {
-	
-   	display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    margin-inline: auto;
-    min-width: 380px;
-    max-width: 900px;
-    width: 90%;
-    height: max-content;
-    background: linear-gradient(to bottom, #3a404d, #181c26);
-    border-radius: 10px;
-    box-shadow: 0 7px 30px rgb(62 9 11 / 30%);
-    padding: 30px;
-    box-sizing: border-box;
-    margin-bottom: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 80%;
+  background: linear-gradient(to bottom, #3a404d, #181c26);
+  border-radius: 10px;
+  box-shadow: 0 7px 30px rgba(62, 9, 11, 0.3);
+  margin-top:27px;
 }
 
 .leaderboard h1 {
   font-size: 18px;
   color: #e1e1e1;
+  padding: 12px 13px 18px;
 }
 
 .leaderboard h1 svg {
@@ -124,8 +144,8 @@ body {
   border-left: 10px solid transparent;
   transition: all 0.1s ease-in-out;
   opacity: 0;
-}
 
+}
 .leaderboard ol li mark::after {
   left: auto;
   right: -9px;
@@ -175,4 +195,18 @@ body {
 .leaderboard ol li:hover mark::before, .leaderboard ol li:hover mark::after {
   opacity: 1;
   transition: all 0.35s ease-in-out;
+}
+
+.the-most {
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: 50vw;
+  max-width: 200px;
+  padding: 10px;
+}
+
+.the-most img {
+  max-width: 100%;
 }
