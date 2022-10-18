@@ -44,7 +44,7 @@
    			<svg class="icon">
      				<use xlink:href="#icono"></use>
    			</svg>
-   			Modificar mis datos
+   			Modificar Mis Datos
  			</h1>
  			<form id="modificarusuarioform" action="ModificarUsuario" method="post"> 
 			<table class="demo">

@@ -81,6 +81,7 @@
 					<tr><td style="word-break: break-word;"><h2>Registros </h2></td></tr>
 			</tbody>
 		</table>
+			<%if(ICcc.listarRegistros(ac.getclase().getNombre()).size()!=0){%>
 					<ol class="ol">
 						<%for(Object[] r: ICcc.listarRegistros(ac.getclase().getNombre())){%>
 							<li style="list-style-type: none; height: 50px;">
@@ -88,7 +89,10 @@
 							</li>
 						<%}%>
 	  				</ol>
-		        <%}ac.setActividad(null);ac.setclase(null);%>
+		    <%}else{%>
+		    	<p>No hay socios registrados</p>
+		    <%}%>
+		    <%}ac.setActividad(null);ac.setclase(null);%>
 		</form>
 	</div>
 	<svg style="display: none;">
