@@ -14,16 +14,16 @@ import interfaces.ICconsultaactividad;
 import interfaces.ICconsultaclase;
 
 /**
- * Servlet implementation class ConsultaActividad
+ * Servlet implementation class ConsultaClase
  */
-@WebServlet("/ConsultaActividad")
-public class ConsultaActividad extends HttpServlet {
+@WebServlet("/ConsultaClase")
+public class ConsultaClase extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConsultaActividad() {
+    public ConsultaClase() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,14 +50,14 @@ public class ConsultaActividad extends HttpServlet {
 			ICca.buscarActividad(acti);
 			ac.setActividad(ICca.getDtad());
 			ac.setclase(null);
-			getServletContext().getRequestDispatcher("/consultaactividad.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/consultaclase.jsp").forward(request, response);
 		}else {
 			ICconsultaclase ICcc = f.getICconsultaclase();
 			ICcc.buscarClase(clase);
 			ICca.buscarActividad(acti);
 			ac.setActividad(ICca.getDtad());
 			ac.setclase(ICcc.getDtc());
-			getServletContext().getRequestDispatcher("/consultaactividad.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/consultaclase.jsp").forward(request, response);
 		}
 	}
 }

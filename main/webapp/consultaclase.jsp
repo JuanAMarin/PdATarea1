@@ -2,7 +2,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page import="interfaces.Fabrica"%>
 <%@ page import="interfaces.Acceso"%>
-<%@ page import="interfaces.ICconsultaactividad"%>
+<%@ page import="interfaces.ICconsultaclase"%>
 <%@ page import="datatypes.DtActividadDep"%>
 <%@ page import="java.util.Base64"%>
 
@@ -15,41 +15,37 @@
 	</style>
 	<meta charset="UTF-8">
 	<%Acceso ac = Acceso.getInstancia();
-	  if(ac.getP()!=null || ac.getS()!=null){%>
-		  <title>Ver Actividad</title>
-		  <%if(ac.getP()!=null){%>
-  			  <jsp:include page="headerP.jsp" />
-		  <%}else{%>
-  			  <jsp:include page="headerS.jsp" />
-		  <%}
-	  }%>
-	  <script>
+	  if(ac.getP()!=null){%>
+		  <title>Ver Clase</title>
+		  <jsp:include page="headerP.jsp" />
+	<%}%>
+	<script type="text/javascript">
 		function enviar(){
-			<%if(ac.getP()==null && ac.getS()==null){%>
+			<%if(ac.getP()==null){%>
 				location.href="login.jsp";
 			<%}%>
 		}
 	</script>
 </head>
-<body onload="enviar()">
-<%if(ac.getP()!=null || ac.getS()!=null){%>
+<body onload="enviar();">
+<%if(ac.getP()!=null){%>
 	<div class="leaderboard">
   		<h1>
     		<svg class="icon">
       			<use xlink:href="#icono"></use>
     		</svg>
-			Ver Actividad
+			Ver Clase
 		</h1>
-		<form id="consultaractividadform" action="ConsultaActividad" method="post">
+		<form id="consultaclaseform" action="ConsultaClase" method="post">
 		<table>
 			<tbody>
 				<tr><td style="word-break: break-word;">
 					<select name="actividades" id="actividades">
 						<option><%=ac.getActividad()==null ? "Selecciona una actividad" : ac.getActividad().getNombre()%></option>
 							<%Fabrica f = Fabrica.getInstancia();
-				  			  ICconsultaactividad ICca = f.getICconsultaactividad();
-				  			  for(String i: ICca.listarInstituciones()){
-								  for(String a: ICca.listarActividades(i)){
+							  ICconsultaclase ICcc = f.getICconsultaclase();
+				  			  for(String i: ICcc.listarInstituciones()){
+								  for(String a: ICcc.listarActividades(i)){
 								  	  if(ac.getActividad() == null){%> 
 									  	  <option value="<%=a%>"><%=a%></option>
 									<%}else if(!ac.getActividad().getNombre().equals(a)){%>
@@ -61,16 +57,11 @@
 			        <button class="button" type="submit">Buscar</button>
 		        </td></tr>
 				<%if(ac.getActividad()!=null){%>
-                    <tr><td style="word-break: break-word;"><h2>Nombre </h2><p><%=ac.getActividad().getNombre()%></p></td><td style="vertical-align: top" rowspan="5"><img style="margin-left: 15px;" width="380px" height="380px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(ac.getActividad().getImage())%>"></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Fecha de registro </h2><p><%=ac.getActividad().getFechaReg()%></p></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Descripción </h2><p><%=ac.getActividad().getDescripcion()%></p></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Costo </h2><p><%=ac.getActividad().getCosto()%></p></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Duración </h2><p><%=ac.getActividad().getDuracion()%></p></td></tr>
-					<tr><td style="word-break: break-word;">
+                    <tr><td style="word-break: break-word;">
 					<input type="hidden" name="ultimaActividad" value="<%=ac.getActividad().getNombre()%>"/>
 						<select name="clases" id="clases">
 							<option><%=ac.getclase()==null ? "Selecciona una clase" : ac.getclase().getNombre()%></option>
-								<%for(String c: ICca.listarClasesN(ac.getActividad().getNombre())){
+								<%for(String c: ICcc.listarClases(ac.getActividad().getNombre())){
 									  if(ac.getclase() == null){%> 
 										  <option value="<%=c%>"><%=c%></option>
 									<%}else if(!ac.getclase().getNombre().equals(c)){%>
@@ -82,14 +73,22 @@
 			        </td></tr>
 		        <%}%>
 		        <%if(ac.getclase()!=null){%>
-                    <tr><td style="word-break: break-word;"><h2>Nombre </h2><p><%=ac.getclase().getNombre()%></p></td><td style="vertical-align: top" rowspan="5"><img style="margin-left: 15px;" width="380px" height="380px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(ac.getActividad().getImage())%>"></td></tr>
+                    <tr><td style="word-break: break-word;"><h2>Nombre </h2><p><%=ac.getclase().getNombre()%></p></td><td style="vertical-align: top" rowspan="5"><img style="margin-left: 15px;" width="380px" height="380px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(ac.getclase().getImage())%>"></td></tr>
 					<tr><td style="word-break: break-word;"><h2>Url </h2><p><%=ac.getclase().getUrl()%></p></td></tr>
 					<tr><td style="word-break: break-word;"><h2>Fecha de Inicio </h2><p><%=new SimpleDateFormat("dd/MM/yyyy").format(ac.getclase().getFecha())%></p></td></tr>
 					<tr><td style="word-break: break-word;"><h2>Hora de Inicio </h2><p><%=new SimpleDateFormat("hh:mm").format(ac.getclase().getHoraInicio())%></p></td></tr>
 					<tr><td style="word-break: break-word;"><h2>Fecha de Registro </h2><p><%=ac.getclase().getFechaReg()%></p></td></tr>
-		        <%}ac.setActividad(null);ac.setclase(null);%>
+					<tr><td style="word-break: break-word;"><h2>Registros </h2></td></tr>
 			</tbody>
 		</table>
+					<ol class="ol">
+						<%for(Object[] r: ICcc.listarRegistros(ac.getclase().getNombre())){%>
+							<li style="list-style-type: none; height: 50px;">
+								<mark style="width: 98%">Nombre: <%=r[0]%></mark>
+							</li>
+						<%}%>
+	  				</ol>
+		        <%}ac.setActividad(null);ac.setclase(null);%>
 		</form>
 	</div>
 	<svg style="display: none;">

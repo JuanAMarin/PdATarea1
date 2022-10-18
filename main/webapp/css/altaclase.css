@@ -157,3 +157,29 @@ body {
   margin-right: 6px;
   vertical-align: baseline;
 }
+
+select {
+     background: #ffffff;
+     border: 1px solid #ffffff;
+     font-size: 14px;
+     height: 30px;
+     padding: 5px;
+     width: 250px;
+     border-radius: 3px;
+}
+  
+button{	
+  margin-top:5px;
+  display: inline-block;
+  background: white;
+  border: 2.5px solid #fff;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}

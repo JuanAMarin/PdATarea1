@@ -10,7 +10,8 @@
 </head>
 	<script>
 		function loaded(){
-			<%Acceso ac = Acceso.getInstancia();%>
+			<%Acceso ac = Acceso.getInstancia();
+			ac.killInstancia();%>
 			if(<%=ac.isModal()%>){
 				<%ac.setModal(false);%>
 				modal.style.display = "block";
@@ -74,7 +75,7 @@ span.onclick = function() {
 //When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 	if (event.target == modal) {
-	 modal.style.display = "none";
+		modal.style.display = "none";
 	}
 }
 </script>
