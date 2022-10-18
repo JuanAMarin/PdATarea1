@@ -1,6 +1,7 @@
 package interfaces;
 
 import datatypes.DtClase;
+import exceptions.SocioYaEliminadoException;
 import exceptions.SocioYaRegistradoException;
 
 public interface ICregistrodeclases {
@@ -10,4 +11,5 @@ public interface ICregistrodeclases {
 	public abstract DtClase buscarClase(String clase);
 	public abstract String[] listarSocios();
 	public abstract void Registro (String clase, String Socio)throws SocioYaRegistradoException;
+	public abstract void eliminarRegistro (String clase, String socio) throws SocioYaEliminadoException;
 }

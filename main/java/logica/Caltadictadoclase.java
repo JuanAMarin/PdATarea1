@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import datatypes.DtActividadDep;
 import datatypes.DtClase;
+import datatypes.DtInstitucionDep;
 import interfaces.ICaltadictadoclase;
 
 public class Caltadictadoclase implements ICaltadictadoclase {
+	private DtActividadDep dtad;
 
 	public String[] listarInstituciones() {
 		ArrayList<String> instituciones;
@@ -73,7 +76,20 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 		}
 		return users;
 	}
-
+	
+	public void buscarActividad(String actividad){
+		Manejador m = Manejador.getInstancia();
+		dtad = m.buscarActividad(actividad);
+	}
+	
+	public DtActividadDep getDtad() {
+		return dtad;
+	}
+	
+	public DtInstitucionDep buscarInsti(String insti){
+		Manejador m = Manejador.getInstancia();
+		return m.buscarInstitucion(insti);
+	}
 }
 
 

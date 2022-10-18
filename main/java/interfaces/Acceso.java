@@ -1,6 +1,7 @@
 package interfaces;
 
 import datatypes.DtActividadDep;
+import datatypes.DtClase;
 import datatypes.DtInstitucionDep;
 import datatypes.DtProfesor;
 import datatypes.DtSocio;
@@ -12,7 +13,10 @@ public class Acceso {
 	private DtSocio s;
 	private DtActividadDep actividad;
 	private DtInstitucionDep institucion;
+	private DtClase clase;
 	private boolean modal;
+	private boolean modalErr;
+	private boolean ModalAux;
 	
 	public static Acceso getInstancia() {
         if (instancia == null) {
@@ -45,14 +49,14 @@ public class Acceso {
 		this.actividad = actividad;
 	}
 
-	public boolean isModal() {
-		return modal;
+	public DtClase getclase() {
+		return clase;
 	}
 
-	public void setModal(boolean modal) {
-		this.modal = modal;
+	public void setclase(DtClase clase) {
+		this.clase = clase;
 	}
-
+	
 	public DtInstitucionDep getInstitucion() {
 		return institucion;
 	}
@@ -60,12 +64,40 @@ public class Acceso {
 	public void setInstitucion(DtInstitucionDep institucion) {
 		this.institucion = institucion;
 	}
+	
+	public boolean isModal() {
+		return modal;
+	}
+
+	public void setModal(boolean modal) {
+		this.modal = modal;
+	}
+	
+	public boolean isModalErr() {
+		return modalErr;
+	}
+
+	public void setModalErr(boolean modalErr) {
+		this.modalErr = modalErr;
+	}
+	
+	public boolean isModalAux() {
+		return ModalAux;
+	}
+
+	public void setModalAux(boolean modalAux) {
+		ModalAux = modalAux;
+	}
 
 	public void killInstancia() {
 		instancia = null;
-		p = null;
-		s = null;
-		actividad = null;
-		modal = false;
+		this.p = null;
+		this.s = null;
+		this.actividad = null;
+		this.modal = false;
+		this.clase = null;
+		this.institucion = null;
 	}
+
+	
 }

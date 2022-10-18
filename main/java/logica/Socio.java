@@ -38,4 +38,19 @@ public class Socio extends Usuario{
 	public void addRegistro(Registro r) {
 		registros.add(r);
 	}
+	
+	public void borrarRegistro(Clase clase) {
+		int i = 0;
+		String c;
+		boolean encontre=false;
+		while((i< registros.size()) && (!encontre)) {
+			String s = clase.getNombre();
+			c = registros.get(i).getClase().getNombre();
+			if(c.equals(s)) {
+				registros.remove(i);
+				encontre=true;
+			}
+			i++;
+		}
+	}
 }

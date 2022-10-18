@@ -53,7 +53,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 	private JButton btnLoadImage;
 	private JLabel lblImage;
 	private String filename = null;
-	private byte[] personImage = null;
+	private byte[] actiImage = null;
 	
 	public Modactividaddeportiva(ICmodactividaddep ICmad) {
 		ICMad = ICmad; 
@@ -240,6 +240,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 		textFieldCosto.setEnabled(true);
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(act1.getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
 		lblImage.setIcon(imageIcon);
+		actiImage = act1.getImage();
 	}
 
 	protected void AceptarActionPerformed(ActionEvent arg0) {
@@ -248,7 +249,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 			String descripcion = this.textPaneDescripcion.getText();
 			Integer duracion = Integer.valueOf(this.textFieldDuracion.getText());
 			Float costo = Float.parseFloat(this.textFieldCosto.getText());
-			ICMad.ModActividadDeportiva(nombre.toLowerCase(), descripcion, duracion, costo, personImage);
+			ICMad.ModActividadDeportiva(nombre.toLowerCase(), descripcion, duracion, costo, actiImage);
 			JOptionPane.showMessageDialog(this, "La Actividad Deportiva "+nombre+" se ha modificado con exito", "Modificar Actividad Deportiva",
                     JOptionPane.INFORMATION_MESSAGE);
 			formClose();
@@ -298,7 +299,7 @@ public class Modactividaddeportiva extends JInternalFrame {
 			for (int readNum;(readNum = fis.read(buf))!=-1;){
 				bos.write(buf,0,readNum);
 			}
-			personImage = bos.toByteArray();
+			actiImage = bos.toByteArray();
 			fis.close();
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null,e2);

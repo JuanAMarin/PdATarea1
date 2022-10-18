@@ -7,4 +7,5 @@ public interface ICrankingdeactividades {
 	public abstract ArrayList<Object[]> obtRankActividades();
 	public ArrayList<DtActividadDep> RankActividadesDT();
 	public ArrayList<Object[]> obtRankActividadesO(ArrayList<DtActividadDep> a);
+	public ArrayList<Integer> obtCantClases();
 }

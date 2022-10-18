@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import datatypes.DtClase;
+import exceptions.SocioYaEliminadoException;
 import exceptions.SocioYaRegistradoException;
 import interfaces.ICregistrodeclases;
 
@@ -77,4 +78,11 @@ public class Cregistrodeclases implements ICregistrodeclases {
 			m.addRegistro(clase, socio);
 	}
 	
+	public void eliminarRegistro (String clase, String socio) throws SocioYaEliminadoException{
+		Manejador m = Manejador.getInstancia();
+		if(!m.classTieneSocio(clase, socio)) {
+			throw new SocioYaEliminadoException("El socio " + socio + "No esta registrado en la clase" + clase);
+		}else
+			m.eliminarRegistro(clase, socio);
+	}
 }

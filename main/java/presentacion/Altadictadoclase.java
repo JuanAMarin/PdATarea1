@@ -355,7 +355,7 @@ public class Altadictadoclase extends JInternalFrame{
 		if(checkFormulario()) {
 			try {
 				ICac.altaClase(nombre.toLowerCase(), url, fecha, fechaReg, h, prof.toLowerCase(), actividad.toLowerCase(), personImage);
-				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con Ã‰xito", "Alta de Dictado de Clase",
+				JOptionPane.showMessageDialog(this, "La Clase "+nombre+" se ha creado con éxito", "Alta de Dictado de Clase",
 		                JOptionPane.INFORMATION_MESSAGE);
 				formClose();
 			} catch (ClaseRepetidaException e) {

@@ -9,7 +9,7 @@ public interface ICconsultaclase {
 	public abstract String[] listarActividades(String institucion);
 	public abstract String[] listarClases(String actividad);
 	public abstract void buscarClase(String clase);
-	public abstract DtClase getDtad();
+	public abstract DtClase getDtc();
 	public abstract ArrayList<Object[]> listarRegistros(String clase);
 	public abstract String buscarProfesorCC(String clase);
 }

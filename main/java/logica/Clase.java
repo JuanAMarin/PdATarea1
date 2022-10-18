@@ -86,4 +86,20 @@ public class Clase {
 	public void addRegistro(Registro r) {
 		registros.add(r);
 	}
+	
+	public void borrarRegistro(Socio socio) {
+		int i = 0;
+		String nick;
+		boolean encontre=false;
+		while((i< registros.size()) && (!encontre)) {
+			String s = socio.getNickname();
+			nick = registros.get(i).getSocio().getNickname();
+			if(nick.equals(s)) {
+				registros.remove(i);
+				encontre=true;
+			}
+			i++;
+		}
+		socio.borrarRegistro(this);
+	}
 }

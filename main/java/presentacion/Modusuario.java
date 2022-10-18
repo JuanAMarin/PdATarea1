@@ -102,6 +102,7 @@ public class Modusuario extends JInternalFrame {
 				txtSitioWeb.setText("");
 				ImageIcon imageIcon = new ImageIcon(new ImageIcon(socio.getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
 				lblImage.setIcon(imageIcon);
+				personImage = socio.getImage();
 			}else {
 				dateFechaNac.setEnabled(true);
 				rdbtnSocio.setSelected(false);
@@ -118,6 +119,7 @@ public class Modusuario extends JInternalFrame {
 				txtEmail.setText(profe.getEmail());
 				ImageIcon imageIcon = new ImageIcon(new ImageIcon(profe.getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
 				lblImage.setIcon(imageIcon);
+				personImage = profe.getImage();
 			}
 			txtNombre.setEnabled(true);
 			txtApellido.setEnabled(true);

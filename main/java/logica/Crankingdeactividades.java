@@ -35,4 +35,9 @@ public class Crankingdeactividades implements ICrankingdeactividades {
 		return obtRankActividadesO(RankActividadesDT());
 	}
 	
+	public ArrayList<Integer> obtCantClases(){
+		Manejador m = Manejador.getInstancia();
+		return m.obtCantClases();
+	}
+	
 }

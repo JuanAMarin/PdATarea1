@@ -30,6 +30,10 @@ public class Crankingdeclases implements ICrankingdeclases{
 	public ArrayList<Object[]> obtRankClases() {
 		return obtRankClasesO(obtRankClasesDT());
 	}
-
+	
+	public ArrayList<Integer> obtCantRegistros(){
+		Manejador m = Manejador.getInstancia();
+		return m.obtCantRegistros();
+	}
 }
 

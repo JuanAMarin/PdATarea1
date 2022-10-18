@@ -49,6 +49,16 @@ public class Cconsultaactividad implements ICconsultaactividad{
 		dtad = m.buscarActividad(actividad);
 	}
 
+	public ArrayList<String> listarClasesN(String actividad) {
+		Manejador m = Manejador.getInstancia();
+		ArrayList<DtClase> dtc = m.buscarClases(m.listarClasesDeAct(actividad));
+		ArrayList<String> c = new ArrayList<>();
+		for(DtClase dt: dtc) {
+			c.add(dt.getNombre());
+		}
+		return c;
+	}
+	
 	public ArrayList<Object[]> listarClases(String actividad) {
 		Manejador m = Manejador.getInstancia();
 		ArrayList<DtClase> dtc = m.buscarClases(m.listarClasesDeAct(actividad));
@@ -79,5 +89,4 @@ public class Cconsultaactividad implements ICconsultaactividad{
 		Manejador m = Manejador.getInstancia();
 		return m.buscarProfesorC(clase);
 	}
-	
 }

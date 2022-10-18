@@ -10,6 +10,7 @@ public interface ICconsultaactividad {
 	public abstract void buscarActividad(String actividad);
 	public abstract DtActividadDep getDtad();
 	public abstract ArrayList<Object[]> listarClases(String actividad);
+	public abstract ArrayList<String> listarClasesN(String actividad);
 	public abstract ArrayList<Object[]> listarRegistros(String clase);
 	public abstract String buscarProfesorCC(String clase);
 }

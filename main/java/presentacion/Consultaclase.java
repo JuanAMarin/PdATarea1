@@ -133,18 +133,18 @@ public class Consultaclase extends JInternalFrame {
 				ICcc.buscarClase(cboClase.getSelectedItem().toString());
 				modelo.clear();
 				
-				modelo.addElement("Nombre: " + ICcc.getDtad().getNombre());
-				modelo.addElement("URL: " + ICcc.getDtad().getUrl());
-				modelo.addElement("Fecha: " + ICcc.getDtad().getFecha());
-				modelo.addElement("Hora de inicio: " + ICcc.getDtad().getHoraInicio());
-				modelo.addElement("Fecha de registro: " + ICcc.getDtad().getFechaReg());
+				modelo.addElement("Nombre: " + ICcc.getDtc().getNombre());
+				modelo.addElement("URL: " + ICcc.getDtc().getUrl());
+				modelo.addElement("Fecha: " + ICcc.getDtc().getFecha());
+				modelo.addElement("Hora de inicio: " + ICcc.getDtc().getHoraInicio());
+				modelo.addElement("Fecha de registro: " + ICcc.getDtc().getFechaReg());
 				textFieldProfesor.setText(ICcc.buscarProfesorCC(cboClase.getSelectedItem().toString()));
 				tableModel.setRowCount(0);
 				for(Object[] o: ICcc.listarRegistros(cboClase.getSelectedItem().toString())) {
 					tableModel.addRow(o);
 				}
 				
-				ImageIcon image = new ImageIcon(new ImageIcon(ICcc.getDtad().getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+				ImageIcon image = new ImageIcon(new ImageIcon(ICcc.getDtc().getImage()).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
 				lblImage.setIcon(image);
 			}
 		});

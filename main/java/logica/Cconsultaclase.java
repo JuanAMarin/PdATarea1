@@ -15,7 +15,7 @@ public class Cconsultaclase implements ICconsultaclase{
 		super();
 	}
 
-	public DtClase getDtad() {
+	public DtClase getDtc() {
 		return dtc;
 	}
 

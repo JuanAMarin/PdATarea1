@@ -277,6 +277,13 @@ public class Manejador {
 		em.getTransaction().commit();
 	}
 	
+	public ArrayList<Integer> obtCantRegistros(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select size(c.registros) from Clase c order by size(c.registros) desc");
+		return (ArrayList<Integer>)query.getResultList();
+	}
+	
 	public ArrayList<DtClase> obtRankClases(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
@@ -286,6 +293,15 @@ public class Manejador {
 			ret.add(c.getDT());
 		return ret;
 	}
+	
+	public ArrayList<Integer> obtCantClases(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query query = em.createQuery("select size(a.clases) from ActividadDep a order by size(a.clases) desc");
+		return (ArrayList<Integer>)query.getResultList();
+	}
+	
+	//Actividades
 	
 	public ArrayList<DtActividadDep> obtRankActividades(){
 		Conexion conexion = Conexion.getInstancia();
@@ -431,5 +447,16 @@ public class Manejador {
 		em.getTransaction().commit();
 	}
 	
+	public void eliminarRegistro (String clase, String socio){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Clase clas = em.find(Clase.class, clase);
+		Socio soc = em.find(Socio.class, socio);
+		clas.borrarRegistro(soc);
+		em.getTransaction().begin();
+		em.persist(soc);
+		em.persist(clas);
+		em.getTransaction().commit();
+	}
 }
 
