@@ -1,7 +1,13 @@
 package datatypes;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtInstitucionDep {
 	private String nombre, descripcion, url;
+	
+	public DtInstitucionDep(){}
 	
 	public DtInstitucionDep(String nombre, String descripcion, String url) {
 		super();

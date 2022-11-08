@@ -1,11 +1,17 @@
 package datatypes;
 
-import java.util.Date;;
+import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtClase {
 	private String nombre, url;
 	private Date fecha, fechaReg, horaInicio;
 	private byte[] image;
+	
+	public DtClase(){}
 	
 	public DtClase(String nombre, String url, Date fecha, Date fechaReg, Date horaInicio, byte[] image) {
 		super();

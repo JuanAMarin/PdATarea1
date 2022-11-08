@@ -1,18 +1,54 @@
 package datatypes;
 
 import java.util.Date;
-import logica.InstitucionDep;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtProfesor extends DtUsuario{
 	private String descripcion, biografia, sitioweb;
-	private InstitucionDep institucion;
+	protected String nickname, nombre, apellido, email;
+	protected Date fechaNac;
+	protected byte[] image;
 	
-	public DtProfesor(String nickname, String nombre, String apellido, String email, Date fechaNac, String descripcion, String biografia, String sitioweb, InstitucionDep institucion, byte[] image) {
-		super(nickname, nombre, apellido, email, fechaNac, image);
+	public DtProfesor(){}
+	
+	public DtProfesor(String nickname, String nombre, String apellido, String email, Date fechaNac, byte[] image, String descripcion, String biografia, String sitioweb) {
+		super();
+		this.nickname = nickname;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.fechaNac = fechaNac;
+		this.image= image;
 		this.descripcion = descripcion;
 		this.biografia = biografia;
 		this.sitioweb = sitioweb;
-		this.institucion = institucion;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public Date getFechaNac() {
+		return fechaNac;
+	}
+	
+	public byte[] getImage() {
+		return image;
 	}
 
 	public String getDescripcion() {
@@ -25,10 +61,6 @@ public class DtProfesor extends DtUsuario{
 
 	public String getSitioweb() {
 		return sitioweb;
-	}
-
-	public InstitucionDep getInstitucion() {
-		return institucion;
 	}
 
 }

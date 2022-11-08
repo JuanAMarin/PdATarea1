@@ -16,4 +16,5 @@ public interface ICaltadictadoclase {
 	public abstract void buscarActividad(String actividad);
 	public abstract DtActividadDep getDtad();
 	public DtInstitucionDep buscarInsti(String insti);
+	public boolean existeClase(String clase);
 }

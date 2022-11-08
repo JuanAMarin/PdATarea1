@@ -8,19 +8,22 @@ import datatypes.DtClase;
 import datatypes.DtProfesor;
 import datatypes.DtRegistro;
 import datatypes.DtSocio;
-import datatypes.DtUsuario;
 import interfaces.ICconsultausuario;
 @SuppressWarnings("deprecation")
 public class Cconsultausuario implements ICconsultausuario{
 	
-	private DtUsuario user;
+	private DtSocio socio;
+	private DtProfesor profesor;
 	
 	public Cconsultausuario() {
 		super();
 	}
-
-	public DtUsuario getUsuario() {
-		return user;
+	
+	public DtSocio getSocioDT() {
+		return socio;
+	}
+	public DtProfesor getProfesorDT() {
+		return profesor;
 	}
 
 	@Override
@@ -109,7 +112,8 @@ public class Cconsultausuario implements ICconsultausuario{
 
 	public void buscarUsuario(String nickname) {
 		Manejador m = Manejador.getInstancia();
-		user = m.buscarUsuario(nickname);
+		socio = m.buscarSocio(nickname);
+		profesor = m.buscarProfesor(nickname);
 	}
 	
 }

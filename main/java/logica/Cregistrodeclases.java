@@ -85,4 +85,11 @@ public class Cregistrodeclases implements ICregistrodeclases {
 		}else
 			m.eliminarRegistro(clase, socio);
 	}
+	public boolean socioYaRegistrado (String clase, String socio) {
+		Manejador m = Manejador.getInstancia();
+		if(!m.classTieneSocio(clase, socio))
+			return false;
+		else
+			return true;
+	}
 }

@@ -90,6 +90,15 @@ public class Caltadictadoclase implements ICaltadictadoclase {
 		Manejador m = Manejador.getInstancia();
 		return m.buscarInstitucion(insti);
 	}
+	
+	public boolean existeClase(String clase){
+		Manejador m = Manejador.getInstancia();
+		if(m.buscarClase(clase)==null)
+			return false;
+		else
+			return true;
+	}
+	
 }
 
 

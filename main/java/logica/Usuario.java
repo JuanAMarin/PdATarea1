@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import datatypes.DtUsuario;
-
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
@@ -92,10 +90,6 @@ public class Usuario {
 
 	public void setImage(byte[] image) {
 		this.image = image;
-	}
-
-	public DtUsuario getDT() {
-		return new DtUsuario(this.getNickname(),this.getNombre(),this.getApellido(),this.getEmail(),this.getFechaNac(),this.getImage());
 	}
 	
 }

@@ -2,12 +2,18 @@ package datatypes;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtActividadDep {
 	private String nombre, descripcion;
 	private Integer duracion;
 	private float costo;
 	private Date fechaReg;
 	private byte[] image;
+	
+	public DtActividadDep(){}
 	
 	public DtActividadDep(String nombre, String descripcion, Integer duracion, float costo, Date fechaReg, byte[] image) {
 		super();

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import datatypes.DtProfesor;
 import datatypes.DtSocio;
-import datatypes.DtUsuario;
 
 public interface ICconsultausuario {
 	public abstract String[] listarUsuarios();
@@ -12,7 +11,8 @@ public interface ICconsultausuario {
 	public abstract ArrayList<Object[]> listarClasesS(String nickname);
 	public abstract ArrayList<Object[]> listarRegistros(String nombre);
 	public abstract ArrayList<Object[]> listarClasesA(String nombre);
-	public abstract DtUsuario getUsuario();
+	public abstract DtSocio getSocioDT();
+	public abstract DtProfesor getProfesorDT();
 	public abstract ArrayList<Object[]> listarActividades(String nickname);
 	public abstract DtProfesor buscarProfesor(String nickname);
 	public abstract DtSocio buscarSocio(String nickname);

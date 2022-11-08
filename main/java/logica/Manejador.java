@@ -10,7 +10,6 @@ import datatypes.DtInstitucionDep;
 import datatypes.DtProfesor;
 import datatypes.DtRegistro;
 import datatypes.DtSocio;
-import datatypes.DtUsuario;
 import persistencia.Conexion;
 
 @SuppressWarnings("unchecked")
@@ -99,14 +98,6 @@ public class Manejador {
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Socio.class, nickname) != null)
 			return em.find(Socio.class, nickname).getDT();
-		return null;	
-	}
-	
-	public DtUsuario buscarUsuario(String nickname) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nickname) != null)
-			return em.find(Usuario.class, nickname).getDT();
 		return null;	
 	}
 	

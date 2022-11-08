@@ -6,6 +6,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import interfaces.*;
+import publicadores.ControladorPublishAC;
+import publicadores.ControladorPublishAcceso;
+import publicadores.ControladorPublishCUCA;
+import publicadores.ControladorPublishLogin;
+import publicadores.ControladorPublishMU;
+import publicadores.ControladorPublishRAC;
+import publicadores.ControladorPublishRSC;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -88,7 +95,20 @@ public class Principal {
 	}
 	public Principal() {
 		initialize();
-				
+		ControladorPublishLogin cpl = new ControladorPublishLogin();
+		cpl.publicar();
+		ControladorPublishAcceso cpa = new ControladorPublishAcceso();
+		cpa.publicar();
+		ControladorPublishCUCA cpCUCA = new ControladorPublishCUCA();
+		cpCUCA.publicar();
+		ControladorPublishRAC cpRAC = new ControladorPublishRAC();
+		cpRAC.publicar();
+		ControladorPublishMU cpMU = new ControladorPublishMU();
+		cpMU.publicar();
+		ControladorPublishRSC cpRSC = new ControladorPublishRSC();
+		cpRSC.publicar();
+		ControladorPublishAC cpAC = new ControladorPublishAC();
+		cpAC.publicar();
 		Fabrica fabrica = Fabrica.getInstancia();
 		ICau=fabrica.getICaltausuario();
 		ICcu=fabrica.getICconsultausuario();

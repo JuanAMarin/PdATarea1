@@ -98,6 +98,25 @@ public class Acceso {
 		this.clase = null;
 		this.institucion = null;
 	}
-
+	
+	public boolean pIsNull() {
+		return (this.p==null);
+	}
+	
+	public boolean sIsNull() {
+		return (this.s==null);
+	}
+	
+	public boolean iIsNull() {
+		return (this.institucion==null);
+	}
+	
+	public boolean aIsNull() {
+		return (this.actividad==null);
+	}
+	
+	public boolean cIsNull() {
+		return (this.clase==null);
+	}
 	
 }
