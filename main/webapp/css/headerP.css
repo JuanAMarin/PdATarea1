@@ -1,0 +1,148 @@
+nav {
+  margin: 3% auto 3%;
+  position: relative;
+  width: 57vw;
+  height: 50px;
+  background-color: #34495e;
+  border-radius: 8px;
+  font-size: 0;
+}
+
+nav a {
+  line-height: 65px;
+  height: 100%;
+  font-size: 15px;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  width: 7.125vw;
+}
+
+nav .animation {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  z-index: 0;
+  transition: all .5s ease 0s;
+  border-radius: 8px;
+}
+
+a{
+  width: 7.125vw;
+}
+
+nav .start-home, a:nth-child(1):hover~.animation {
+  width: 7.125vw;
+  left: 0;
+  background-color: #c24448;
+}
+
+nav .start-about, a:nth-child(2):hover~.animation {
+  width: 7.125vw;
+  left: 7.125vw;
+  background-color: #B84145;
+}
+
+nav .start-blog, a:nth-child(3):hover~.animation {
+  width: 7.125vw;
+  left: 14.25vw;
+  background-color: #B14044;
+}
+
+nav .start-portefolio, a:nth-child(4):hover~.animation {
+  width: 7.125vw;
+  left: 21.375vw;
+  background-color: #A93E42;
+}
+
+nav .start-contact, a:nth-child(5):hover~.animation {
+  width: 7.125vw;
+  left: 28.5vw;
+  background-color: #A03B3F;
+}
+
+nav .start-contact, a:nth-child(6):hover~.animation {
+  width: 7.125vw;
+  left: 35.625vw;
+  background-color: #97393C;
+}
+
+nav .start-contact, a:nth-child(7):hover~.animation {
+  width: 7.125vw;
+  left: 42.75vw;
+  background-color: #8D3638;
+}
+
+nav .start-contact, a:nth-child(8):hover~.animation {
+  width: 7.125vw;
+  left: 49.875vw;
+  background-color: #853335	;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Overpass', sans-serif;
+  font-weight: normal;
+  font-size: 100%;
+  color: #1b262c;
+  margin: 0;
+  background-image: url(../imagenes/fondo.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+span {
+    color: #2BD6B4;
+}
+
+svg-icon{
+    width: 25px;
+    height: 25px;
+    fill: #F26856;
+}
+.hover-text {
+  position: relative;
+  display: table-cell;
+  text-align: center;
+}
+#bottom {
+  top: 25px;
+  left: -50%;
+}
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  width: 140px;
+  color: white;
+  font-size: 10px;
+  background-color: #192733;
+  border-radius: 10px;
+  text-align: center;
+  margin-left: 100%;
+  margin-top: 15%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  bottom: -60%;
+}
+
+.hover-text:hover .tooltip-text {
+  visibility: visible;
+}
