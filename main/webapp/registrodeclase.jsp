@@ -13,6 +13,7 @@
 <head>
 	<link rel="stylesheet" href="css/pages.css">
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%ControladorPublishRSCService cpsRSC = new ControladorPublishRSCServiceLocator();
 	ControladorPublishAccesoService cpsA = new ControladorPublishAccesoServiceLocator();
 	ControladorPublishAcceso portA = cpsA.getControladorPublishAccesoPort();

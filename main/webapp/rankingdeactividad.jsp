@@ -19,6 +19,7 @@
 		textarea {resize: none; overflow: scroll;}
 	</style>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%ControladorPublishAccesoService cpsA = new ControladorPublishAccesoServiceLocator();
 	  ControladorPublishAcceso portA = cpsA.getControladorPublishAccesoPort();
   	  if(!portA.pIsNull()){%>
@@ -50,11 +51,18 @@
 			 	  int[] cant = portRAC.obtCantClases();
 				  int i=0;
 				  for(DtActividadDep a: actividades){%>
-				<li style="list-style-type: none; height: 120px;">
-					<mark style="width: 98%">Nombre: <%=a.getNombre()%><br>
+				<li style="list-style-type: none; height: 150px;">
+					<div>
+					<mark style="width: 98%">
+					
+					Nombre: <%=a.getNombre()%><br>
 					Costo: <%=a.getCosto()%><br>
-					Descripción: <%=a.getDescripcion()%></mark>
+					Descripción: <%=a.getDescripcion()%>
+					
+					</mark>
+					</div>
 					<small><%=cant[i]%></small>
+					
 				</li>
 				<%i++;}%>
   			</ol>

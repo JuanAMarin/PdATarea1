@@ -13,8 +13,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="css/pages.css">
+	<link rel="stylesheet" href="css/modregpages.css">
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%ControladorPublishACService cpsAC = new ControladorPublishACServiceLocator();
 	  ControladorPublishAccesoService cpsA = new ControladorPublishAccesoServiceLocator();
 	  ControladorPublishAcceso portA = cpsA.getControladorPublishAccesoPort();
@@ -43,11 +44,8 @@
    			</svg>
    			Registrar Clase
  			</h1>
- 			<form class="responsive" id="altaclaseform1" action="AltaClase" method="post"> 
-			<table class="responsive">
-				<tbody>
-					<tr><td style="word-break: break-word;">
-							<select name="instituciones" id="instituciones">
+ 			<form class="responsive" id="altaclaseform1" action="AltaClase" method="post">
+						<select name="instituciones" id="instituciones">
 							<option><%=portA.iIsNull() ? "Selecciona una institución" : portA.getInstitucion().getNombre()%></option>
 								<%for(String i: portAC.listarInstituciones()){
 									  if(portA.iIsNull()){%> 
@@ -56,11 +54,10 @@
 										  	  <option value="<%=i%>"><%=i%></option>
 									<%}
 								  }%>
-							</select>
-							<button class="button" type="submit">Continuar</button>
-						</td></tr>
+						</select>
+						<button class="button" type="submit">Continuar</button>
 						<%if(!portA.iIsNull()){%>
-		        			 <tr><td style="word-break: break-word;">
+						<div>
 				        		<input type="hidden" name="ultimaInstitucion" value="<%=portA.getInstitucion().getNombre()%>"/>
 								<select name="actividades" id="actividades">
 								<option><%=portA.aIsNull() ? "Selecciona una actividad" : portA.getActividad().getNombre()%></option>
@@ -77,15 +74,16 @@
 					        		<%if(!portA.aIsNull()){ %>
 					        			<h1>Complete los datos de la Clase</h1>
 					        		<%}%>
-				        	  </td></tr>
-				</tbody>
-			</table>
+					   </div>
 			</form>
-			<form class="responsive" id="altaclaseform2" action="AltaClase2" method="post"> 
-			<table class="responsive">
-				<tbody>	       
+			<form class="responsive" id="altaclaseform2" action="AltaClase2" method="post">       
 					  <%if(!portA.aIsNull()){ %>
-					  	  <tr><td style="word-break: break-word;">
+					  	   <div class="imageHolder" style="width: fit-content; max-width: 370px; padding-top: 10px;">
+					            <img style="float:left" class="image" width="370px" height="370px" src="imagenes/default.jpg" id="imagenPreCarga">
+				       	  		<input style="color: transparent; float:left;" type="file" class="custom-file-input" name="imagenNew" id="imagenNew" maxlength="256" placeholder="ImagenNew" accept="image/*">
+								<input style="float: right" type="hidden" name="img" id="img" value="">
+				       	   </div>
+					  	   <div class="responsive" style="width: fit-content; float:left;">
 						  		<input type="hidden" name="ultimaActividad" value="<%=portA.getActividad().getNombre()%>"/>
 					       		<input type="hidden" name="nickname" value="<%=portA.getP().getNickname()%>">
 						  		<input type="hidden" name="nomIns" value="<%=portA.getInstitucion().getNombre()%>">
@@ -94,29 +92,17 @@
 					      		<h1>Fecha de Inicio</h1><input id="fechainicio" type="date" placeholder="fechainicio" name="fechainicio" min="<%=LocalDate.now()%>" required>
 					            <h1>Hora de Inicio</h1><input id="horainicio" type="time" placeholder="horainicio" name="horainicio" required>
 					            <h1>URL</h1><input id="url" type="text" placeholder="url" name="url" required>
-					      </td>
-					      <td class="imageHolder">
-					            <div class="responsiveDiv"><img class="image" width="370px" height="370px" src="imagenes/default.jpg" id="imagenPreCarga"></div>
-				       	  		<input type="file" class="custom-file-input" name="imagenNew" id="imagenNew" maxlength="256" placeholder="ImagenNew" accept="image/*">
-								<input type="hidden" name="img" id="img" value="">
-				       	  </td>
-					      </tr>
-						  <tr><td style="word-break: break-word;">
-			            		<button type="submit" id="Aceptar" name="Aceptar">Aceptar</button>
-			              </td><td>
-			              		
-			              </td></tr>  
-				</tbody>
-			</table>
+								
+			               </div>
+			               <div class="responsive" style="float:left;">
+								<button type="submit" id="Aceptar" name="Aceptar" style="margin-block-end: 0px;">Aceptar</button>
+			               </div>
+
 			</form>
 			<form class="responsive" id="altaclaseform3" action="Cancelar" method="post">
-			<table class="responsive">
-			<tbody>
-			<tr><td style="word-break: break-word;">
-			<button type="submit" id="Cancelar" name="Cancelar">Cancelar</button>
-			</td><tr>
-			</tbody>
-			</table>
+				<div class="responsive">
+					<button type="submit" id="Cancelar" name="Cancelar">Cancelar</button>
+				</div>
 			</form>
 			<%}%>
 		<%}%>

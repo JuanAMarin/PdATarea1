@@ -23,6 +23,7 @@
 		textarea {resize: none; overflow: scroll;}
 	</style>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ranking de Clases</title>
 	<script type="text/javascript">
 		function enviar(){
@@ -48,7 +49,7 @@
 				  int[] cant = portRAC.obtCantRegistros();
 				  int i=0;
 				  for(DtClase c: clases){%>
-				<li style="list-style-type: none; height: 120px;">
+				<li style="list-style-type: none; height: 150px;">
 					<mark style="width: 98%">Nombre: <%=c.getNombre()%><br>
 					Fecha: <%=c.getFecha().getTime()%><br>
 					URL: <%=c.getUrl()%></mark>

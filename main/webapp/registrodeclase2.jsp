@@ -16,6 +16,7 @@
 <head>
 	<link rel="stylesheet" href="css/pages.css">
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%ControladorPublishRSCService cpsRSC = new ControladorPublishRSCServiceLocator();
 	ControladorPublishAccesoService cpsA = new ControladorPublishAccesoServiceLocator();
 	ControladorPublishAcceso portA = cpsA.getControladorPublishAccesoPort();
@@ -42,16 +43,15 @@
    			</svg>
    			Registrarme a Clase
  			</h1>
- 			<form class="responsive" action="RegElimDeClase" method="post"> 
-			<table class="responsive">
-				<tbody>
-					<tr><td style="word-break: break-word;"><h2>Nombre </h2><p><%=portA.getclase().getNombre()%></p>
+ 			<form class="responsive" action="RegElimDeClase" method="post">
+			<div class="responsive">
+					<h2>Nombre </h2><p><%=portA.getclase().getNombre()%></p>
 					<h2>Url </h2><p><%=portA.getclase().getUrl()%></p>
 					<h2>Fecha de Inicio </h2><p><%=new SimpleDateFormat("dd/MM/yyyy").format(portA.getclase().getFecha().getTime())%></p>
 					<h2>Hora de Inicio </h2><p><%=new SimpleDateFormat("HH:mm").format(portA.getclase().getHoraInicio().getTime())%></p>
-					<h2>Fecha de Registro </h2><p><%=portA.getclase().getFechaReg().getTime()%></p></td><td class="imageHolder" rowspan="5"><div class="responsiveDiv"><img class="image" width="370px" height="370px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(image)%>"></div></td></tr>
-				</tbody>
-			</table>
+					<h2>Fecha de Registro </h2><p><%=portA.getclase().getFechaReg().getTime()%></p>
+			</div>
+			<div class="imageHolder" ><img class="image" width="370px" height="370px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(image)%>"></div>
 			<input type="hidden" name="boton" id="boton" value="">
 			<button type="button" class="btn btn-primary"
 				onclick="procesar('registro')">Registrarse</button>

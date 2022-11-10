@@ -13,6 +13,7 @@
 <head>
 	<link rel="stylesheet" href="css/pages.css">
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%ControladorPublishAccesoService cpsA = new ControladorPublishAccesoServiceLocator();
 	  ControladorPublishAcceso portA = cpsA.getControladorPublishAccesoPort();
 	  if(!portA.pIsNull()){%>
@@ -37,27 +38,22 @@
 			Ver Clase
 		</h1>
 		<form class="responsive" id="consultaclaseform" action="ConsultaClase" method="post">
-		<table class = "responsive">
-			<tbody>
-				<tr><td style="word-break: break-word;">
-					<select name="actividades" id="actividades">
-						<option><%=portA.aIsNull() ? "Selecciona una actividad" : portA.getActividad().getNombre()%></option>
-							<%ControladorPublishCUCAService cpsCUCA = new ControladorPublishCUCAServiceLocator();
-							  ControladorPublishCUCA portCUCA = cpsCUCA.getControladorPublishCUCAPort();
-				  			  for(String i: portCUCA.listarInstituciones()){
-								  for(String a: portCUCA.listarActividadesI(i)){
-								  	  if(portA.aIsNull()){%> 
-									  	  <option value="<%=a%>"><%=a%></option>
-									<%}else if(!portA.getActividad().getNombre().equals(a)){%>
-									  	  <option value="<%=a%>"><%=a%></option>
-									<%}
-								  }
-							  }%>
-			        </select>
-			        <button class="button" type="submit">Buscar</button>
-		        </td></tr>
+			<select name="actividades" id="actividades">
+				<option><%=portA.aIsNull() ? "Selecciona una actividad" : portA.getActividad().getNombre()%></option>
+					<%ControladorPublishCUCAService cpsCUCA = new ControladorPublishCUCAServiceLocator();
+					  ControladorPublishCUCA portCUCA = cpsCUCA.getControladorPublishCUCAPort();
+		  			  for(String i: portCUCA.listarInstituciones()){
+						  for(String a: portCUCA.listarActividadesI(i)){
+						  	  if(portA.aIsNull()){%> 
+							  	  <option value="<%=a%>"><%=a%></option>
+							<%}else if(!portA.getActividad().getNombre().equals(a)){%>
+							  	  <option value="<%=a%>"><%=a%></option>
+							<%}
+						  }
+					  }%>
+	        </select>
+			<button class="button" type="submit">Buscar</button>
 				<%if(!portA.aIsNull()){%>
-                    <tr><td style="word-break: break-word;">
 					<input type="hidden" name="ultimaActividad" value="<%=portA.getActividad().getNombre()%>"/>
 						<select name="clases" id="clases">
 							<option><%=portA.cIsNull() ? "Selecciona una clase" : portA.getclase().getNombre()%></option>
@@ -70,15 +66,17 @@
 								  }%>
 				        </select>
 				        <button class="button" type="submit">Buscar</button>
-			        </td></tr>
 		        <%}%>
 		        <%if(!portA.cIsNull()){%>
-                    <tr><td style="word-break: break-word;"><h2>Nombre </h2><p><%=portA.getclase().getNombre()%></p></td><td class="imageHolder" rowspan="5"><div class="responsiveDiv"><img class="image" width="370px" height="370px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(portA.getclase().getImage())%>"></div></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Url </h2><p><%=portA.getclase().getUrl()%></p></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Fecha de Inicio </h2><p><%=new SimpleDateFormat("dd/MM/yyyy").format(portA.getclase().getFecha().getTime())%></p></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Hora de Inicio </h2><p><%=new SimpleDateFormat("hh:mm").format(portA.getclase().getHoraInicio().getTime())%></p></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Fecha de Registro </h2><p><%=portA.getclase().getFechaReg().getTime()%></p></td></tr>
-					<tr><td style="word-break: break-word;"><h2>Registros </h2></td></tr>
+		        <div class="imageHolder"><img class="image" width="370px" height="370px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(portA.getclase().getImage())%>"></div>
+		        <div class="responsive">
+                    <h2>Nombre </h2><p><%=portA.getclase().getNombre()%></p>
+					<h2>Url </h2><p><%=portA.getclase().getUrl()%></p>
+					<h2>Fecha de Inicio </h2><p><%=new SimpleDateFormat("dd/MM/yyyy").format(portA.getclase().getFecha().getTime())%></p>
+					<h2>Hora de Inicio </h2><p><%=new SimpleDateFormat("hh:mm").format(portA.getclase().getHoraInicio().getTime())%></p>
+					<h2>Fecha de Registro </h2><p><%=portA.getclase().getFechaReg().getTime()%></p>
+					<h2>Registros </h2>
+				</div>
 			</tbody>
 		</table>
 			<%if(portCUCA.listarRegistrosC(portA.getclase().getNombre()).length!=0){%>

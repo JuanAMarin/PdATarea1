@@ -293,6 +293,7 @@ select {
 
 .imageHolder{
 	vertical-align: top;
+	float: right;
 }
 
 .image{
@@ -320,8 +321,8 @@ select {
 	}
 }
 
-@media screen and (min-width: 646px) {
+@media screen and (max-width: 677px) {
 	.imageHolder{
-		float: right;
+		float: left;
 	}
 }

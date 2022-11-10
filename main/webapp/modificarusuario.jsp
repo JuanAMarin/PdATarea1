@@ -10,8 +10,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="css/pages.css">
+	<link rel="stylesheet" href="css/modregpages.css">
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%ControladorPublishAccesoService cpsA = new ControladorPublishAccesoServiceLocator();
 	  ControladorPublishAcceso portA = cpsA.getControladorPublishAccesoPort();
 	  if(!portA.pIsNull() || !portA.sIsNull()){%>
@@ -43,47 +44,46 @@
    			</svg>
    			Modificar Mis Datos
  			</h1>
- 			<form class="responsive" id="modificarusuarioform" action="ModificarUsuario" method="post"> 
-			<table class="responsive">
-				<tbody>
-					<tr>
-						<td style="word-break: break-word;">
-							<%if(portA.pIsNull()){%>
-	                        	<h1>Nickname </h1><input id="Nickname" type="text" name="Nickname" readonly="true"  height="400px" value="<%=portA.getS().getNickname()%>" required>
-                        		<h1>Nombre </h1><input id="Nombre" type="text" name="Nombre" value="<%=portA.getS().getNombre()%>" required>
-								<h1>Apellido </h1><input id="Apellido" type="text" name="Apellido" value="<%=portA.getS().getApellido()%>" required>
-	                            <h1>Fecha de Nacimiento </h1><input id="fecha" type="date" name="fecha" min="1900-01-01" max="<%=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))%>" value="<%=new SimpleDateFormat("yyyy-MM-dd").format(portA.getS().getFechaNac().getTime())%>" required>
-								<h1>Email </h1><input id="Email" type="text" name="Email" readonly="true" value="<%=portA.getS().getEmail()%>" required>
-	                        <%}else{%>
-	                        	<h1>Nickname </h1><input id="Nickname" type="text" name="Nickname" readonly="true" value="<%=portA.getP().getNickname()%>" required>
-                        		<h1>Nombre </h1><input id="Nombre" type="text" name="Nombre" value="<%=portA.getP().getNombre()%>" required>
-								<h1>Apellido </h1><input id="Apellido" type="text" name="Apellido" value="<%=portA.getP().getApellido()%>" required>
-								
-								<h1>Fecha de Nacimiento </h1><input id="fecha" type="date" name="fecha" min="1900-01-01" max="<%=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))%>" value="<%=new SimpleDateFormat("yyyy-MM-dd").format(portA.getP().getFechaNac().getTime())%>" required>
-								<h1>Email </h1><input id="Email" type="text" name="Email" readonly="true" value="<%=portA.getP().getEmail()%>" required>
-							<%}%>
-						</td><td class="imageHolder">
-							<%if(portA.pIsNull()){%>
-								<div class="responsiveDiv"><img class="image" width="370px" height="370px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(portA.getS().getImage())%>" name="imagenPreCarga" id="imagenPreCarga"></div>
-								<input type="file" class="custom-file-input" name="imagenNew" id="imagenNew" maxlength="256" placeholder="ImagenNew" accept="image/*">
-								<input type="hidden" name="img" id="img" value="">
-							<%}else{%>
-								<div class="responsiveDiv"><img class="image" width="370px" height="370px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(portA.getP().getImage())%>" name="imagenPreCarga" id="imagenPreCarga"></div>
-								<input type="file" class="custom-file-input" name="imagenNew" id="imagenNew" maxlength="256" placeholder="ImagenNew" accept="image/*">
-								<input type="hidden" name="img" id="img" value="">
-							<%}%>
-						</td></tr>
-						<%if(!portA.pIsNull()){%>
-						<tr><td colspan="2">
-							<h1>Biografía </h1><textarea id="Biografia" name="Biografia" cols="62" rows="5"><%=portA.getP().getBiografia()%></textarea>
-							<h1>Descripción </h1><textarea id="Descripcion" name="Descripcion" cols="62" rows="5"><%=portA.getP().getDescripcion()%></textarea>
-							<h1>Sitio Web </h1><textarea id="SitioWeb" name="SitioWeb" cols="62" rows="5"><%=portA.getP().getSitioweb()%></textarea>
-						</td></tr>
-						<%}%>
-						<tr>
-						<td colspan="2"><button style="float:right; margin-top:5px; max-width: 350px;" class="button" type="submit"  name="Aceptar" id = "Aceptar">Guardar Cambios</button></td></tr>
-				</tbody>
-			</table>
+ 			<form class="responsive" id="modificarusuarioform" action="ModificarUsuario" method="post">
+			<div class="responsive" style="width: fit-content; float:left;">
+				<%if(portA.pIsNull()){%>
+				<h1> </h1>
+                      	<h1>Nickname </h1><input id="Nickname" type="text" name="Nickname" readonly="true"  height="400px" value="<%=portA.getS().getNickname()%>" required>
+                     	<h1>Nombre </h1><input id="Nombre" type="text" name="Nombre" value="<%=portA.getS().getNombre()%>" required>
+						<h1>Apellido </h1><input id="Apellido" type="text" name="Apellido" value="<%=portA.getS().getApellido()%>" required>
+                        <h1>Fecha de Nacimiento </h1><input id="fecha" type="date" name="fecha" min="1900-01-01" max="<%=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))%>" value="<%=new SimpleDateFormat("yyyy-MM-dd").format(portA.getS().getFechaNac().getTime())%>" required>
+						<h1>Email </h1><input id="Email" type="text" name="Email" readonly="true" value="<%=portA.getS().getEmail()%>" required>
+                <%}else{%>
+                      	<h1>Nickname </h1><input id="Nickname" type="text" name="Nickname" readonly="true" value="<%=portA.getP().getNickname()%>" required>
+                     	<h1>Nombre </h1><input id="Nombre" type="text" name="Nombre" value="<%=portA.getP().getNombre()%>" required>
+						<h1>Apellido </h1><input id="Apellido" type="text" name="Apellido" value="<%=portA.getP().getApellido()%>" required>
+					<h1>Fecha de Nacimiento </h1><input id="fecha" type="date" name="fecha" min="1900-01-01" max="<%=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))%>" value="<%=new SimpleDateFormat("yyyy-MM-dd").format(portA.getP().getFechaNac().getTime())%>" required>
+					<h1>Email </h1><input id="Email" type="text" name="Email" readonly="true" value="<%=portA.getP().getEmail()%>" required>
+				<%}%>
+				<%if(!portA.pIsNull()){%>
+					<h1>Biografía </h1><textarea id="Biografia" name="Biografia" cols="62" rows="5"><%=portA.getP().getBiografia()%></textarea>
+					<h1>Descripción </h1><textarea id="Descripcion" name="Descripcion" cols="62" rows="5"><%=portA.getP().getDescripcion()%></textarea>
+					<h1>Sitio Web </h1><textarea id="SitioWeb" name="SitioWeb" cols="62" rows="5"><%=portA.getP().getSitioweb()%></textarea>
+				<%}%>
+			</div>
+			
+				<%if(portA.pIsNull()){%>
+				<div class="imageHolder" style="width: fit-content; max-width: 370px; padding-top: 10px;">
+					<img class="image" width="370px" height="370px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(portA.getS().getImage())%>" name="imagenPreCarga" id="imagenPreCarga">
+					<input style="color: transparent" type="file" class="custom-file-input" name="imagenNew" id="imagenNew" maxlength="256" placeholder="ImagenNew" accept="image/*">
+					<input type="hidden" name="img" id="img" value="">
+					<button style="margin-top:5px; max-width: 350px;" class="button" type="submit"  name="Aceptar" id = "Aceptar">Guardar Cambios</button>
+				</div>
+				<%}else{%>
+				<div class="imageHolder" style="width: fit-content; max-width: 370px; padding-top: 10px; float:left">
+					<img class="image" width="370px" height="370px" src="data:image/png;base64,<%=Base64.getEncoder().encodeToString(portA.getP().getImage())%>" name="imagenPreCarga" id="imagenPreCarga">
+					<input style="color: transparent" type="file" class="custom-file-input" name="imagenNew" id="imagenNew" maxlength="256" placeholder="ImagenNew" accept="image/*">
+					<input type="hidden" name="img" id="img" value="">
+					<button style="margin-top:5px; max-width: 350px;" class="button" type="submit"  name="Aceptar" id = "Aceptar">Guardar Cambios</button>
+				</div>
+				<%}%>
+				
+				
 		</form>
 	</div>
 	<div id="myModal" class="modal">
